@@ -9,14 +9,12 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useGame } from "@/context/GameContext";
 import colors from "@/constants/colors";
 
 const FULL_WORD = "SURVIVOR";
 
 export default function SplashScreen() {
   const insets = useSafeAreaInsets();
-  const { setIsGuest } = useGame();
   const [typed, setTyped] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -46,26 +44,17 @@ export default function SplashScreen() {
           toValue: 1,
           duration: 400,
           delay: 200,
-          useNativeDriver: Platform.OS !== "web",
+          useNativeDriver: true,
         }),
         Animated.timing(slideAnim, {
           toValue: 0,
           duration: 400,
           delay: 200,
-          useNativeDriver: Platform.OS !== "web",
+          useNativeDriver: true,
         }),
       ]).start();
     }
   }, [doneTyping]);
-
-  const handleClockIn = () => {
-    if (Platform.OS === "web") {
-      setIsGuest(true);
-      router.replace("/(tabs)/");
-    } else {
-      router.replace("/auth");
-    }
-  };
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const bottomPad = Platform.OS === "web" ? 34 : insets.bottom;
@@ -78,6 +67,7 @@ export default function SplashScreen() {
       ]}
     >
       <View style={styles.center}>
+        {/* Nametag badge */}
         <View style={styles.nametag}>
           <View style={styles.nametagHeader}>
             <Text style={styles.helloText}>HELLO</Text>
@@ -115,7 +105,7 @@ export default function SplashScreen() {
           <TouchableOpacity
             style={styles.clockInBtn}
             activeOpacity={0.8}
-            onPress={handleClockIn}
+            onPress={() => router.replace("/auth")}
           >
             <Text style={styles.clockInText}>CLOCK IN →</Text>
           </TouchableOpacity>

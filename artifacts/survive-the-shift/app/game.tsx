@@ -11,73 +11,30 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "@/context/GameContext";
-import { useElevenLabsAgent, type AgentMessage, type AgentStatus } from "@/hooks/useElevenLabsAgent";
 import colors from "@/constants/colors";
 
-const GAME_DURATION = 120;
+const GAME_DURATION = 90;
+const RAGE_DECAY_RATE = 0.4;
+const RAGE_SURGE_RATE = 2.0;
+const DIALOGUE_CYCLE_MS = 5000;
 const MAX_RAGE = 100;
-const RAGE_DRIFT_RATE = 0.12;
 
 export default function GameScreen() {
   const insets = useSafeAreaInsets();
   const { currentScenario, recordResult, haptics } = useGame();
   const [rage, setRage] = useState(30);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const [dialogueIdx, setDialogueIdx] = useState(0);
+  const [isListening, setIsListening] = useState(false);
   const [managerUsed, setManagerUsed] = useState(false);
   const [ragePeak, setRagePeak] = useState(30);
   const [ended, setEnded] = useState(false);
-  const [messages, setMessages] = useState<AgentMessage[]>([]);
-  const [agentStatus, setAgentStatus] = useState<AgentStatus>("idle");
-  const [sessionStarted, setSessionStarted] = useState(false);
-
   const pulseAnim = useRef(new Animated.Value(0)).current;
-  const micPulseAnim = useRef(new Animated.Value(1)).current;
-  const ragePendingRef = useRef<number>(0);
-  const endedRef = useRef(false);
-  const timeLeftRef = useRef(GAME_DURATION);
-  const ragePeakRef = useRef(30);
-  const managerUsedRef = useRef(false);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom;
 
   const scenario = currentScenario;
-
-  const handleRageDelta = useCallback((delta: number) => {
-    ragePendingRef.current += delta;
-  }, []);
-
-  const handleMessage = useCallback((msg: AgentMessage) => {
-    setMessages((prev) => [...prev.slice(-5), msg]);
-  }, []);
-
-  const agent = useElevenLabsAgent(
-    scenario
-      ? {
-          scenarioId: scenario.id,
-          customerName: scenario.customerName,
-          customerTitle: scenario.customerTitle,
-          complaint: scenario.complaint,
-          location: scenario.location,
-          dialogue: scenario.dialogue,
-          threatLevel: scenario.threatLevel,
-          onRageDelta: handleRageDelta,
-          onMessage: handleMessage,
-          onStatusChange: setAgentStatus,
-        }
-      : {
-          scenarioId: "none",
-          customerName: "Karen",
-          customerTitle: "Customer",
-          complaint: "Generic complaint",
-          location: "Store",
-          dialogue: ["Hello?"],
-          threatLevel: 3,
-          onRageDelta: handleRageDelta,
-          onMessage: handleMessage,
-          onStatusChange: setAgentStatus,
-        }
-  );
 
   useEffect(() => {
     Animated.loop(
@@ -89,33 +46,51 @@ export default function GameScreen() {
   }, []);
 
   useEffect(() => {
-    if (agentStatus === "listening") {
-      const anim = Animated.loop(
-        Animated.sequence([
-          Animated.timing(micPulseAnim, { toValue: 1.2, duration: 450, useNativeDriver: true }),
-          Animated.timing(micPulseAnim, { toValue: 1, duration: 450, useNativeDriver: true }),
-        ])
-      );
-      anim.start();
-      return () => anim.stop();
-    } else {
-      Animated.timing(micPulseAnim, { toValue: 1, duration: 150, useNativeDriver: true }).start();
-    }
-  }, [agentStatus, micPulseAnim]);
+    if (ended) return;
+    const t = setInterval(() => {
+      setRage((prev) => {
+        const surge = isListening ? -RAGE_DECAY_RATE : RAGE_SURGE_RATE * 0.3;
+        const next = Math.min(MAX_RAGE, Math.max(0, prev + surge));
+        setRagePeak((pk) => Math.max(pk, next));
+        return next;
+      });
+    }, 200);
+    return () => clearInterval(t);
+  }, [isListening, ended]);
+
+  useEffect(() => {
+    if (ended) return;
+    const t = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          setEnded(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [ended]);
+
+  useEffect(() => {
+    if (!scenario) return;
+    const t = setInterval(() => {
+      setDialogueIdx((i) => (i + 1) % scenario.dialogue.length);
+    }, DIALOGUE_CYCLE_MS);
+    return () => clearInterval(t);
+  }, [scenario]);
 
   const handleEnd = useCallback(
     (won: boolean) => {
-      if (endedRef.current) return;
-      endedRef.current = true;
+      if (ended) return;
       setEnded(true);
-      agent.endSession();
       if (haptics) {
         if (won) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         else Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
-      const elapsed = GAME_DURATION - timeLeftRef.current;
+      const elapsed = GAME_DURATION - timeLeft;
       const bonus = won ? Math.max(0, 300 - elapsed * 2) : 0;
-      const managerBonus = !managerUsedRef.current && won ? 100 : 0;
+      const managerBonus = !managerUsed && won ? 100 : 0;
       const scoreEarned = won ? 200 + bonus + managerBonus : 0;
       recordResult({
         scenarioId: scenario?.id ?? "unknown",
@@ -123,303 +98,181 @@ export default function GameScreen() {
         location: scenario?.location ?? "Unknown",
         complaint: scenario?.complaint ?? "Unknown",
         timeSecs: elapsed,
-        ragePeak: Math.round(ragePeakRef.current),
-        managerUsed: managerUsedRef.current,
+        ragePeak: Math.round(ragePeak),
+        managerUsed,
         scoreEarned,
         won,
         timestamp: Date.now(),
       });
       router.replace({ pathname: "/result", params: { won: won ? "1" : "0" } });
     },
-    [scenario, haptics, recordResult, agent]
+    [ended, timeLeft, ragePeak, managerUsed, scenario, haptics, recordResult]
   );
 
   useEffect(() => {
-    timeLeftRef.current = timeLeft;
-  }, [timeLeft]);
+    if (!ended && rage >= MAX_RAGE) {
+      handleEnd(false);
+    }
+    if (!ended && timeLeft === 0) {
+      handleEnd(true);
+    }
+  }, [rage, timeLeft, ended, handleEnd]);
 
-  useEffect(() => {
-    ragePeakRef.current = ragePeak;
-  }, [ragePeak]);
-
-  useEffect(() => {
-    managerUsedRef.current = managerUsed;
-  }, [managerUsed]);
-
-  useEffect(() => {
-    if (ended) return;
-    const t = setInterval(() => {
-      setRage((prev) => {
-        const pending = ragePendingRef.current;
-        ragePendingRef.current = 0;
-        const next = Math.min(MAX_RAGE, Math.max(0, prev + pending + RAGE_DRIFT_RATE));
-        setRagePeak((pk) => {
-          const newPk = Math.max(pk, next);
-          ragePeakRef.current = newPk;
-          return newPk;
-        });
-        if (next >= MAX_RAGE && !endedRef.current) {
-          setTimeout(() => handleEnd(false), 0);
-        }
-        return next;
-      });
-    }, 200);
-    return () => clearInterval(t);
-  }, [ended, handleEnd]);
-
-  useEffect(() => {
-    if (ended) return;
-    const t = setInterval(() => {
-      setTimeLeft((prev) => {
-        const next = prev - 1;
-        timeLeftRef.current = next;
-        if (next <= 0 && !endedRef.current) {
-          setTimeout(() => handleEnd(true), 0);
-          return 0;
-        }
-        return next;
-      });
-    }, 1000);
-    return () => clearInterval(t);
-  }, [ended, handleEnd]);
-
-  const handleStartSession = async () => {
-    if (sessionStarted) return;
-    setSessionStarted(true);
-    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    await agent.startSession();
+  const handleMicPress = () => {
+    setIsListening((prev) => !prev);
+    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const handleManager = () => {
-    if (managerUsed || ended) return;
+    if (managerUsed) return;
     setManagerUsed(true);
-    managerUsedRef.current = true;
+    setRage((r) => Math.max(0, r - 30));
     if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    ragePendingRef.current -= 25;
-  };
-
-  const rageColor =
-    rage < 40 ? colors.green : rage < 70 ? colors.amber : colors.red;
-
-  const rageLabel =
-    rage < 40 ? "CALM" : rage < 70 ? "ESCALATING" : "CRITICAL";
-
-  const isKarenSpeaking = agentStatus === "speaking";
-  const isPlayerTurn = agentStatus === "listening";
-
-  const latestKarenMsg = [...messages].reverse().find((m) => m.source === "ai");
-  const latestPlayerMsg = [...messages].reverse().find((m) => m.source === "user");
-
-  const mins = Math.floor(timeLeft / 60);
-  const secs = String(timeLeft % 60).padStart(2, "0");
-
-  const statusColor =
-    agentStatus === "error"
-      ? colors.red
-      : agentStatus === "connecting" || agentStatus === "creating"
-      ? colors.amber
-      : agentStatus === "speaking" || agentStatus === "listening" || agentStatus === "connected"
-      ? colors.green
-      : colors.muted;
-
-  const statusLabel: Record<AgentStatus, string> = {
-    idle: "TAP BELOW TO START",
-    creating: "SETTING UP SHIFT…",
-    connecting: "CONNECTING…",
-    connected: "CONNECTED",
-    speaking: "KAREN IS SPEAKING",
-    listening: "YOUR TURN — SPEAK NOW",
-    disconnected: "DISCONNECTED",
-    error: "CONNECTION ERROR",
   };
 
   if (!scenario) {
-    router.replace("/(tabs)/");
-    return null;
+    return (
+      <View style={[styles.container, { paddingTop: topPad }]}>
+        <Text style={{ color: colors.text }}>No scenario loaded.</Text>
+      </View>
+    );
   }
 
+  const rageColor =
+    rage < 40 ? colors.green : rage < 70 ? colors.amber : colors.red;
+  const mins = Math.floor(timeLeft / 60);
+  const secs = String(timeLeft % 60).padStart(2, "0");
+
+  const pulseOpacity = pulseAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.4, 1],
+  });
+
   return (
-    <View style={[styles.container, { paddingTop: topPad, paddingBottom: botPad }]}>
-      {/* Header row */}
-      <View style={styles.header}>
+    <View style={[styles.container, { paddingBottom: botPad }]}>
+      {/* Status bar */}
+      <View style={[styles.statusBar, { paddingTop: topPad }]}>
         <View style={styles.locationBadge}>
-          <Text style={styles.locationText} numberOfLines={1}>
-            📍 {scenario.location.toUpperCase()}
+          <Text style={styles.locationText}>
+            {scenario.location.toUpperCase()}
           </Text>
         </View>
-      </View>
-
-      {/* Timer + Rage + Manager row */}
-      <View style={styles.statsRow}>
-        <View style={styles.timerBox}>
-          <Text style={styles.timerLabel}>TIME</Text>
-          <Text style={styles.timerValue}>
-            {mins}:{secs}
-          </Text>
-        </View>
-
-        <View style={styles.rageBox}>
-          <View style={styles.rageLabelRow}>
-            <Text style={[styles.rageLabel, { color: rageColor }]}>{rageLabel}</Text>
-            <Text style={[styles.ragePercent, { color: rageColor }]}>
-              {Math.round(rage)}%
-            </Text>
-          </View>
-          <View style={styles.rageBarBg}>
-            <Animated.View
-              style={[
-                styles.rageBarFill,
-                { width: `${rage}%` as any, backgroundColor: rageColor },
-              ]}
-            />
-          </View>
-          <View style={styles.rageTicks}>
-            <Text style={styles.rageTick}>CALM</Text>
-            <Text style={styles.rageTick}>FIRED</Text>
-          </View>
-        </View>
-
+        <Text style={styles.timer}>
+          {mins}:{secs}
+        </Text>
         <TouchableOpacity
-          style={[styles.managerBtn, managerUsed && styles.managerBtnUsed]}
+          style={[
+            styles.mgrBtn,
+            managerUsed && { borderColor: "#4b5563", opacity: 0.5 },
+          ]}
           onPress={handleManager}
-          disabled={managerUsed || ended}
+          disabled={managerUsed}
           activeOpacity={0.7}
         >
-          <Text style={styles.managerIcon}>📋</Text>
-          <Text style={[styles.managerLabel, managerUsed && styles.managerLabelUsed]}>
-            {managerUsed ? "USED" : "MGR"}
+          <Text style={[styles.mgrText, managerUsed && { color: "#4b5563" }]}>
+            MGR{" "}
           </Text>
+          <View
+            style={[
+              styles.mgrBadge,
+              managerUsed && { backgroundColor: "#4b5563" },
+            ]}
+          >
+            <Text style={styles.mgrBadgeText}>
+              {managerUsed ? "✓" : "1×"}
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
 
-      {/* Karen card */}
-      <View style={styles.karenPanel}>
-        <View style={styles.karenAvatarRow}>
-          <Animated.View
+      {/* Rage meter */}
+      <View style={styles.rageMeterWrap}>
+        <View style={styles.rageMeterLabels}>
+          <Text style={[styles.rageMeterLabel, { color: colors.green }]}>
+            CALM
+          </Text>
+          <Text style={[styles.rageMeterLabel, { color: colors.text }]}>
+            RAGE: {Math.round(rage)}%
+          </Text>
+          <Text style={[styles.rageMeterLabel, { color: colors.red }]}>
+            FIRED
+          </Text>
+        </View>
+        <View style={styles.rageMeterBar}>
+          <View
             style={[
-              styles.karenAvatar,
-              isKarenSpeaking && {
-                transform: [
-                  {
-                    scale: pulseAnim.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.06],
-                    }),
-                  },
-                ],
-              },
+              styles.rageMeterFill,
+              { width: `${rage}%` as any, backgroundColor: rageColor },
             ]}
+          />
+        </View>
+      </View>
+
+      {/* Customer zone */}
+      <View style={styles.customerZone}>
+        <Animated.View style={[styles.customerCard, { opacity: pulseOpacity }]}>
+          <View style={styles.avatarCircle}>
+            <Text style={styles.avatarLetter}>
+              {scenario.customerName[0]}
+            </Text>
+          </View>
+          <Text style={styles.customerName}>{scenario.customerName}</Text>
+          <View style={styles.customerTitleBadge}>
+            <Text style={styles.customerTitleText}>
+              {scenario.customerTitle.toUpperCase()}
+            </Text>
+          </View>
+        </Animated.View>
+
+        {/* Speech bubble */}
+        <View style={styles.bubbleWrap}>
+          <View style={styles.bubbleArrow} />
+          <View style={styles.bubble}>
+            <Text style={styles.bubbleText}>
+              "{scenario.dialogue[dialogueIdx]}"
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Player controls */}
+      <View style={styles.controls}>
+        <Text style={styles.listeningLabel}>
+          {isListening ? "De-escalating..." : "Tap mic to respond"}
+        </Text>
+
+        <View style={styles.micRow}>
+          <View style={styles.waveLeft}>
+            <View style={[styles.wavebar, { height: 16 }]} />
+            <View style={[styles.wavebar, { height: 32 }]} />
+          </View>
+
+          <TouchableOpacity
+            style={[
+              styles.micBtn,
+              isListening && { backgroundColor: colors.green, borderColor: "#1a5c26" },
+            ]}
+            onPress={handleMicPress}
+            activeOpacity={0.85}
           >
-            <Text style={styles.karenAvatarIcon}>😤</Text>
-          </Animated.View>
-          <View style={styles.karenInfo}>
-            <Text style={styles.karenName}>{scenario.customerName}</Text>
-            <Text style={styles.karenTitle}>{scenario.customerTitle}</Text>
-            <View style={[styles.statusPill, { borderColor: statusColor }]}>
-              <View style={[styles.statusDot, { backgroundColor: statusColor }]} />
-              <Text style={[styles.statusText, { color: statusColor }]}>
-                {statusLabel[agentStatus]}
-              </Text>
-            </View>
+            <Text style={styles.micIcon}>{isListening ? "⏹" : "🎤"}</Text>
+          </TouchableOpacity>
+
+          <View style={styles.waveRight}>
+            <View style={[styles.wavebar, { height: 24 }]} />
+            <View style={[styles.wavebar, { height: 12 }]} />
+            <View style={[styles.wavebar, { height: 20 }]} />
           </View>
         </View>
 
-        {latestKarenMsg ? (
-          <View style={styles.dialogueBubble}>
-            <Text style={styles.dialogueLabel}>KAREN SAYS</Text>
-            <Text style={styles.dialogueText}>"{latestKarenMsg.message}"</Text>
-          </View>
-        ) : (
-          <View style={styles.dialogueBubble}>
-            <Text style={styles.dialogueLabel}>SITUATION</Text>
-            <Text style={styles.dialogueText}>"{scenario.complaint}"</Text>
-          </View>
-        )}
-      </View>
-
-      {/* Conversation feed */}
-      <View style={styles.chatArea}>
-        {messages.length === 0 ? (
-          <Text style={styles.chatEmptyHint}>
-            {sessionStarted
-              ? "Conversation will appear here…"
-              : "Start the shift to begin the conversation."}
-          </Text>
-        ) : (
-          messages.slice(-4).map((msg, i) => (
-            <View
-              key={i}
-              style={[
-                styles.chatBubble,
-                msg.source === "ai" ? styles.karenBubble : styles.playerBubble,
-              ]}
-            >
-              <Text style={styles.chatSource}>
-                {msg.source === "ai" ? "😤 KAREN" : "🎙️ YOU"}
-              </Text>
-              <Text style={styles.chatText}>{msg.message}</Text>
-            </View>
-          ))
-        )}
-      </View>
-
-      {/* Controls */}
-      <View style={styles.controls}>
-        {!sessionStarted ? (
-          <TouchableOpacity
-            style={styles.startBtn}
-            onPress={handleStartSession}
-            disabled={!scenario}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.startBtnText}>🎙️  BEGIN SHIFT</Text>
-            <Text style={styles.startBtnSub}>
-              Your mic opens automatically — just speak naturally
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.micArea}>
-            <Animated.View
-              style={[
-                styles.micIndicator,
-                { transform: [{ scale: micPulseAnim }] },
-                isPlayerTurn && styles.micIndicatorActive,
-                isKarenSpeaking && styles.micIndicatorKaren,
-              ]}
-            >
-              <Text style={styles.micIconEmoji}>
-                {isPlayerTurn ? "🎙️" : isKarenSpeaking ? "🔊" : "⏳"}
-              </Text>
-            </Animated.View>
-            <Text style={[styles.micHint, { color: isPlayerTurn ? colors.green : colors.muted }]}>
-              {isPlayerTurn
-                ? "Speak now — mic is open"
-                : isKarenSpeaking
-                ? "Karen is speaking…"
-                : agentStatus === "creating" || agentStatus === "connecting"
-                ? "Connecting…"
-                : agentStatus === "error"
-                ? "Connection error — try restarting"
-                : "Waiting…"}
-            </Text>
-
-            {latestPlayerMsg && (
-              <View style={styles.playerTranscript}>
-                <Text style={styles.playerTranscriptLabel}>YOU SAID</Text>
-                <Text style={styles.playerTranscriptText}>
-                  "{latestPlayerMsg.message}"
-                </Text>
-              </View>
-            )}
-          </View>
-        )}
-
         <TouchableOpacity
-          style={styles.quitBtn}
-          onPress={() => handleEnd(false)}
-          activeOpacity={0.7}
+          style={styles.deEscalateBtn}
+          onPress={() => handleEnd(true)}
+          activeOpacity={0.8}
         >
-          <Text style={styles.quitBtnText}>QUIT SHIFT</Text>
+          <Text style={styles.deEscalateBtnText}>
+            ✓ CUSTOMER DE-ESCALATED
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -431,346 +284,242 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bg,
   },
-  header: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 4,
-  },
-  locationBadge: {
+  statusBar: {
     backgroundColor: colors.panelAlt,
-    borderWidth: 1,
-    borderColor: colors.panelBorder,
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  locationText: {
-    color: colors.muted,
-    fontFamily: "Inter_700Bold",
-    fontSize: 9,
-    letterSpacing: 1.5,
-  },
-  statsRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    gap: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.panelBorder,
-  },
-  timerBox: {
-    alignItems: "center",
-    minWidth: 52,
-  },
-  timerLabel: {
-    color: colors.muted,
-    fontSize: 8,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-  },
-  timerValue: {
-    color: colors.text,
-    fontSize: 22,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1,
-  },
-  rageBox: {
-    flex: 1,
-    gap: 2,
-  },
-  rageLabelRow: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  rageLabel: {
-    fontSize: 9,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-  },
-  ragePercent: {
-    fontSize: 9,
-    fontFamily: "Inter_700Bold",
-  },
-  rageBarBg: {
-    height: 10,
-    backgroundColor: colors.panelAlt,
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-  rageBarFill: {
-    height: "100%",
-    borderRadius: 5,
-  },
-  rageTicks: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  rageTick: {
-    color: colors.muted,
-    fontSize: 7,
-    fontFamily: "Inter_500Medium",
-    letterSpacing: 1,
-  },
-  managerBtn: {
     alignItems: "center",
-    backgroundColor: colors.panelAlt,
-    borderWidth: 1.5,
-    borderColor: colors.amber,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 7,
   },
-  managerBtnUsed: {
-    borderColor: colors.panelBorder,
-    opacity: 0.45,
-  },
-  managerIcon: {
-    fontSize: 16,
-  },
-  managerLabel: {
-    color: colors.amber,
-    fontSize: 8,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 1,
-    marginTop: 1,
-  },
-  managerLabelUsed: {
-    color: colors.muted,
-  },
-  karenPanel: {
-    marginHorizontal: 16,
-    marginTop: 10,
-    backgroundColor: colors.panel,
+  locationBadge: {
+    backgroundColor: colors.black,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     borderWidth: 1,
-    borderColor: colors.panelBorder,
-    borderRadius: 12,
-    padding: 14,
-    gap: 10,
+    borderColor: "#374151",
+    flex: 1,
+    marginRight: 8,
   },
-  karenAvatarRow: {
+  locationText: {
+    color: "#9ca3af",
+    fontFamily: "Inter_700Bold",
+    fontSize: 9,
+    letterSpacing: 1,
+  },
+  timer: {
+    fontFamily: "Inter_700Bold",
+    fontSize: 24,
+    color: colors.white,
+    marginRight: 8,
+  },
+  mgrBtn: {
+    backgroundColor: colors.bg,
+    borderWidth: 2,
+    borderColor: colors.amber,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
   },
-  karenAvatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: colors.panelAlt,
+  mgrText: {
+    color: colors.amber,
+    fontFamily: "Inter_700Bold",
+    fontSize: 11,
+  },
+  mgrBadge: {
+    backgroundColor: colors.amber,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+  },
+  mgrBadgeText: {
+    color: colors.black,
+    fontFamily: "Inter_700Bold",
+    fontSize: 10,
+  },
+  rageMeterWrap: {
+    backgroundColor: colors.panel,
+    padding: 16,
+  },
+  rageMeterLabels: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  rageMeterLabel: {
+    fontFamily: "Inter_700Bold",
+    fontSize: 11,
+    letterSpacing: 1,
+  },
+  rageMeterBar: {
+    height: 24,
+    backgroundColor: colors.black,
     borderWidth: 2,
-    borderColor: colors.panelBorder,
+    borderColor: "#374151",
+    padding: 2,
+  },
+  rageMeterFill: {
+    flex: 1,
+    minWidth: 0,
+  },
+  customerZone: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    padding: 24,
   },
-  karenAvatarIcon: {
-    fontSize: 26,
+  customerCard: {
+    backgroundColor: colors.card,
+    borderWidth: 4,
+    borderColor: colors.amber,
+    padding: 24,
+    width: "100%",
+    maxWidth: 280,
+    alignItems: "center",
+    shadowColor: colors.amber,
+    shadowOffset: { width: 8, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 0,
+    elevation: 0,
   },
-  karenInfo: {
-    flex: 1,
-    gap: 2,
+  avatarCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.cardAlt,
+    borderWidth: 4,
+    borderColor: colors.black,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
   },
-  karenName: {
-    color: colors.text,
+  avatarLetter: {
     fontFamily: "Inter_700Bold",
-    fontSize: 15,
+    fontSize: 40,
+    color: "#8B4513",
   },
-  karenTitle: {
-    color: colors.muted,
-    fontFamily: "Inter_400Regular",
-    fontSize: 10,
-    letterSpacing: 1,
+  customerName: {
+    fontFamily: "Inter_700Bold",
+    fontSize: 22,
+    letterSpacing: -0.5,
+    color: colors.black,
+  },
+  customerTitleBadge: {
+    backgroundColor: colors.black,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginTop: 8,
+  },
+  customerTitleText: {
+    color: colors.white,
+    fontFamily: "Inter_700Bold",
+    fontSize: 9,
+    letterSpacing: 2,
     textTransform: "uppercase",
   },
-  statusPill: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-    borderWidth: 1,
-    borderRadius: 100,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    alignSelf: "flex-start",
-    marginTop: 3,
+  bubbleWrap: {
+    width: "100%",
+    maxWidth: 300,
+    marginTop: 20,
   },
-  statusDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 3,
+  bubbleArrow: {
+    width: 16,
+    height: 16,
+    backgroundColor: colors.cardAlt,
+    transform: [{ rotate: "45deg" }],
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: "#d1d5db",
+    alignSelf: "center",
+    marginBottom: -8,
   },
-  statusText: {
-    fontSize: 8,
+  bubble: {
+    backgroundColor: colors.cardAlt,
+    borderWidth: 2,
+    borderColor: "#d1d5db",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  bubbleText: {
     fontFamily: "Inter_700Bold",
-    letterSpacing: 1.5,
-  },
-  dialogueBubble: {
-    backgroundColor: "#2c1212",
-    borderRadius: 8,
-    padding: 12,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.red,
-    gap: 4,
-  },
-  dialogueLabel: {
-    color: colors.red,
-    fontSize: 8,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-  },
-  dialogueText: {
-    color: colors.text,
-    fontFamily: "Inter_500Medium",
     fontSize: 13,
-    lineHeight: 19,
-    fontStyle: "italic",
-  },
-  chatArea: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    gap: 6,
-    justifyContent: "flex-end",
-  },
-  chatEmptyHint: {
-    color: colors.muted,
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
-    textAlign: "center",
-    fontStyle: "italic",
-  },
-  chatBubble: {
-    borderRadius: 8,
-    padding: 10,
-    gap: 2,
-    maxWidth: "88%",
-  },
-  karenBubble: {
-    backgroundColor: "#2c1212",
-    borderWidth: 1,
-    borderColor: "#4a1a1a",
-    alignSelf: "flex-start",
-  },
-  playerBubble: {
-    backgroundColor: "#0f2015",
-    borderWidth: 1,
-    borderColor: "#1a4a28",
-    alignSelf: "flex-end",
-  },
-  chatSource: {
-    fontSize: 8,
-    fontFamily: "Inter_700Bold",
-    letterSpacing: 2,
-    color: colors.muted,
-  },
-  chatText: {
-    color: colors.text,
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
-    lineHeight: 17,
+    color: colors.black,
+    textTransform: "uppercase",
+    lineHeight: 20,
   },
   controls: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 12,
-    gap: 8,
-    alignItems: "center",
+    backgroundColor: colors.panel,
     borderTopWidth: 1,
     borderTopColor: colors.panelBorder,
-  },
-  startBtn: {
-    backgroundColor: colors.red,
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    padding: 24,
     alignItems: "center",
-    width: "100%",
-    shadowColor: colors.red,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.45,
-    shadowRadius: 18,
-    elevation: 8,
   },
-  startBtnText: {
-    color: "#fff",
-    fontFamily: "Inter_700Bold",
-    fontSize: 16,
-    letterSpacing: 1,
-  },
-  startBtnSub: {
-    color: "rgba(255,255,255,0.6)",
+  listeningLabel: {
     fontFamily: "Inter_400Regular",
     fontSize: 11,
-    marginTop: 3,
+    color: "#6b7280",
+    marginBottom: 16,
+    letterSpacing: 1,
   },
-  micArea: {
-    alignItems: "center",
-    gap: 6,
-    width: "100%",
-  },
-  micIndicator: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: colors.panelAlt,
-    borderWidth: 2,
-    borderColor: colors.panelBorder,
+  micRow: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
+    gap: 20,
   },
-  micIndicatorActive: {
-    backgroundColor: "#0f2015",
-    borderColor: colors.green,
-    shadowColor: colors.green,
+  waveLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  waveRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  wavebar: {
+    width: 4,
+    backgroundColor: "#4b5563",
+    borderRadius: 2,
+  },
+  micBtn: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.red,
+    borderWidth: 4,
+    borderColor: colors.redDark,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: colors.red,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 18,
+    shadowOpacity: 0.4,
+    shadowRadius: 20,
     elevation: 8,
   },
-  micIndicatorKaren: {
-    backgroundColor: "#2c1212",
-    borderColor: colors.red,
+  micIcon: {
+    fontSize: 28,
   },
-  micIconEmoji: {
-    fontSize: 24,
-  },
-  micHint: {
-    fontFamily: "Inter_600SemiBold",
-    fontSize: 12,
-    letterSpacing: 0.4,
-  },
-  playerTranscript: {
+  deEscalateBtn: {
     width: "100%",
-    backgroundColor: "#0f2015",
-    borderRadius: 8,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#1a4a28",
+    maxWidth: 280,
+    borderWidth: 2,
+    borderColor: colors.green,
+    paddingVertical: 14,
+    alignItems: "center",
   },
-  playerTranscriptLabel: {
+  deEscalateBtnText: {
     color: colors.green,
-    fontSize: 8,
     fontFamily: "Inter_700Bold",
+    fontSize: 13,
     letterSpacing: 2,
-    marginBottom: 2,
-  },
-  playerTranscriptText: {
-    color: colors.text,
-    fontFamily: "Inter_400Regular",
-    fontSize: 12,
-    lineHeight: 17,
-    fontStyle: "italic",
-  },
-  quitBtn: {
-    borderWidth: 1,
-    borderColor: colors.panelBorder,
-    borderRadius: 8,
-    paddingVertical: 9,
-    paddingHorizontal: 24,
-  },
-  quitBtnText: {
-    color: colors.muted,
-    fontFamily: "Inter_700Bold",
-    fontSize: 10,
-    letterSpacing: 2,
+    textTransform: "uppercase",
   },
 });
