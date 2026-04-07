@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGame } from "@/context/GameContext";
+import { useGameAudio } from "@/hooks/useGameAudio";
 import colors from "@/constants/colors";
 
 const GAME_DURATION = 90;
@@ -19,9 +20,17 @@ const RAGE_SURGE_RATE = 2.0;
 const DIALOGUE_CYCLE_MS = 5000;
 const MAX_RAGE = 100;
 
+const SCENE_MAP: Record<string, "grocery" | "drive-thru" | "store" | "coffee" | "office"> = {
+  s1: "grocery",
+  s2: "drive-thru",
+  s3: "store",
+  s4: "coffee",
+  boss: "office",
+};
+
 export default function GameScreen() {
   const insets = useSafeAreaInsets();
-  const { currentScenario, recordResult, haptics } = useGame();
+  const { currentScenario, recordResult, haptics, soundVolume } = useGame();
   const [rage, setRage] = useState(30);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [dialogueIdx, setDialogueIdx] = useState(0);
@@ -30,11 +39,19 @@ export default function GameScreen() {
   const [ragePeak, setRagePeak] = useState(30);
   const [ended, setEnded] = useState(false);
   const pulseAnim = useRef(new Animated.Value(0)).current;
+  const audioStarted = useRef(false);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom;
 
   const scenario = currentScenario;
+  const scene = scenario ? (SCENE_MAP[scenario.id] ?? "grocery") : "grocery";
+  const audioEnabled = soundVolume > 0;
+
+  const { startAmbient, speakKaren, stopAll, karenLoading } = useGameAudio({
+    scene,
+    enabled: audioEnabled,
+  });
 
   useEffect(() => {
     Animated.loop(
@@ -44,6 +61,13 @@ export default function GameScreen() {
       ])
     ).start();
   }, []);
+
+  useEffect(() => {
+    if (!scenario || audioStarted.current || !audioEnabled) return;
+    audioStarted.current = true;
+    startAmbient();
+    speakKaren(scenario.dialogue[0]);
+  }, [scenario, audioEnabled, startAmbient, speakKaren]);
 
   useEffect(() => {
     if (ended) return;
@@ -75,15 +99,22 @@ export default function GameScreen() {
   useEffect(() => {
     if (!scenario) return;
     const t = setInterval(() => {
-      setDialogueIdx((i) => (i + 1) % scenario.dialogue.length);
+      setDialogueIdx((i) => {
+        const next = (i + 1) % scenario.dialogue.length;
+        if (audioEnabled && !ended) {
+          speakKaren(scenario.dialogue[next]);
+        }
+        return next;
+      });
     }, DIALOGUE_CYCLE_MS);
     return () => clearInterval(t);
-  }, [scenario]);
+  }, [scenario, audioEnabled, ended, speakKaren]);
 
   const handleEnd = useCallback(
     (won: boolean) => {
       if (ended) return;
       setEnded(true);
+      stopAll();
       if (haptics) {
         if (won) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         else Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -106,7 +137,7 @@ export default function GameScreen() {
       });
       router.replace({ pathname: "/result", params: { won: won ? "1" : "0" } });
     },
-    [ended, timeLeft, ragePeak, managerUsed, scenario, haptics, recordResult]
+    [ended, timeLeft, ragePeak, managerUsed, scenario, haptics, recordResult, stopAll]
   );
 
   useEffect(() => {
@@ -128,6 +159,9 @@ export default function GameScreen() {
     setManagerUsed(true);
     setRage((r) => Math.max(0, r - 30));
     if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    if (audioEnabled) {
+      speakKaren("Okay, fine. I'll speak to the manager.", "manager");
+    }
   };
 
   if (!scenario) {
@@ -227,10 +261,13 @@ export default function GameScreen() {
         {/* Speech bubble */}
         <View style={styles.bubbleWrap}>
           <View style={styles.bubbleArrow} />
-          <View style={styles.bubble}>
+          <View style={[styles.bubble, karenLoading && styles.bubbleLoading]}>
             <Text style={styles.bubbleText}>
               "{scenario.dialogue[dialogueIdx]}"
             </Text>
+            {karenLoading && (
+              <Text style={styles.speakingIndicator}>🔊 speaking...</Text>
+            )}
           </View>
         </View>
       </View>
@@ -446,12 +483,22 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
+  bubbleLoading: {
+    borderColor: colors.amber,
+  },
   bubbleText: {
     fontFamily: "Inter_700Bold",
     fontSize: 13,
     color: colors.black,
     textTransform: "uppercase",
     lineHeight: 20,
+  },
+  speakingIndicator: {
+    fontFamily: "Inter_400Regular",
+    fontSize: 10,
+    color: colors.amber,
+    marginTop: 6,
+    letterSpacing: 1,
   },
   controls: {
     backgroundColor: colors.panel,
