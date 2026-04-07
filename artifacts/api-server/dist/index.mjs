@@ -96675,39 +96675,54 @@ router4.post("/voice/respond", async (req, res) => {
     complaint,
     location,
     history = [],
-    rage = 50
+    rage = 50,
+    silenceCount = 0
   } = req.body;
-  if (!userText || typeof userText !== "string" || userText.trim().length === 0) {
-    res.status(400).json({ error: "userText is required" });
-    return;
-  }
+  const isSilent = !userText || userText.trim().length === 0;
   const systemPrompt = `You are ${customerName}, a ${customerTitle} at ${location}. 
 Your complaint: "${complaint}". 
 Your current rage level is ${Math.round(rage)}/100 \u2014 0 is calm, 100 is you storming out and getting the employee fired.
 
-You MUST respond as ${customerName} in character \u2014 emotional, entitled, dramatic. Keep responses SHORT (1-3 sentences max).
+You are having a REAL, natural conversation with a customer service employee. Respond naturally as this character would in real life.
+
+${isSilent && silenceCount === 0 ? `The employee hasn't responded yet. Say something to get their attention \u2014 like "Hello? Anyone there?" or "Excuse me?" Stay in character.` : ""}
+${isSilent && silenceCount === 1 ? `The employee is STILL not responding. Get more impatient \u2014 "Hello?! I'm talking to you!" or similar. Your rage rises.` : ""}
+${isSilent && silenceCount >= 2 ? `The employee keeps ignoring you. You are getting very angry now. "This is UNBELIEVABLE. Are you even listening to me?!" Your rage surges.` : ""}
+${!isSilent ? `The employee just said: "${userText.trim()}"
+
+Respond naturally to what they actually said. Be a real person reacting genuinely to their words. 
+- If they were empathetic, apologetic, or offered a solution: calm down a bit
+- If they were dismissive, unhelpful, or didn't address your complaint: get more upset
+- If they said something rude or inappropriate: get very angry
+- Stay in character \u2014 emotional, entitled, dramatic but realistic
+Keep responses SHORT (1-3 sentences max). This is a natural back-and-forth conversation.` : ""}
 
 After your spoken response, output a JSON block on its own line like this:
 <rage_delta>{"delta": -15, "reason": "player apologized sincerely"}</rage_delta>
 
 Rules for rage delta:
-- If the player was polite, empathetic, apologetic, offered a solution: delta -10 to -25
-- If the player validated your feelings AND offered compensation: delta -20 to -35
-- If the player was dismissive, rude, or didn't address your complaint: delta +10 to +20
-- If the player called you crazy, told you to leave, or was sarcastic: delta +20 to +35
+- Silent / no response: delta +${silenceCount >= 2 ? "25 to +35" : silenceCount === 1 ? "15 to +25" : "8 to +15"}
+- Player was polite, empathetic, apologetic: delta -10 to -25
+- Player validated feelings AND offered compensation or solution: delta -20 to -35
+- Player gave a vague or unhelpful response: delta +5 to +15
+- Player was dismissive, rude, or didn't address the complaint: delta +10 to +20
+- Player called you crazy, told you to leave, or was sarcastic: delta +20 to +35
 - If rage drops to 0 or below, output "GAME_OVER_WIN" in the reason
 - If rage would exceed 100, output "GAME_OVER_LOSE" in the reason
-- Normal response range: delta -25 to +25
 
 Remember: you are in a customer service training simulation. Stay in character but keep it realistic.`;
   const messages = [];
-  for (const h of history.slice(-6)) {
+  for (const h of history.slice(-8)) {
     messages.push({
       role: h.role === "user" ? "user" : "assistant",
       content: h.text
     });
   }
-  messages.push({ role: "user", content: userText.trim() });
+  if (isSilent) {
+    messages.push({ role: "user", content: "[silence - employee did not respond]" });
+  } else {
+    messages.push({ role: "user", content: userText.trim() });
+  }
   try {
     const anthropic = getAnthropic();
     const response = await anthropic.messages.create({
@@ -96718,24 +96733,23 @@ Remember: you are in a customer service training simulation. Stay in character b
     });
     const fullText = response.content[0].type === "text" ? response.content[0].text : "";
     const deltaMatch = fullText.match(/<rage_delta>(.*?)<\/rage_delta>/s);
-    let rageDelta = 0;
+    let rageDelta = isSilent ? silenceCount >= 2 ? 25 : silenceCount === 1 ? 18 : 10 : 5;
     let gameOver = "";
     if (deltaMatch) {
       try {
         const parsed = JSON.parse(deltaMatch[1]);
-        rageDelta = Math.max(-35, Math.min(35, Number(parsed.delta) || 0));
+        rageDelta = Math.max(-35, Math.min(35, Number(parsed.delta) || rageDelta));
         const reason = (parsed.reason || "").toLowerCase();
         if (reason.includes("game_over_win") || rage + rageDelta <= 0) gameOver = "win";
         if (reason.includes("game_over_lose") || rage + rageDelta >= 100) gameOver = "lose";
       } catch {
-        rageDelta = 0;
       }
     }
     const spokenText = fullText.replace(/<rage_delta>.*?<\/rage_delta>/s, "").trim();
     res.setHeader("X-Karen-Text", Buffer.from(spokenText.slice(0, 500)).toString("base64"));
     res.setHeader("X-Rage-Delta", String(rageDelta));
     res.setHeader("X-Game-Over", gameOver);
-    await ttsStream(spokenText || "I... fine. Fine!", KAREN_VOICE_ID, true, res);
+    await ttsStream(spokenText || "Hello?! Are you even listening to me?!", KAREN_VOICE_ID, true, res);
   } catch (err) {
     req.log.error({ err }, "AI respond error");
     if (!res.headersSent) res.status(502).json({ error: "Response generation failed" });

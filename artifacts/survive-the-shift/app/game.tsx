@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Animated,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,11 +15,8 @@ import { useGame } from "@/context/GameContext";
 import { useGameAudio } from "@/hooks/useGameAudio";
 import colors from "@/constants/colors";
 
-const GAME_DURATION = 90;
-const RAGE_DECAY_RATE = 0.4;
-const RAGE_SURGE_RATE = 2.0;
-const DIALOGUE_CYCLE_MS = 5000;
 const MAX_RAGE = 100;
+const CUSTOMER_IDLE_MS = 10000;
 
 const SCENE_MAP: Record<string, "grocery" | "drive-thru" | "store" | "coffee" | "office"> = {
   s1: "grocery",
@@ -28,18 +26,51 @@ const SCENE_MAP: Record<string, "grocery" | "drive-thru" | "store" | "coffee" | 
   boss: "office",
 };
 
+type MessageEntry = { role: "user" | "karen"; text: string };
+
+type CallState =
+  | "connecting"
+  | "karen-speaking"
+  | "your-turn"
+  | "you-speaking"
+  | "processing"
+  | "ended";
+
 export default function GameScreen() {
   const insets = useSafeAreaInsets();
   const { currentScenario, recordResult, haptics, soundVolume } = useGame();
+
   const [rage, setRage] = useState(30);
-  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
-  const [dialogueIdx, setDialogueIdx] = useState(0);
-  const [isListening, setIsListening] = useState(false);
+  const rageRef = useRef(30);
+  const ragePeakRef = useRef(30);
+
+  const [callState, setCallState] = useState<CallState>("connecting");
+  const callStateRef = useRef<CallState>("connecting");
+  const setCS = (s: CallState) => { callStateRef.current = s; setCallState(s); };
+
+  const [interimText, setInterimText] = useState("");
+  const [karenSubtitle, setKarenSubtitle] = useState("");
   const [managerUsed, setManagerUsed] = useState(false);
-  const [ragePeak, setRagePeak] = useState(30);
-  const [ended, setEnded] = useState(false);
-  const pulseAnim = useRef(new Animated.Value(0)).current;
+  const managerUsedRef = useRef(false);
+  const endedRef = useRef(false);
+  const [callDuration, setCallDuration] = useState(0);
+  const callDurationRef = useRef(0);
+
+  const silenceCountRef = useRef(0);
+  const historyRef = useRef<MessageEntry[]>([]);
   const audioStarted = useRef(false);
+  const respondingRef = useRef(false);
+  const customerIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // SR refs
+  const recognitionRef = useRef<any>(null);
+  const accumulatedRef = useRef("");
+  const srActiveRef = useRef(false);
+  const holdActiveRef = useRef(false);
+
+  const pulseAnim = useRef(new Animated.Value(0)).current;
+  const waveAnim = useRef(new Animated.Value(0)).current;
+  const micScaleAnim = useRef(new Animated.Value(1)).current;
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom;
@@ -48,525 +79,587 @@ export default function GameScreen() {
   const scene = scenario ? (SCENE_MAP[scenario.id] ?? "grocery") : "grocery";
   const audioEnabled = soundVolume > 0;
 
-  const { startAmbient, speakKaren, stopAll, karenLoading } = useGameAudio({
+  const handleKarenFinished = useCallback(() => {
+    if (endedRef.current) return;
+    if (callStateRef.current === "karen-speaking") {
+      setCS("your-turn");
+      scheduleIdleCheck();
+    }
+  }, []);
+
+  const { startAmbient, stopKaren, speakKarenRespond, stopAll } = useGameAudio({
     scene,
     enabled: audioEnabled,
+    onKarenFinished: handleKarenFinished,
   });
 
+  // Animations loop
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
-        Animated.timing(pulseAnim, { toValue: 0, duration: 900, useNativeDriver: true }),
+        Animated.timing(pulseAnim, { toValue: 1, duration: 700, useNativeDriver: false }),
+        Animated.timing(pulseAnim, { toValue: 0, duration: 700, useNativeDriver: false }),
+      ])
+    ).start();
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(waveAnim, { toValue: 1, duration: 450, useNativeDriver: false }),
+        Animated.timing(waveAnim, { toValue: 0, duration: 450, useNativeDriver: false }),
       ])
     ).start();
   }, []);
 
+  // Call duration clock
   useEffect(() => {
-    if (!scenario || audioStarted.current || !audioEnabled) return;
-    audioStarted.current = true;
-    startAmbient();
-    speakKaren(scenario.dialogue[0]);
-  }, [scenario, audioEnabled, startAmbient, speakKaren]);
-
-  useEffect(() => {
-    if (ended) return;
+    if (endedRef.current) return;
     const t = setInterval(() => {
-      setRage((prev) => {
-        const surge = isListening ? -RAGE_DECAY_RATE : RAGE_SURGE_RATE * 0.3;
-        const next = Math.min(MAX_RAGE, Math.max(0, prev + surge));
-        setRagePeak((pk) => Math.max(pk, next));
-        return next;
-      });
-    }, 200);
-    return () => clearInterval(t);
-  }, [isListening, ended]);
-
-  useEffect(() => {
-    if (ended) return;
-    const t = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          setEnded(true);
-          return 0;
-        }
-        return prev - 1;
-      });
+      callDurationRef.current += 1;
+      setCallDuration(callDurationRef.current);
     }, 1000);
     return () => clearInterval(t);
-  }, [ended]);
+  }, []);
 
-  useEffect(() => {
-    if (!scenario) return;
-    const t = setInterval(() => {
-      setDialogueIdx((i) => {
-        const next = (i + 1) % scenario.dialogue.length;
-        if (audioEnabled && !ended) {
-          speakKaren(scenario.dialogue[next]);
-        }
-        return next;
-      });
-    }, DIALOGUE_CYCLE_MS);
-    return () => clearInterval(t);
-  }, [scenario, audioEnabled, ended, speakKaren]);
-
-  const handleEnd = useCallback(
+  const finishGame = useCallback(
     (won: boolean) => {
-      if (ended) return;
-      setEnded(true);
+      if (endedRef.current) return;
+      endedRef.current = true;
+      setCS("ended");
       stopAll();
+      stopSRNow();
+      if (customerIdleTimerRef.current) clearTimeout(customerIdleTimerRef.current);
       if (haptics) {
-        if (won) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        else Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        Haptics.notificationAsync(
+          won ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error
+        );
       }
-      const elapsed = GAME_DURATION - timeLeft;
-      const bonus = won ? Math.max(0, 300 - elapsed * 2) : 0;
-      const managerBonus = !managerUsed && won ? 100 : 0;
-      const scoreEarned = won ? 200 + bonus + managerBonus : 0;
       recordResult({
         scenarioId: scenario?.id ?? "unknown",
         customerName: scenario?.customerName ?? "Unknown",
         location: scenario?.location ?? "Unknown",
         complaint: scenario?.complaint ?? "Unknown",
-        timeSecs: elapsed,
-        ragePeak: Math.round(ragePeak),
-        managerUsed,
-        scoreEarned,
+        timeSecs: callDurationRef.current,
+        ragePeak: Math.round(ragePeakRef.current),
+        managerUsed: managerUsedRef.current,
+        scoreEarned: won ? 500 : 0,
         won,
         timestamp: Date.now(),
       });
       router.replace({ pathname: "/result", params: { won: won ? "1" : "0" } });
     },
-    [ended, timeLeft, ragePeak, managerUsed, scenario, haptics, recordResult, stopAll]
+    [scenario, haptics, recordResult, stopAll]
   );
 
-  useEffect(() => {
-    if (!ended && rage >= MAX_RAGE) {
-      handleEnd(false);
-    }
-    if (!ended && timeLeft === 0) {
-      handleEnd(true);
-    }
-  }, [rage, timeLeft, ended, handleEnd]);
+  const scheduleIdleCheck = useCallback(() => {
+    if (customerIdleTimerRef.current) clearTimeout(customerIdleTimerRef.current);
+    customerIdleTimerRef.current = setTimeout(() => {
+      if (endedRef.current || respondingRef.current || holdActiveRef.current) return;
+      silenceCountRef.current += 1;
+      triggerRespond("", silenceCountRef.current);
+    }, CUSTOMER_IDLE_MS);
+  }, []);
 
-  const handleMicPress = () => {
-    setIsListening((prev) => !prev);
+  const triggerRespond = useCallback(
+    async (userText: string, silenceCount: number) => {
+      if (endedRef.current || respondingRef.current || !scenario) return;
+      respondingRef.current = true;
+      setCS("processing");
+      setInterimText("");
+
+      const history = historyRef.current.slice(-10);
+      const currentRage = rageRef.current;
+
+      try {
+        const { text, rageDelta, gameOver } = await speakKarenRespond({
+          userText,
+          customerName: scenario.customerName,
+          customerTitle: scenario.customerTitle,
+          complaint: scenario.complaint,
+          location: scenario.location,
+          history,
+          rage: currentRage,
+          silenceCount,
+        });
+
+        if (endedRef.current) return;
+
+        const newRage = Math.min(MAX_RAGE, Math.max(0, currentRage + rageDelta));
+        rageRef.current = newRage;
+        setRage(newRage);
+        if (newRage > ragePeakRef.current) ragePeakRef.current = newRage;
+
+        if (userText.trim()) historyRef.current.push({ role: "user", text: userText.trim() });
+        historyRef.current.push({ role: "karen", text });
+        setKarenSubtitle(text);
+        setCS("karen-speaking");
+
+        if (gameOver === "win" || newRage <= 0) { setTimeout(() => finishGame(true), 1800); return; }
+        if (gameOver === "lose" || newRage >= MAX_RAGE) { setTimeout(() => finishGame(false), 1800); return; }
+      } catch {
+        setCS("your-turn");
+        scheduleIdleCheck();
+      } finally {
+        respondingRef.current = false;
+      }
+    },
+    [scenario, speakKarenRespond, finishGame, scheduleIdleCheck]
+  );
+
+  // ── Speech Recognition: hold-to-talk ────────────────────────────────────────
+
+  const stopSRNow = useCallback(() => {
+    srActiveRef.current = false;
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.onend = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.stop();
+      } catch {}
+      recognitionRef.current = null;
+    }
+  }, []);
+
+  const handleMicPressIn = useCallback(() => {
+    if (endedRef.current || respondingRef.current) return;
+
+    holdActiveRef.current = true;
+
+    // Interrupt Karen immediately
+    if (callStateRef.current === "karen-speaking") {
+      stopKaren();
+    }
+    if (customerIdleTimerRef.current) clearTimeout(customerIdleTimerRef.current);
+    silenceCountRef.current = 0;
+
+    setCS("you-speaking");
+    setInterimText("");
+    accumulatedRef.current = "";
+
+    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    // Animate mic button scale
+    Animated.spring(micScaleAnim, { toValue: 0.88, useNativeDriver: false, speed: 30 }).start();
+
+    if (Platform.OS !== "web") return;
+
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) return;
+
+    stopSRNow();
+
+    const r = new SR();
+    r.continuous = true;
+    r.interimResults = true;
+    r.lang = "en-US";
+    recognitionRef.current = r;
+    srActiveRef.current = true;
+
+    r.onresult = (event: any) => {
+      if (!holdActiveRef.current && !srActiveRef.current) return;
+      let interim = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const res = event.results[i];
+        if (res.isFinal) accumulatedRef.current += res[0].transcript + " ";
+        else interim = res[0].transcript;
+      }
+      setInterimText(accumulatedRef.current + interim);
+    };
+
+    r.onerror = () => {
+      srActiveRef.current = false;
+    };
+
+    r.onend = () => {
+      srActiveRef.current = false;
+      // Flush on end (fired after stop() is called on release)
+      const spoken = accumulatedRef.current.trim();
+      accumulatedRef.current = "";
+      setInterimText("");
+      if (spoken.length > 0 && !endedRef.current) {
+        triggerRespond(spoken, 0);
+      } else if (!endedRef.current && !respondingRef.current) {
+        setCS("your-turn");
+        scheduleIdleCheck();
+      }
+    };
+
+    try { r.start(); } catch { srActiveRef.current = false; }
+  }, [haptics, stopKaren, stopSRNow, triggerRespond, scheduleIdleCheck]);
+
+  const handleMicPressOut = useCallback(() => {
+    holdActiveRef.current = false;
+    Animated.spring(micScaleAnim, { toValue: 1, useNativeDriver: false, speed: 30 }).start();
     if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
-
-  const handleManager = () => {
-    if (managerUsed) return;
-    setManagerUsed(true);
-    setRage((r) => Math.max(0, r - 30));
-    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (audioEnabled) {
-      speakKaren("Okay, fine. I'll speak to the manager.", "manager");
+    // Stop SR — onend will flush and send
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch {}
+    } else {
+      // No SR available (permission blocked etc.) — just return to your-turn
+      const leftover = accumulatedRef.current.trim();
+      accumulatedRef.current = "";
+      setInterimText("");
+      if (leftover.length > 0) triggerRespond(leftover, 0);
+      else { setCS("your-turn"); scheduleIdleCheck(); }
     }
-  };
+  }, [haptics, triggerRespond, scheduleIdleCheck]);
+
+  // ── Game start ───────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    if (!scenario || audioStarted.current) return;
+    audioStarted.current = true;
+    if (audioEnabled) startAmbient();
+    setTimeout(() => {
+      if (!endedRef.current) triggerRespond("", 0);
+    }, 800);
+    return () => {
+      stopSRNow();
+      if (customerIdleTimerRef.current) clearTimeout(customerIdleTimerRef.current);
+    };
+  }, [scenario]);
+
+  const handleManager = useCallback(() => {
+    if (managerUsedRef.current || endedRef.current) return;
+    managerUsedRef.current = true;
+    setManagerUsed(true);
+    stopKaren();
+    stopSRNow();
+    holdActiveRef.current = false;
+    const newRage = Math.max(0, rageRef.current - 25);
+    rageRef.current = newRage;
+    setRage(newRage);
+    if (haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    if (customerIdleTimerRef.current) clearTimeout(customerIdleTimerRef.current);
+    triggerRespond("I'm getting my manager right now to help you with this.", 0);
+  }, [haptics, triggerRespond, stopKaren, stopSRNow]);
 
   if (!scenario) {
     return (
       <View style={[styles.container, { paddingTop: topPad }]}>
-        <Text style={{ color: colors.text }}>No scenario loaded.</Text>
+        <Text style={{ color: "#fff" }}>No scenario loaded.</Text>
       </View>
     );
   }
 
-  const rageColor =
-    rage < 40 ? colors.green : rage < 70 ? colors.amber : colors.red;
-  const mins = Math.floor(timeLeft / 60);
-  const secs = String(timeLeft % 60).padStart(2, "0");
-
-  const pulseOpacity = pulseAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.4, 1],
-  });
+  const rageColor = rage < 40 ? "#22c55e" : rage < 70 ? "#f59e0b" : "#ef4444";
+  const mins = Math.floor(callDuration / 60);
+  const secs = String(callDuration % 60).padStart(2, "0");
+  const canSpeak = !endedRef.current && (
+    callState === "your-turn" ||
+    callState === "karen-speaking" ||
+    callState === "you-speaking"
+  );
 
   return (
-    <View style={[styles.container, { paddingBottom: botPad }]}>
-      {/* Status bar */}
-      <View style={[styles.statusBar, { paddingTop: topPad }]}>
-        <View style={styles.locationBadge}>
-          <Text style={styles.locationText}>
-            {scenario.location.toUpperCase()}
-          </Text>
+    <View style={[styles.container, { paddingTop: topPad, paddingBottom: botPad }]}>
+
+      {/* TOP BAR */}
+      <View style={styles.topBar}>
+        <Text style={styles.callDuration}>{mins}:{secs}</Text>
+        <View style={styles.rageBarWrap}>
+          <View style={styles.rageBarBg}>
+            <View style={[styles.rageBarFill, { width: `${rage}%` as any, backgroundColor: rageColor }]} />
+          </View>
+          <Text style={[styles.rageLabel, { color: rageColor }]}>RAGE {Math.round(rage)}%</Text>
         </View>
-        <Text style={styles.timer}>
-          {mins}:{secs}
-        </Text>
         <TouchableOpacity
-          style={[
-            styles.mgrBtn,
-            managerUsed && { borderColor: "#4b5563", opacity: 0.5 },
-          ]}
+          style={[styles.mgrBtn, managerUsed && styles.mgrBtnUsed]}
           onPress={handleManager}
           disabled={managerUsed}
           activeOpacity={0.7}
         >
-          <Text style={[styles.mgrText, managerUsed && { color: "#4b5563" }]}>
-            MGR{" "}
+          <Text style={[styles.mgrText, managerUsed && styles.mgrTextUsed]}>
+            {managerUsed ? "MGR ✓" : "MGR"}
           </Text>
-          <View
-            style={[
-              styles.mgrBadge,
-              managerUsed && { backgroundColor: "#4b5563" },
-            ]}
-          >
-            <Text style={styles.mgrBadgeText}>
-              {managerUsed ? "✓" : "1×"}
-            </Text>
-          </View>
         </TouchableOpacity>
       </View>
 
-      {/* Rage meter */}
-      <View style={styles.rageMeterWrap}>
-        <View style={styles.rageMeterLabels}>
-          <Text style={[styles.rageMeterLabel, { color: colors.green }]}>
-            CALM
-          </Text>
-          <Text style={[styles.rageMeterLabel, { color: colors.text }]}>
-            RAGE: {Math.round(rage)}%
-          </Text>
-          <Text style={[styles.rageMeterLabel, { color: colors.red }]}>
-            FIRED
-          </Text>
+      {/* CALL BODY */}
+      <View style={styles.callBody}>
+        {/* Avatar */}
+        <View style={[styles.avatarRing, callState === "karen-speaking" && styles.avatarRingActive]}>
+          <Animated.View style={[styles.avatarGlow, {
+            opacity: callState === "karen-speaking"
+              ? waveAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 0.4] })
+              : 0,
+          }]} />
+          <View style={styles.avatar}>
+            <Text style={styles.avatarLetter}>{scenario.customerName[0]}</Text>
+          </View>
         </View>
-        <View style={styles.rageMeterBar}>
-          <View
-            style={[
-              styles.rageMeterFill,
-              { width: `${rage}%` as any, backgroundColor: rageColor },
-            ]}
-          />
+
+        <Text style={styles.customerName}>{scenario.customerName}</Text>
+        <Text style={styles.customerTitle}>{scenario.customerTitle} • {scenario.location}</Text>
+
+        {/* Status */}
+        <View style={styles.stateBox}>
+          {callState === "connecting" && (
+            <Text style={styles.stateConnecting}>Connecting...</Text>
+          )}
+          {callState === "processing" && (
+            <Animated.Text style={[styles.stateProcessing, {
+              opacity: pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1] }),
+            }]}>● ● ●</Animated.Text>
+          )}
+          {callState === "karen-speaking" && (
+            <View style={styles.speakingRow}>
+              {[7, 17, 11, 23, 15, 21, 9, 19, 13].map((h, i) => (
+                <Animated.View key={i} style={[styles.waveBar, {
+                  height: waveAnim.interpolate({ inputRange: [0, 1], outputRange: [4, h] }),
+                  backgroundColor: rageColor,
+                }]} />
+              ))}
+              <Text style={[styles.speakingLabel, { color: rageColor }]}>  SPEAKING</Text>
+            </View>
+          )}
+          {callState === "your-turn" && (
+            <View style={styles.yourTurnRow}>
+              <Animated.View style={[styles.micDot, {
+                opacity: pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1] }),
+              }]} />
+              <Text style={styles.yourTurnText}>Hold mic to respond</Text>
+            </View>
+          )}
+          {callState === "you-speaking" && (
+            <View style={styles.speakingRow}>
+              {[6, 13, 9, 19, 11, 17, 7, 15, 9].map((h, i) => (
+                <Animated.View key={i} style={[styles.waveBar, {
+                  height: waveAnim.interpolate({ inputRange: [0, 1], outputRange: [4, h] }),
+                  backgroundColor: "#22c55e",
+                }]} />
+              ))}
+              <Text style={[styles.speakingLabel, { color: "#22c55e" }]}>  YOU'RE SPEAKING</Text>
+            </View>
+          )}
         </View>
+
+        {/* Live transcript */}
+        {callState === "you-speaking" && interimText.length > 0 && (
+          <View style={styles.transcriptBox}>
+            <Text style={styles.transcriptText} numberOfLines={3}>"{interimText}"</Text>
+          </View>
+        )}
+
+        {/* Karen subtitle */}
+        {(callState === "karen-speaking" || callState === "your-turn" || callState === "processing") && karenSubtitle.length > 0 && (
+          <View style={styles.karenSubBox}>
+            <Text style={styles.karenSubText} numberOfLines={4}>{karenSubtitle}</Text>
+          </View>
+        )}
       </View>
 
-      {/* Customer zone */}
-      <View style={styles.customerZone}>
-        <Animated.View style={[styles.customerCard, { opacity: pulseOpacity }]}>
-          <View style={styles.avatarCircle}>
-            <Text style={styles.avatarLetter}>
-              {scenario.customerName[0]}
-            </Text>
-          </View>
-          <Text style={styles.customerName}>{scenario.customerName}</Text>
-          <View style={styles.customerTitleBadge}>
-            <Text style={styles.customerTitleText}>
-              {scenario.customerTitle.toUpperCase()}
-            </Text>
-          </View>
-        </Animated.View>
-
-        {/* Speech bubble */}
-        <View style={styles.bubbleWrap}>
-          <View style={styles.bubbleArrow} />
-          <View style={[styles.bubble, karenLoading && styles.bubbleLoading]}>
-            <Text style={styles.bubbleText}>
-              "{scenario.dialogue[dialogueIdx]}"
-            </Text>
-            {karenLoading && (
-              <Text style={styles.speakingIndicator}>🔊 speaking...</Text>
-            )}
-          </View>
-        </View>
-      </View>
-
-      {/* Player controls */}
-      <View style={styles.controls}>
-        <Text style={styles.listeningLabel}>
-          {isListening ? "De-escalating..." : "Tap mic to respond"}
-        </Text>
-
-        <View style={styles.micRow}>
-          <View style={styles.waveLeft}>
-            <View style={[styles.wavebar, { height: 16 }]} />
-            <View style={[styles.wavebar, { height: 32 }]} />
-          </View>
-
-          <TouchableOpacity
-            style={[
-              styles.micBtn,
-              isListening && { backgroundColor: colors.green, borderColor: "#1a5c26" },
-            ]}
-            onPress={handleMicPress}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.micIcon}>{isListening ? "⏹" : "🎤"}</Text>
-          </TouchableOpacity>
-
-          <View style={styles.waveRight}>
-            <View style={[styles.wavebar, { height: 24 }]} />
-            <View style={[styles.wavebar, { height: 12 }]} />
-            <View style={[styles.wavebar, { height: 20 }]} />
-          </View>
-        </View>
-
+      {/* BOTTOM BAR */}
+      <View style={styles.bottomBar}>
+        {/* End call */}
         <TouchableOpacity
-          style={styles.deEscalateBtn}
-          onPress={() => handleEnd(true)}
+          style={styles.endCallBtn}
+          onPress={() => finishGame(false)}
           activeOpacity={0.8}
         >
-          <Text style={styles.deEscalateBtnText}>
-            ✓ CUSTOMER DE-ESCALATED
-          </Text>
+          <Text style={styles.endCallIcon}>✕</Text>
         </TouchableOpacity>
+
+        {/* HOLD TO SPEAK button */}
+        <Pressable
+          onPressIn={handleMicPressIn}
+          onPressOut={handleMicPressOut}
+          disabled={!canSpeak}
+        >
+          <Animated.View style={[
+            styles.holdBtn,
+            callState === "you-speaking" && styles.holdBtnActive,
+            !canSpeak && styles.holdBtnDisabled,
+            { transform: [{ scale: micScaleAnim }] },
+          ]}>
+            {/* Outer pulse ring when speaking */}
+            {callState === "you-speaking" && (
+              <Animated.View style={[styles.holdPulseRing, {
+                opacity: pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 0.5] }),
+                transform: [{
+                  scale: pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [1, 1.35] }),
+                }],
+              }]} />
+            )}
+            <Text style={styles.holdMicIcon}>🎤</Text>
+            <Text style={styles.holdLabel}>
+              {callState === "you-speaking" ? "RELEASE" : "HOLD TO SPEAK"}
+            </Text>
+          </Animated.View>
+        </Pressable>
+
+        {/* Manager placeholder for balance */}
+        <View style={{ width: 52 }} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  statusBar: {
-    backgroundColor: colors.panelAlt,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.panelBorder,
+  container: { flex: 1, backgroundColor: "#0a0a0a" },
+
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
-    paddingBottom: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    paddingVertical: 10,
+    backgroundColor: "#111",
+    borderBottomWidth: 1,
+    borderBottomColor: "#1f1f1f",
+    gap: 10,
   },
-  locationBadge: {
-    backgroundColor: colors.black,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderWidth: 1,
-    borderColor: "#374151",
-    flex: 1,
-    marginRight: 8,
-  },
-  locationText: {
-    color: "#9ca3af",
-    fontFamily: "Inter_700Bold",
-    fontSize: 9,
-    letterSpacing: 1,
-  },
-  timer: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 24,
-    color: colors.white,
-    marginRight: 8,
-  },
+  callDuration: { fontFamily: "Inter_700Bold", fontSize: 14, color: "#6b7280", minWidth: 44 },
+  rageBarWrap: { flex: 1, gap: 3 },
+  rageBarBg: { height: 6, backgroundColor: "#1f1f1f", borderRadius: 3, overflow: "hidden" },
+  rageBarFill: { height: 6, borderRadius: 3 },
+  rageLabel: { fontFamily: "Inter_700Bold", fontSize: 8, letterSpacing: 1.5 },
   mgrBtn: {
-    backgroundColor: colors.bg,
-    borderWidth: 2,
-    borderColor: colors.amber,
+    backgroundColor: "#1c1c1a",
+    borderWidth: 1.5,
+    borderColor: "#f59e0b",
     paddingHorizontal: 10,
-    paddingVertical: 6,
-    flexDirection: "row",
-    alignItems: "center",
+    paddingVertical: 5,
   },
-  mgrText: {
-    color: colors.amber,
-    fontFamily: "Inter_700Bold",
-    fontSize: 11,
-  },
-  mgrBadge: {
-    backgroundColor: colors.amber,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
-  },
-  mgrBadgeText: {
-    color: colors.black,
-    fontFamily: "Inter_700Bold",
-    fontSize: 10,
-  },
-  rageMeterWrap: {
-    backgroundColor: colors.panel,
-    padding: 16,
-  },
-  rageMeterLabels: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-  },
-  rageMeterLabel: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 11,
-    letterSpacing: 1,
-  },
-  rageMeterBar: {
-    height: 24,
-    backgroundColor: colors.black,
-    borderWidth: 2,
-    borderColor: "#374151",
-    padding: 2,
-  },
-  rageMeterFill: {
-    flex: 1,
-    minWidth: 0,
-  },
-  customerZone: {
+  mgrBtnUsed: { borderColor: "#374151", opacity: 0.4 },
+  mgrText: { color: "#f59e0b", fontFamily: "Inter_700Bold", fontSize: 10 },
+  mgrTextUsed: { color: "#374151" },
+
+  callBody: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
+    paddingHorizontal: 24,
+    gap: 10,
   },
-  customerCard: {
-    backgroundColor: colors.card,
-    borderWidth: 4,
-    borderColor: colors.amber,
-    padding: 24,
-    width: "100%",
-    maxWidth: 280,
-    alignItems: "center",
-    shadowColor: colors.amber,
-    shadowOffset: { width: 8, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 0,
-    elevation: 0,
-  },
-  avatarCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.cardAlt,
-    borderWidth: 4,
-    borderColor: colors.black,
+
+  avatarRing: {
+    width: 118,
+    height: 118,
+    borderRadius: 59,
+    borderWidth: 3,
+    borderColor: "#2a2a2a",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 12,
+    marginBottom: 4,
+    position: "relative",
   },
-  avatarLetter: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 40,
-    color: "#8B4513",
+  avatarRingActive: { borderColor: "#ef4444" },
+  avatarGlow: {
+    position: "absolute",
+    width: 118,
+    height: 118,
+    borderRadius: 59,
+    backgroundColor: "#ef4444",
   },
-  customerName: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 22,
-    letterSpacing: -0.5,
-    color: colors.black,
+  avatar: {
+    width: 98,
+    height: 98,
+    borderRadius: 49,
+    backgroundColor: "#1c1c1a",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  customerTitleBadge: {
-    backgroundColor: colors.black,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginTop: 8,
-  },
-  customerTitleText: {
-    color: colors.white,
-    fontFamily: "Inter_700Bold",
-    fontSize: 9,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-  },
-  bubbleWrap: {
+  avatarLetter: { fontFamily: "Inter_700Bold", fontSize: 44, color: "#8B4513" },
+
+  customerName: { fontFamily: "Inter_700Bold", fontSize: 22, color: "#f9fafb", letterSpacing: 0.4 },
+  customerTitle: { fontFamily: "Inter_400Regular", fontSize: 12, color: "#6b7280" },
+
+  stateBox: { marginTop: 16, height: 36, alignItems: "center", justifyContent: "center" },
+  stateConnecting: { fontFamily: "Inter_400Regular", fontSize: 14, color: "#6b7280", letterSpacing: 1 },
+  stateProcessing: { fontFamily: "Inter_700Bold", fontSize: 22, color: "#6b7280", letterSpacing: 8 },
+  speakingRow: { flexDirection: "row", alignItems: "center", gap: 3 },
+  waveBar: { width: 3, borderRadius: 2, minHeight: 4 },
+  speakingLabel: { fontFamily: "Inter_700Bold", fontSize: 10, letterSpacing: 2 },
+  yourTurnRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  micDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: "#22c55e" },
+  yourTurnText: { fontFamily: "Inter_400Regular", fontSize: 13, color: "#9ca3af" },
+
+  transcriptBox: {
+    backgroundColor: "#0b1f10",
+    borderLeftWidth: 3,
+    borderLeftColor: "#22c55e",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
     width: "100%",
-    maxWidth: 300,
-    marginTop: 20,
   },
-  bubbleArrow: {
-    width: 16,
-    height: 16,
-    backgroundColor: colors.cardAlt,
-    transform: [{ rotate: "45deg" }],
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    borderColor: "#d1d5db",
-    alignSelf: "center",
-    marginBottom: -8,
-  },
-  bubble: {
-    backgroundColor: colors.cardAlt,
-    borderWidth: 2,
-    borderColor: "#d1d5db",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  bubbleLoading: {
-    borderColor: colors.amber,
-  },
-  bubbleText: {
-    fontFamily: "Inter_700Bold",
-    fontSize: 13,
-    color: colors.black,
-    textTransform: "uppercase",
+  transcriptText: {
+    fontFamily: "Inter_400Regular",
+    fontSize: 14,
+    color: "#86efac",
+    fontStyle: "italic",
     lineHeight: 20,
   },
-  speakingIndicator: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 10,
-    color: colors.amber,
-    marginTop: 6,
-    letterSpacing: 1,
-  },
-  controls: {
-    backgroundColor: colors.panel,
-    borderTopWidth: 1,
-    borderTopColor: colors.panelBorder,
-    padding: 24,
-    alignItems: "center",
-  },
-  listeningLabel: {
-    fontFamily: "Inter_400Regular",
-    fontSize: 11,
-    color: "#6b7280",
-    marginBottom: 16,
-    letterSpacing: 1,
-  },
-  micRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20,
-    gap: 20,
-  },
-  waveLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  waveRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  wavebar: {
-    width: 4,
-    backgroundColor: "#4b5563",
-    borderRadius: 2,
-  },
-  micBtn: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.red,
-    borderWidth: 4,
-    borderColor: colors.redDark,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: colors.red,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
-    elevation: 8,
-  },
-  micIcon: {
-    fontSize: 28,
-  },
-  deEscalateBtn: {
+  karenSubBox: {
+    backgroundColor: "#1a0808",
+    borderLeftWidth: 3,
+    borderLeftColor: "#ef4444",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
     width: "100%",
-    maxWidth: 280,
-    borderWidth: 2,
-    borderColor: colors.green,
-    paddingVertical: 14,
-    alignItems: "center",
   },
-  deEscalateBtnText: {
-    color: colors.green,
-    fontFamily: "Inter_700Bold",
+  karenSubText: {
+    fontFamily: "Inter_400Regular",
     fontSize: 13,
-    letterSpacing: 2,
-    textTransform: "uppercase",
+    color: "#fca5a5",
+    lineHeight: 20,
+    fontStyle: "italic",
+  },
+
+  bottomBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 28,
+    paddingVertical: 22,
+    backgroundColor: "#0f0f0f",
+    borderTopWidth: 1,
+    borderTopColor: "#1a1a1a",
+  },
+
+  endCallBtn: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: "#ef4444",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  endCallIcon: { fontSize: 20, color: "#fff" },
+
+  holdBtn: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: "#1a2a1a",
+    borderWidth: 3,
+    borderColor: "#22c55e",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    position: "relative",
+    overflow: "visible",
+  },
+  holdBtnActive: {
+    backgroundColor: "#0d2010",
+    borderColor: "#16a34a",
+  },
+  holdBtnDisabled: {
+    borderColor: "#1f2937",
+    backgroundColor: "#111",
+    opacity: 0.4,
+  },
+  holdPulseRing: {
+    position: "absolute",
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    borderWidth: 3,
+    borderColor: "#22c55e",
+  },
+  holdMicIcon: { fontSize: 32 },
+  holdLabel: {
+    fontFamily: "Inter_700Bold",
+    fontSize: 9,
+    color: "#22c55e",
+    letterSpacing: 1.5,
+    textAlign: "center",
   },
 });

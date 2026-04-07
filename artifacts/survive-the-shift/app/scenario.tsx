@@ -1,6 +1,6 @@
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Platform,
   ScrollView,
@@ -19,8 +19,13 @@ export default function ScenarioScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom;
 
+  useEffect(() => {
+    if (!currentScenario) {
+      router.replace("/(tabs)/");
+    }
+  }, [currentScenario]);
+
   if (!currentScenario) {
-    router.replace("/(tabs)/");
     return null;
   }
 

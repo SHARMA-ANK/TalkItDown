@@ -3,6 +3,9 @@ packages:
   - "lib/*"
   - "scripts"
 
+onlyBuiltDependencies:
+  - esbuild
+
 catalog:
   "@replit/vite-plugin-cartographer": "^0.5.1"
   "@replit/vite-plugin-runtime-error-modal": "^0.0.6"
