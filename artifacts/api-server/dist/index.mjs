@@ -1703,10 +1703,10 @@ var require_bom_handling = __commonJS({
 var require_merge_exports = __commonJS({
   "../../node_modules/.pnpm/iconv-lite@0.7.2/node_modules/iconv-lite/lib/helpers/merge-exports.js"(exports, module) {
     "use strict";
-    var hasOwn = typeof Object.hasOwn === "undefined" ? Function.call.bind(Object.prototype.hasOwnProperty) : Object.hasOwn;
+    var hasOwn2 = typeof Object.hasOwn === "undefined" ? Function.call.bind(Object.prototype.hasOwnProperty) : Object.hasOwn;
     function mergeModules(target, module2) {
       for (var key in module2) {
-        if (hasOwn(module2, key)) {
+        if (hasOwn2(module2, key)) {
           target[key] = module2[key];
         }
       }
@@ -15314,11 +15314,11 @@ var require_mime_types = __commonJS({
       }
       return exts[0];
     }
-    function lookup(path) {
-      if (!path || typeof path !== "string") {
+    function lookup(path2) {
+      if (!path2 || typeof path2 !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path).toLowerCase().slice(1);
+      var extension2 = extname("x." + path2).toLowerCase().slice(1);
       if (!extension2) {
         return false;
       }
@@ -15986,7 +15986,7 @@ var require_object_inspect = __commonJS({
         depth = 0;
       }
       if (depth >= maxDepth && maxDepth > 0 && typeof obj === "object") {
-        return isArray(obj) ? "[Array]" : "[Object]";
+        return isArray2(obj) ? "[Array]" : "[Object]";
       }
       var indent = getIndent(opts, depth);
       if (typeof seen === "undefined") {
@@ -16032,7 +16032,7 @@ var require_object_inspect = __commonJS({
         s += "</" + $toLowerCase.call(String(obj.nodeName)) + ">";
         return s;
       }
-      if (isArray(obj)) {
+      if (isArray2(obj)) {
         if (obj.length === 0) {
           return "[]";
         }
@@ -16132,7 +16132,7 @@ var require_object_inspect = __commonJS({
     function canTrustToString(obj) {
       return !toStringTag || !(typeof obj === "object" && (toStringTag in obj || typeof obj[toStringTag] !== "undefined"));
     }
-    function isArray(obj) {
+    function isArray2(obj) {
       return toStr(obj) === "[object Array]" && canTrustToString(obj);
     }
     function isDate(obj) {
@@ -16181,11 +16181,11 @@ var require_object_inspect = __commonJS({
       }
       return false;
     }
-    var hasOwn = Object.prototype.hasOwnProperty || function(key) {
+    var hasOwn2 = Object.prototype.hasOwnProperty || function(key) {
       return key in this;
     };
     function has(obj, key) {
-      return hasOwn.call(obj, key);
+      return hasOwn2.call(obj, key);
     }
     function toStr(obj) {
       return objectToString.call(obj);
@@ -16360,7 +16360,7 @@ var require_object_inspect = __commonJS({
       return lineJoiner + $join.call(xs, "," + lineJoiner) + "\n" + indent.prev;
     }
     function arrObjKeys(obj, inspect) {
-      var isArr = isArray(obj);
+      var isArr = isArray2(obj);
       var xs = [];
       if (isArr) {
         xs.length = obj.length;
@@ -17183,7 +17183,7 @@ var require_get_intrinsic = __commonJS({
       "%WeakSetPrototype%": ["WeakSet", "prototype"]
     };
     var bind = require_function_bind();
-    var hasOwn = require_hasown();
+    var hasOwn2 = require_hasown();
     var $concat = bind.call($call, Array.prototype.concat);
     var $spliceApply = bind.call($apply, Array.prototype.splice);
     var $replace = bind.call($call, String.prototype.replace);
@@ -17208,11 +17208,11 @@ var require_get_intrinsic = __commonJS({
     var getBaseIntrinsic = function getBaseIntrinsic2(name, allowMissing) {
       var intrinsicName = name;
       var alias;
-      if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
+      if (hasOwn2(LEGACY_ALIASES, intrinsicName)) {
         alias = LEGACY_ALIASES[intrinsicName];
         intrinsicName = "%" + alias[0] + "%";
       }
-      if (hasOwn(INTRINSICS, intrinsicName)) {
+      if (hasOwn2(INTRINSICS, intrinsicName)) {
         var value = INTRINSICS[intrinsicName];
         if (value === needsEval) {
           value = doEval(intrinsicName);
@@ -17261,7 +17261,7 @@ var require_get_intrinsic = __commonJS({
         }
         intrinsicBaseName += "." + part;
         intrinsicRealName = "%" + intrinsicBaseName + "%";
-        if (hasOwn(INTRINSICS, intrinsicRealName)) {
+        if (hasOwn2(INTRINSICS, intrinsicRealName)) {
           value = INTRINSICS[intrinsicRealName];
         } else if (value != null) {
           if (!(part in value)) {
@@ -17279,7 +17279,7 @@ var require_get_intrinsic = __commonJS({
               value = value[part];
             }
           } else {
-            isOwn = hasOwn(value, part);
+            isOwn = hasOwn2(value, part);
             value = value[part];
           }
           if (isOwn && !skipFurtherCaching) {
@@ -17516,7 +17516,7 @@ var require_utils2 = __commonJS({
     var formats = require_formats();
     var getSideChannel = require_side_channel();
     var has = Object.prototype.hasOwnProperty;
-    var isArray = Array.isArray;
+    var isArray2 = Array.isArray;
     var overflowChannel = getSideChannel();
     var markOverflow = function markOverflow2(obj, maxIndex) {
       overflowChannel.set(obj, maxIndex);
@@ -17542,7 +17542,7 @@ var require_utils2 = __commonJS({
       while (queue.length > 1) {
         var item = queue.pop();
         var obj = item.obj[item.prop];
-        if (isArray(obj)) {
+        if (isArray2(obj)) {
           var compacted = [];
           for (var j = 0; j < obj.length; ++j) {
             if (typeof obj[j] !== "undefined") {
@@ -17567,7 +17567,7 @@ var require_utils2 = __commonJS({
         return target;
       }
       if (typeof source !== "object" && typeof source !== "function") {
-        if (isArray(target)) {
+        if (isArray2(target)) {
           var nextIndex = target.length;
           if (options && typeof options.arrayLimit === "number" && nextIndex > options.arrayLimit) {
             return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
@@ -17605,10 +17605,10 @@ var require_utils2 = __commonJS({
         return combined;
       }
       var mergeTarget = target;
-      if (isArray(target) && !isArray(source)) {
+      if (isArray2(target) && !isArray2(source)) {
         mergeTarget = arrayToObject(target, options);
       }
-      if (isArray(target) && isArray(source)) {
+      if (isArray2(target) && isArray2(source)) {
         source.forEach(function(item, i) {
           if (has.call(target, i)) {
             var targetItem = target[i];
@@ -17747,7 +17747,7 @@ var require_utils2 = __commonJS({
       return result;
     };
     var maybeMap = function maybeMap2(val, fn) {
-      if (isArray(val)) {
+      if (isArray2(val)) {
         var mapped = [];
         for (var i = 0; i < val.length; i += 1) {
           mapped[mapped.length] = fn(val[i]);
@@ -17793,10 +17793,10 @@ var require_stringify = __commonJS({
         return prefix;
       }
     };
-    var isArray = Array.isArray;
+    var isArray2 = Array.isArray;
     var push = Array.prototype.push;
     var pushToArray = function(arr, valueOrArray) {
-      push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
+      push.apply(arr, isArray2(valueOrArray) ? valueOrArray : [valueOrArray]);
     };
     var toISO = Date.prototype.toISOString;
     var defaultFormat = formats["default"];
@@ -17851,7 +17851,7 @@ var require_stringify = __commonJS({
         obj = filter(prefix, obj);
       } else if (obj instanceof Date) {
         obj = serializeDate(obj);
-      } else if (generateArrayPrefix === "comma" && isArray(obj)) {
+      } else if (generateArrayPrefix === "comma" && isArray2(obj)) {
         obj = utils.maybeMap(obj, function(value2) {
           if (value2 instanceof Date) {
             return serializeDate(value2);
@@ -17877,20 +17877,20 @@ var require_stringify = __commonJS({
         return values;
       }
       var objKeys;
-      if (generateArrayPrefix === "comma" && isArray(obj)) {
+      if (generateArrayPrefix === "comma" && isArray2(obj)) {
         if (encodeValuesOnly && encoder2) {
           obj = utils.maybeMap(obj, encoder2);
         }
         objKeys = [{ value: obj.length > 0 ? obj.join(",") || null : void 0 }];
-      } else if (isArray(filter)) {
+      } else if (isArray2(filter)) {
         objKeys = filter;
       } else {
         var keys = Object.keys(obj);
         objKeys = sort ? keys.sort(sort) : keys;
       }
       var encodedPrefix = encodeDotInKeys ? String(prefix).replace(/\./g, "%2E") : String(prefix);
-      var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? encodedPrefix + "[]" : encodedPrefix;
-      if (allowEmptyArrays && isArray(obj) && obj.length === 0) {
+      var adjustedPrefix = commaRoundTrip && isArray2(obj) && obj.length === 1 ? encodedPrefix + "[]" : encodedPrefix;
+      if (allowEmptyArrays && isArray2(obj) && obj.length === 0) {
         return adjustedPrefix + "[]";
       }
       for (var j = 0; j < objKeys.length; ++j) {
@@ -17900,7 +17900,7 @@ var require_stringify = __commonJS({
           continue;
         }
         var encodedKey = allowDots && encodeDotInKeys ? String(key).replace(/\./g, "%2E") : String(key);
-        var keyPrefix = isArray(obj) ? typeof generateArrayPrefix === "function" ? generateArrayPrefix(adjustedPrefix, encodedKey) : adjustedPrefix : adjustedPrefix + (allowDots ? "." + encodedKey : "[" + encodedKey + "]");
+        var keyPrefix = isArray2(obj) ? typeof generateArrayPrefix === "function" ? generateArrayPrefix(adjustedPrefix, encodedKey) : adjustedPrefix : adjustedPrefix + (allowDots ? "." + encodedKey : "[" + encodedKey + "]");
         sideChannel.set(object, step);
         var valueSideChannel = getSideChannel();
         valueSideChannel.set(sentinel, sideChannel);
@@ -17913,7 +17913,7 @@ var require_stringify = __commonJS({
           strictNullHandling,
           skipNulls,
           encodeDotInKeys,
-          generateArrayPrefix === "comma" && encodeValuesOnly && isArray(obj) ? null : encoder2,
+          generateArrayPrefix === "comma" && encodeValuesOnly && isArray2(obj) ? null : encoder2,
           filter,
           sort,
           allowDots,
@@ -17953,7 +17953,7 @@ var require_stringify = __commonJS({
       }
       var formatter = formats.formatters[format];
       var filter = defaults2.filter;
-      if (typeof opts.filter === "function" || isArray(opts.filter)) {
+      if (typeof opts.filter === "function" || isArray2(opts.filter)) {
         filter = opts.filter;
       }
       var arrayFormat;
@@ -17998,7 +17998,7 @@ var require_stringify = __commonJS({
       if (typeof options.filter === "function") {
         filter = options.filter;
         obj = filter("", obj);
-      } else if (isArray(options.filter)) {
+      } else if (isArray2(options.filter)) {
         filter = options.filter;
         objKeys = filter;
       }
@@ -18062,7 +18062,7 @@ var require_parse = __commonJS({
     "use strict";
     var utils = require_utils2();
     var has = Object.prototype.hasOwnProperty;
-    var isArray = Array.isArray;
+    var isArray2 = Array.isArray;
     var defaults2 = {
       allowDots: false,
       allowEmptyArrays: false,
@@ -18150,7 +18150,7 @@ var require_parse = __commonJS({
               parseArrayValue(
                 part.slice(pos + 1),
                 options,
-                isArray(obj[key]) ? obj[key].length : 0
+                isArray2(obj[key]) ? obj[key].length : 0
               ),
               function(encodedVal) {
                 return options.decoder(encodedVal, defaults2.decoder, charset, "value");
@@ -18162,9 +18162,9 @@ var require_parse = __commonJS({
           val = interpretNumericEntities(String(val));
         }
         if (part.indexOf("[]=") > -1) {
-          val = isArray(val) ? [val] : val;
+          val = isArray2(val) ? [val] : val;
         }
-        if (options.comma && isArray(val) && val.length > options.arrayLimit) {
+        if (options.comma && isArray2(val) && val.length > options.arrayLimit) {
           if (options.throwOnLimitExceeded) {
             throw new RangeError("Array limit exceeded. Only " + options.arrayLimit + " element" + (options.arrayLimit === 1 ? "" : "s") + " allowed in an array.");
           }
@@ -18790,13 +18790,13 @@ var require_view = __commonJS({
   "../../node_modules/.pnpm/express@5.2.1/node_modules/express/lib/view.js"(exports, module) {
     "use strict";
     var debug = require_src()("express:view");
-    var path = __require("node:path");
+    var path2 = __require("node:path");
     var fs = __require("node:fs");
-    var dirname = path.dirname;
-    var basename = path.basename;
-    var extname = path.extname;
-    var join = path.join;
-    var resolve = path.resolve;
+    var dirname = path2.dirname;
+    var basename = path2.basename;
+    var extname = path2.extname;
+    var join = path2.join;
+    var resolve = path2.resolve;
     module.exports = View2;
     function View2(name, options) {
       var opts = options || {};
@@ -18825,17 +18825,17 @@ var require_view = __commonJS({
       this.path = this.lookup(fileName);
     }
     View2.prototype.lookup = function lookup(name) {
-      var path2;
+      var path3;
       var roots = [].concat(this.root);
       debug('lookup "%s"', name);
-      for (var i = 0; i < roots.length && !path2; i++) {
+      for (var i = 0; i < roots.length && !path3; i++) {
         var root = roots[i];
         var loc = resolve(root, name);
         var dir = dirname(loc);
         var file = basename(loc);
-        path2 = this.resolve(dir, file);
+        path3 = this.resolve(dir, file);
       }
-      return path2;
+      return path3;
     };
     View2.prototype.render = function render(options, callback) {
       var sync = true;
@@ -18857,21 +18857,21 @@ var require_view = __commonJS({
     };
     View2.prototype.resolve = function resolve2(dir, file) {
       var ext = this.ext;
-      var path2 = join(dir, file);
-      var stat = tryStat(path2);
+      var path3 = join(dir, file);
+      var stat = tryStat(path3);
       if (stat && stat.isFile()) {
-        return path2;
+        return path3;
       }
-      path2 = join(dir, basename(file, ext), "index" + ext);
-      stat = tryStat(path2);
+      path3 = join(dir, basename(file, ext), "index" + ext);
+      stat = tryStat(path3);
       if (stat && stat.isFile()) {
-        return path2;
+        return path3;
       }
     };
-    function tryStat(path2) {
-      debug('stat "%s"', path2);
+    function tryStat(path3) {
+      debug('stat "%s"', path3);
       try {
-        return fs.statSync(path2);
+        return fs.statSync(path3);
       } catch (e2) {
         return void 0;
       }
@@ -20007,15 +20007,15 @@ var require_dist = __commonJS({
       let index2 = 0;
       function consumeUntil(end) {
         const output = [];
-        let path = "";
+        let path2 = "";
         function writePath() {
-          if (!path)
+          if (!path2)
             return;
           output.push({
             type: "text",
-            value: encodePath(path)
+            value: encodePath(path2)
           });
-          path = "";
+          path2 = "";
         }
         while (index2 < chars.length) {
           const value = chars[index2++];
@@ -20027,7 +20027,7 @@ var require_dist = __commonJS({
             if (index2 === chars.length) {
               throw new PathError(`Unexpected end after \\ at index ${index2}`, str);
             }
-            path += chars[index2++];
+            path2 += chars[index2++];
             continue;
           }
           if (value === ":" || value === "*") {
@@ -20071,7 +20071,7 @@ var require_dist = __commonJS({
           if (value === "}" || value === "(" || value === ")" || value === "[" || value === "]" || value === "+" || value === "?" || value === "!") {
             throw new PathError(`Unexpected ${value} at index ${index2 - 1}`, str);
           }
-          path += value;
+          path2 += value;
         }
         if (end) {
           throw new PathError(`Unexpected end at index ${index2}, expected ${end}`, str);
@@ -20081,17 +20081,17 @@ var require_dist = __commonJS({
       }
       return new TokenData(consumeUntil(""), str);
     }
-    function compile(path, options = {}) {
+    function compile(path2, options = {}) {
       const { encode = encodeURIComponent, delimiter = DEFAULT_DELIMITER } = options;
-      const data = typeof path === "object" ? path : parse(path, options);
+      const data = typeof path2 === "object" ? path2 : parse(path2, options);
       const fn = tokensToFunction(data.tokens, delimiter, encode);
-      return function path2(params = {}) {
+      return function path3(params = {}) {
         const missing = [];
-        const path3 = fn(params, missing);
+        const path4 = fn(params, missing);
         if (missing.length) {
           throw new TypeError(`Missing parameters: ${missing.join(", ")}`);
         }
-        return path3;
+        return path4;
       };
     }
     function tokensToFunction(tokens, delimiter, encode) {
@@ -20153,9 +20153,9 @@ var require_dist = __commonJS({
         return encodeValue(value);
       };
     }
-    function match(path, options = {}) {
+    function match(path2, options = {}) {
       const { decode = decodeURIComponent, delimiter = DEFAULT_DELIMITER } = options;
-      const { regexp, keys } = pathToRegexp(path, options);
+      const { regexp, keys } = pathToRegexp(path2, options);
       const decoders = keys.map((key) => {
         if (decode === false)
           return NOOP_VALUE;
@@ -20167,7 +20167,7 @@ var require_dist = __commonJS({
         const m = regexp.exec(input);
         if (!m)
           return false;
-        const path2 = m[0];
+        const path3 = m[0];
         const params = /* @__PURE__ */ Object.create(null);
         for (let i = 1; i < m.length; i++) {
           if (m[i] === void 0)
@@ -20176,21 +20176,21 @@ var require_dist = __commonJS({
           const decoder3 = decoders[i - 1];
           params[key.name] = decoder3(m[i]);
         }
-        return { path: path2, params };
+        return { path: path3, params };
       };
     }
-    function pathToRegexp(path, options = {}) {
+    function pathToRegexp(path2, options = {}) {
       const { delimiter = DEFAULT_DELIMITER, end = true, sensitive = false, trailing = true } = options;
       const keys = [];
       let source = "";
       let combinations = 0;
-      function process2(path2) {
-        if (Array.isArray(path2)) {
-          for (const p of path2)
+      function process2(path3) {
+        if (Array.isArray(path3)) {
+          for (const p of path3)
             process2(p);
           return;
         }
-        const data = typeof path2 === "object" ? path2 : parse(path2, options);
+        const data = typeof path3 === "object" ? path3 : parse(path3, options);
         flatten(data.tokens, 0, [], (tokens) => {
           if (combinations >= 256) {
             throw new PathError("Too many path combinations", data.originalPath);
@@ -20201,7 +20201,7 @@ var require_dist = __commonJS({
           combinations++;
         });
       }
-      process2(path);
+      process2(path2);
       let pattern = `^(?:${source})`;
       if (trailing)
         pattern += "(?:" + escape2(delimiter) + "$)?";
@@ -20341,18 +20341,18 @@ var require_layer = __commonJS({
     var TRAILING_SLASH_REGEXP = /\/+$/;
     var MATCHING_GROUP_REGEXP = /\((?:\?<(.*?)>)?(?!\?)/g;
     module.exports = Layer;
-    function Layer(path, options, fn) {
+    function Layer(path2, options, fn) {
       if (!(this instanceof Layer)) {
-        return new Layer(path, options, fn);
+        return new Layer(path2, options, fn);
       }
-      debug("new %o", path);
+      debug("new %o", path2);
       const opts = options || {};
       this.handle = fn;
       this.keys = [];
       this.name = fn.name || "<anonymous>";
       this.params = void 0;
       this.path = void 0;
-      this.slash = path === "/" && opts.end === false;
+      this.slash = path2 === "/" && opts.end === false;
       function matcher(_path) {
         if (_path instanceof RegExp) {
           const keys = [];
@@ -20391,7 +20391,7 @@ var require_layer = __commonJS({
           decode: decodeParam
         });
       }
-      this.matchers = Array.isArray(path) ? path.map(matcher) : [matcher(path)];
+      this.matchers = Array.isArray(path2) ? path2.map(matcher) : [matcher(path2)];
     }
     Layer.prototype.handleError = function handleError(error, req, res, next) {
       const fn = this.handle;
@@ -20431,9 +20431,9 @@ var require_layer = __commonJS({
         next(err);
       }
     };
-    Layer.prototype.match = function match(path) {
+    Layer.prototype.match = function match(path2) {
       let match2;
-      if (path != null) {
+      if (path2 != null) {
         if (this.slash) {
           this.params = {};
           this.path = "";
@@ -20441,7 +20441,7 @@ var require_layer = __commonJS({
         }
         let i = 0;
         while (!match2 && i < this.matchers.length) {
-          match2 = this.matchers[i](path);
+          match2 = this.matchers[i](path2);
           i++;
         }
       }
@@ -20469,13 +20469,13 @@ var require_layer = __commonJS({
         throw err;
       }
     }
-    function loosen(path) {
-      if (path instanceof RegExp || path === "/") {
-        return path;
+    function loosen(path2) {
+      if (path2 instanceof RegExp || path2 === "/") {
+        return path2;
       }
-      return Array.isArray(path) ? path.map(function(p) {
+      return Array.isArray(path2) ? path2.map(function(p) {
         return loosen(p);
-      }) : String(path).replace(TRAILING_SLASH_REGEXP, "");
+      }) : String(path2).replace(TRAILING_SLASH_REGEXP, "");
     }
   }
 });
@@ -20491,9 +20491,9 @@ var require_route = __commonJS({
     var flatten = Array.prototype.flat;
     var methods = METHODS.map((method) => method.toLowerCase());
     module.exports = Route;
-    function Route(path) {
-      debug("new %o", path);
-      this.path = path;
+    function Route(path2) {
+      debug("new %o", path2);
+      this.path = path2;
       this.stack = [];
       this.methods = /* @__PURE__ */ Object.create(null);
     }
@@ -20701,8 +20701,8 @@ var require_router = __commonJS({
         if (++sync > 100) {
           return setImmediate(next, err);
         }
-        const path = getPathname(req);
-        if (path == null) {
+        const path2 = getPathname(req);
+        if (path2 == null) {
           return done(layerError);
         }
         let layer;
@@ -20710,7 +20710,7 @@ var require_router = __commonJS({
         let route;
         while (match !== true && idx < stack.length) {
           layer = stack[idx++];
-          match = matchLayer(layer, path);
+          match = matchLayer(layer, path2);
           route = layer.route;
           if (typeof match !== "boolean") {
             layerError = layerError || match;
@@ -20748,18 +20748,18 @@ var require_router = __commonJS({
           } else if (route) {
             layer.handleRequest(req, res, next);
           } else {
-            trimPrefix(layer, layerError, layerPath, path);
+            trimPrefix(layer, layerError, layerPath, path2);
           }
           sync = 0;
         });
       }
-      function trimPrefix(layer, layerError, layerPath, path) {
+      function trimPrefix(layer, layerError, layerPath, path2) {
         if (layerPath.length !== 0) {
-          if (layerPath !== path.substring(0, layerPath.length)) {
+          if (layerPath !== path2.substring(0, layerPath.length)) {
             next(layerError);
             return;
           }
-          const c = path[layerPath.length];
+          const c = path2[layerPath.length];
           if (c && c !== "/") {
             next(layerError);
             return;
@@ -20783,7 +20783,7 @@ var require_router = __commonJS({
     };
     Router6.prototype.use = function use(handler) {
       let offset = 0;
-      let path = "/";
+      let path2 = "/";
       if (typeof handler !== "function") {
         let arg = handler;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -20791,7 +20791,7 @@ var require_router = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path = handler;
+          path2 = handler;
         }
       }
       const callbacks = flatten.call(slice.call(arguments, offset), Infinity);
@@ -20803,8 +20803,8 @@ var require_router = __commonJS({
         if (typeof fn !== "function") {
           throw new TypeError("argument handler must be a function");
         }
-        debug("use %o %s", path, fn.name || "<anonymous>");
-        const layer = new Layer(path, {
+        debug("use %o %s", path2, fn.name || "<anonymous>");
+        const layer = new Layer(path2, {
           sensitive: this.caseSensitive,
           strict: false,
           end: false
@@ -20814,9 +20814,9 @@ var require_router = __commonJS({
       }
       return this;
     };
-    Router6.prototype.route = function route(path) {
-      const route2 = new Route(path);
-      const layer = new Layer(path, {
+    Router6.prototype.route = function route(path2) {
+      const route2 = new Route(path2);
+      const layer = new Layer(path2, {
         sensitive: this.caseSensitive,
         strict: this.strict,
         end: true
@@ -20829,8 +20829,8 @@ var require_router = __commonJS({
       return route2;
     };
     methods.concat("all").forEach(function(method) {
-      Router6.prototype[method] = function(path) {
-        const route = this.route(path);
+      Router6.prototype[method] = function(path2) {
+        const route = this.route(path2);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
@@ -20859,9 +20859,9 @@ var require_router = __commonJS({
       const fqdnIndex = url.substring(0, pathLength).indexOf("://");
       return fqdnIndex !== -1 ? url.substring(0, url.indexOf("/", 3 + fqdnIndex)) : void 0;
     }
-    function matchLayer(layer, path) {
+    function matchLayer(layer, path2) {
       try {
-        return layer.match(path);
+        return layer.match(path2);
       } catch (err) {
         return err;
       }
@@ -21089,7 +21089,7 @@ var require_application = __commonJS({
     };
     app2.use = function use(fn) {
       var offset = 0;
-      var path = "/";
+      var path2 = "/";
       if (typeof fn !== "function") {
         var arg = fn;
         while (Array.isArray(arg) && arg.length !== 0) {
@@ -21097,7 +21097,7 @@ var require_application = __commonJS({
         }
         if (typeof arg !== "function") {
           offset = 1;
-          path = fn;
+          path2 = fn;
         }
       }
       var fns = flatten.call(slice.call(arguments, offset), Infinity);
@@ -21107,12 +21107,12 @@ var require_application = __commonJS({
       var router6 = this.router;
       fns.forEach(function(fn2) {
         if (!fn2 || !fn2.handle || !fn2.set) {
-          return router6.use(path, fn2);
+          return router6.use(path2, fn2);
         }
-        debug(".use app under %s", path);
-        fn2.mountpath = path;
+        debug(".use app under %s", path2);
+        fn2.mountpath = path2;
         fn2.parent = this;
-        router6.use(path, function mounted_app(req, res, next) {
+        router6.use(path2, function mounted_app(req, res, next) {
           var orig = req.app;
           fn2.handle(req, res, function(err) {
             Object.setPrototypeOf(req, orig.request);
@@ -21124,8 +21124,8 @@ var require_application = __commonJS({
       }, this);
       return this;
     };
-    app2.route = function route(path) {
-      return this.router.route(path);
+    app2.route = function route(path2) {
+      return this.router.route(path2);
     };
     app2.engine = function engine(ext, fn) {
       if (typeof fn !== "function") {
@@ -21168,7 +21168,7 @@ var require_application = __commonJS({
       }
       return this;
     };
-    app2.path = function path() {
+    app2.path = function path2() {
       return this.parent ? this.parent.path() + this.mountpath : "";
     };
     app2.enabled = function enabled(setting) {
@@ -21184,17 +21184,17 @@ var require_application = __commonJS({
       return this.set(setting, false);
     };
     methods.forEach(function(method) {
-      app2[method] = function(path) {
+      app2[method] = function(path2) {
         if (method === "get" && arguments.length === 1) {
-          return this.set(path);
+          return this.set(path2);
         }
-        var route = this.route(path);
+        var route = this.route(path2);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
       };
     });
-    app2.all = function all(path) {
-      var route = this.route(path);
+    app2.all = function all(path2) {
+      var route = this.route(path2);
       var args = slice.call(arguments, 1);
       for (var i = 0; i < methods.length; i++) {
         route[methods[i]].apply(route, args);
@@ -22104,7 +22104,7 @@ var require_request = __commonJS({
       var subdomains2 = !isIP(hostname) ? hostname.split(".").reverse() : [hostname];
       return subdomains2.slice(offset);
     });
-    defineGetter(req, "path", function path() {
+    defineGetter(req, "path", function path2() {
       return parse(this).pathname;
     });
     defineGetter(req, "host", function host() {
@@ -22516,27 +22516,27 @@ var require_send = __commonJS({
     var ms = require_ms();
     var onFinished = require_on_finished();
     var parseRange = require_range_parser();
-    var path = __require("path");
+    var path2 = __require("path");
     var statuses = require_statuses();
-    var Stream = __require("stream");
+    var Stream2 = __require("stream");
     var util2 = __require("util");
-    var extname = path.extname;
-    var join = path.join;
-    var normalize = path.normalize;
-    var resolve = path.resolve;
-    var sep = path.sep;
+    var extname = path2.extname;
+    var join = path2.join;
+    var normalize = path2.normalize;
+    var resolve = path2.resolve;
+    var sep = path2.sep;
     var BYTES_RANGE_REGEXP = /^ *bytes=/;
     var MAX_MAXAGE = 60 * 60 * 24 * 365 * 1e3;
     var UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
     module.exports = send;
-    function send(req, path2, options) {
-      return new SendStream(req, path2, options);
+    function send(req, path3, options) {
+      return new SendStream(req, path3, options);
     }
-    function SendStream(req, path2, options) {
-      Stream.call(this);
+    function SendStream(req, path3, options) {
+      Stream2.call(this);
       var opts = options || {};
       this.options = opts;
-      this.path = path2;
+      this.path = path3;
       this.req = req;
       this._acceptRanges = opts.acceptRanges !== void 0 ? Boolean(opts.acceptRanges) : true;
       this._cacheControl = opts.cacheControl !== void 0 ? Boolean(opts.cacheControl) : true;
@@ -22554,7 +22554,7 @@ var require_send = __commonJS({
       this._maxage = !isNaN(this._maxage) ? Math.min(Math.max(0, this._maxage), MAX_MAXAGE) : 0;
       this._root = opts.root ? resolve(opts.root) : null;
     }
-    util2.inherits(SendStream, Stream);
+    util2.inherits(SendStream, Stream2);
     SendStream.prototype.error = function error(status, err) {
       if (hasListeners(this, "error")) {
         return this.emit("error", createHttpError(status, err));
@@ -22650,10 +22650,10 @@ var require_send = __commonJS({
       var lastModified = this.res.getHeader("Last-Modified");
       return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
     };
-    SendStream.prototype.redirect = function redirect(path2) {
+    SendStream.prototype.redirect = function redirect(path3) {
       var res = this.res;
       if (hasListeners(this, "directory")) {
-        this.emit("directory", res, path2);
+        this.emit("directory", res, path3);
         return;
       }
       if (this.hasTrailingSlash()) {
@@ -22673,38 +22673,38 @@ var require_send = __commonJS({
     SendStream.prototype.pipe = function pipe(res) {
       var root = this._root;
       this.res = res;
-      var path2 = decode(this.path);
-      if (path2 === -1) {
+      var path3 = decode(this.path);
+      if (path3 === -1) {
         this.error(400);
         return res;
       }
-      if (~path2.indexOf("\0")) {
+      if (~path3.indexOf("\0")) {
         this.error(400);
         return res;
       }
       var parts;
       if (root !== null) {
-        if (path2) {
-          path2 = normalize("." + sep + path2);
+        if (path3) {
+          path3 = normalize("." + sep + path3);
         }
-        if (UP_PATH_REGEXP.test(path2)) {
-          debug('malicious path "%s"', path2);
+        if (UP_PATH_REGEXP.test(path3)) {
+          debug('malicious path "%s"', path3);
           this.error(403);
           return res;
         }
-        parts = path2.split(sep);
-        path2 = normalize(join(root, path2));
+        parts = path3.split(sep);
+        path3 = normalize(join(root, path3));
       } else {
-        if (UP_PATH_REGEXP.test(path2)) {
-          debug('malicious path "%s"', path2);
+        if (UP_PATH_REGEXP.test(path3)) {
+          debug('malicious path "%s"', path3);
           this.error(403);
           return res;
         }
-        parts = normalize(path2).split(sep);
-        path2 = resolve(path2);
+        parts = normalize(path3).split(sep);
+        path3 = resolve(path3);
       }
       if (containsDotFile(parts)) {
-        debug('%s dotfile "%s"', this._dotfiles, path2);
+        debug('%s dotfile "%s"', this._dotfiles, path3);
         switch (this._dotfiles) {
           case "allow":
             break;
@@ -22718,13 +22718,13 @@ var require_send = __commonJS({
         }
       }
       if (this._index.length && this.hasTrailingSlash()) {
-        this.sendIndex(path2);
+        this.sendIndex(path3);
         return res;
       }
-      this.sendFile(path2);
+      this.sendFile(path3);
       return res;
     };
-    SendStream.prototype.send = function send2(path2, stat) {
+    SendStream.prototype.send = function send2(path3, stat) {
       var len = stat.size;
       var options = this.options;
       var opts = {};
@@ -22736,9 +22736,9 @@ var require_send = __commonJS({
         this.headersAlreadySent();
         return;
       }
-      debug('pipe "%s"', path2);
-      this.setHeader(path2, stat);
-      this.type(path2);
+      debug('pipe "%s"', path3);
+      this.setHeader(path3, stat);
+      this.type(path3);
       if (this.isConditionalGET()) {
         if (this.isPreconditionFailure()) {
           this.error(412);
@@ -22787,28 +22787,28 @@ var require_send = __commonJS({
         res.end();
         return;
       }
-      this.stream(path2, opts);
+      this.stream(path3, opts);
     };
-    SendStream.prototype.sendFile = function sendFile(path2) {
+    SendStream.prototype.sendFile = function sendFile(path3) {
       var i = 0;
       var self2 = this;
-      debug('stat "%s"', path2);
-      fs.stat(path2, function onstat(err, stat) {
-        var pathEndsWithSep = path2[path2.length - 1] === sep;
-        if (err && err.code === "ENOENT" && !extname(path2) && !pathEndsWithSep) {
+      debug('stat "%s"', path3);
+      fs.stat(path3, function onstat(err, stat) {
+        var pathEndsWithSep = path3[path3.length - 1] === sep;
+        if (err && err.code === "ENOENT" && !extname(path3) && !pathEndsWithSep) {
           return next(err);
         }
         if (err) return self2.onStatError(err);
-        if (stat.isDirectory()) return self2.redirect(path2);
+        if (stat.isDirectory()) return self2.redirect(path3);
         if (pathEndsWithSep) return self2.error(404);
-        self2.emit("file", path2, stat);
-        self2.send(path2, stat);
+        self2.emit("file", path3, stat);
+        self2.send(path3, stat);
       });
       function next(err) {
         if (self2._extensions.length <= i) {
           return err ? self2.onStatError(err) : self2.error(404);
         }
-        var p = path2 + "." + self2._extensions[i++];
+        var p = path3 + "." + self2._extensions[i++];
         debug('stat "%s"', p);
         fs.stat(p, function(err2, stat) {
           if (err2) return next(err2);
@@ -22818,7 +22818,7 @@ var require_send = __commonJS({
         });
       }
     };
-    SendStream.prototype.sendIndex = function sendIndex(path2) {
+    SendStream.prototype.sendIndex = function sendIndex(path3) {
       var i = -1;
       var self2 = this;
       function next(err) {
@@ -22826,7 +22826,7 @@ var require_send = __commonJS({
           if (err) return self2.onStatError(err);
           return self2.error(404);
         }
-        var p = join(path2, self2._index[i]);
+        var p = join(path3, self2._index[i]);
         debug('stat "%s"', p);
         fs.stat(p, function(err2, stat) {
           if (err2) return next(err2);
@@ -22837,10 +22837,10 @@ var require_send = __commonJS({
       }
       next();
     };
-    SendStream.prototype.stream = function stream(path2, options) {
+    SendStream.prototype.stream = function stream(path3, options) {
       var self2 = this;
       var res = this.res;
-      var stream2 = fs.createReadStream(path2, options);
+      var stream2 = fs.createReadStream(path3, options);
       this.emit("stream", stream2);
       stream2.pipe(res);
       function cleanup() {
@@ -22855,17 +22855,17 @@ var require_send = __commonJS({
         self2.emit("end");
       });
     };
-    SendStream.prototype.type = function type(path2) {
+    SendStream.prototype.type = function type(path3) {
       var res = this.res;
       if (res.getHeader("Content-Type")) return;
-      var ext = extname(path2);
+      var ext = extname(path3);
       var type2 = mime.contentType(ext) || "application/octet-stream";
       debug("content-type %s", type2);
       res.setHeader("Content-Type", type2);
     };
-    SendStream.prototype.setHeader = function setHeader(path2, stat) {
+    SendStream.prototype.setHeader = function setHeader(path3, stat) {
       var res = this.res;
-      this.emit("headers", res, path2, stat);
+      this.emit("headers", res, path3, stat);
       if (this._acceptRanges && !res.getHeader("Accept-Ranges")) {
         debug("accept ranges");
         res.setHeader("Accept-Ranges", "bytes");
@@ -22923,9 +22923,9 @@ var require_send = __commonJS({
       }
       return err instanceof Error ? createError(status, err, { expose: false }) : createError(status, err);
     }
-    function decode(path2) {
+    function decode(path3) {
       try {
-        return decodeURIComponent(path2);
+        return decodeURIComponent(path3);
       } catch (err) {
         return -1;
       }
@@ -23069,7 +23069,7 @@ var require_response = __commonJS({
     var http = __require("node:http");
     var onFinished = require_on_finished();
     var mime = require_mime_types();
-    var path = __require("node:path");
+    var path2 = __require("node:path");
     var pathIsAbsolute = __require("node:path").isAbsolute;
     var statuses = require_statuses();
     var sign = require_cookie_signature().sign;
@@ -23078,8 +23078,8 @@ var require_response = __commonJS({
     var setCharset = require_utils3().setCharset;
     var cookie = require_cookie();
     var send = require_send();
-    var extname = path.extname;
-    var resolve = path.resolve;
+    var extname = path2.extname;
+    var resolve = path2.resolve;
     var vary = require_vary();
     var { Buffer: Buffer2 } = __require("node:buffer");
     var res = Object.create(http.ServerResponse.prototype);
@@ -23225,26 +23225,26 @@ var require_response = __commonJS({
       this.type("txt");
       return this.send(body);
     };
-    res.sendFile = function sendFile(path2, options, callback) {
+    res.sendFile = function sendFile(path3, options, callback) {
       var done = callback;
       var req = this.req;
       var res2 = this;
       var next = req.next;
       var opts = options || {};
-      if (!path2) {
+      if (!path3) {
         throw new TypeError("path argument is required to res.sendFile");
       }
-      if (typeof path2 !== "string") {
+      if (typeof path3 !== "string") {
         throw new TypeError("path must be a string to res.sendFile");
       }
       if (typeof options === "function") {
         done = options;
         opts = {};
       }
-      if (!opts.root && !pathIsAbsolute(path2)) {
+      if (!opts.root && !pathIsAbsolute(path3)) {
         throw new TypeError("path must be absolute or specify root to res.sendFile");
       }
-      var pathname = encodeURI(path2);
+      var pathname = encodeURI(path3);
       opts.etag = this.app.enabled("etag");
       var file = send(req, pathname, opts);
       sendfile(res2, file, opts, function(err) {
@@ -23255,7 +23255,7 @@ var require_response = __commonJS({
         }
       });
     };
-    res.download = function download(path2, filename, options, callback) {
+    res.download = function download(path3, filename, options, callback) {
       var done = callback;
       var name = filename;
       var opts = options || null;
@@ -23272,7 +23272,7 @@ var require_response = __commonJS({
         opts = filename;
       }
       var headers2 = {
-        "Content-Disposition": contentDisposition(name || path2)
+        "Content-Disposition": contentDisposition(name || path3)
       };
       if (opts && opts.headers) {
         var keys = Object.keys(opts.headers);
@@ -23285,7 +23285,7 @@ var require_response = __commonJS({
       }
       opts = Object.create(opts);
       opts.headers = headers2;
-      var fullPath = !opts.root ? resolve(path2) : path2;
+      var fullPath = !opts.root ? resolve(path3) : path3;
       return this.sendFile(fullPath, opts, done);
     };
     res.contentType = res.type = function contentType(type) {
@@ -23568,11 +23568,11 @@ var require_serve_static = __commonJS({
         }
         var forwardError = !fallthrough;
         var originalUrl = parseUrl.original(req);
-        var path = parseUrl(req).pathname;
-        if (path === "/" && originalUrl.pathname.substr(-1) !== "/") {
-          path = "";
+        var path2 = parseUrl(req).pathname;
+        if (path2 === "/" && originalUrl.pathname.substr(-1) !== "/") {
+          path2 = "";
         }
-        var stream = send(req, path, opts);
+        var stream = send(req, path2, opts);
         stream.on("directory", onDirectory);
         if (setHeaders) {
           stream.on("headers", setHeaders);
@@ -24333,8 +24333,8 @@ var require_req = __commonJS({
       if (req.originalUrl) {
         _req.url = req.originalUrl;
       } else {
-        const path = req.path;
-        _req.url = typeof path === "string" ? path : req.url ? req.url.path || req.url : void 0;
+        const path2 = req.path;
+        _req.url = typeof path2 === "string" ? path2 : req.url ? req.url.path || req.url : void 0;
       }
       if (req.query) {
         _req.query = req.query;
@@ -24499,14 +24499,14 @@ var require_redact = __commonJS({
       }
       return obj;
     }
-    function parsePath(path) {
+    function parsePath(path2) {
       const parts = [];
       let current = "";
       let inBrackets = false;
       let inQuotes = false;
       let quoteChar = "";
-      for (let i = 0; i < path.length; i++) {
-        const char2 = path[i];
+      for (let i = 0; i < path2.length; i++) {
+        const char2 = path2[i];
         if (!inBrackets && char2 === ".") {
           if (current) {
             parts.push(current);
@@ -24637,10 +24637,10 @@ var require_redact = __commonJS({
       return current;
     }
     function redactPaths(obj, paths, censor, remove = false) {
-      for (const path of paths) {
-        const parts = parsePath(path);
+      for (const path2 of paths) {
+        const parts = parsePath(path2);
         if (parts.includes("*")) {
-          redactWildcardPath(obj, parts, censor, path, remove);
+          redactWildcardPath(obj, parts, censor, path2, remove);
         } else {
           if (remove) {
             removeKey(obj, parts);
@@ -24725,8 +24725,8 @@ var require_redact = __commonJS({
           }
         } else {
           if (afterWildcard.includes("*")) {
-            const wrappedCensor = typeof censor === "function" ? (value, path) => {
-              const fullPath = [...pathArray.slice(0, pathLength), ...path];
+            const wrappedCensor = typeof censor === "function" ? (value, path2) => {
+              const fullPath = [...pathArray.slice(0, pathLength), ...path2];
               return censor(value, fullPath);
             } : censor;
             redactWildcardPath(current, afterWildcard, wrappedCensor, originalPath, remove);
@@ -24761,8 +24761,8 @@ var require_redact = __commonJS({
         return null;
       }
       const pathStructure = /* @__PURE__ */ new Map();
-      for (const path of pathsToClone) {
-        const parts = parsePath(path);
+      for (const path2 of pathsToClone) {
+        const parts = parsePath(path2);
         let current = pathStructure;
         for (let i = 0; i < parts.length; i++) {
           const part = parts[i];
@@ -24814,24 +24814,24 @@ var require_redact = __commonJS({
       }
       return cloneSelectively(obj, pathStructure);
     }
-    function validatePath(path) {
-      if (typeof path !== "string") {
+    function validatePath(path2) {
+      if (typeof path2 !== "string") {
         throw new Error("Paths must be (non-empty) strings");
       }
-      if (path === "") {
+      if (path2 === "") {
         throw new Error("Invalid redaction path ()");
       }
-      if (path.includes("..")) {
-        throw new Error(`Invalid redaction path (${path})`);
+      if (path2.includes("..")) {
+        throw new Error(`Invalid redaction path (${path2})`);
       }
-      if (path.includes(",")) {
-        throw new Error(`Invalid redaction path (${path})`);
+      if (path2.includes(",")) {
+        throw new Error(`Invalid redaction path (${path2})`);
       }
       let bracketCount = 0;
       let inQuotes = false;
       let quoteChar = "";
-      for (let i = 0; i < path.length; i++) {
-        const char2 = path[i];
+      for (let i = 0; i < path2.length; i++) {
+        const char2 = path2[i];
         if ((char2 === '"' || char2 === "'") && bracketCount > 0) {
           if (!inQuotes) {
             inQuotes = true;
@@ -24845,20 +24845,20 @@ var require_redact = __commonJS({
         } else if (char2 === "]" && !inQuotes) {
           bracketCount--;
           if (bracketCount < 0) {
-            throw new Error(`Invalid redaction path (${path})`);
+            throw new Error(`Invalid redaction path (${path2})`);
           }
         }
       }
       if (bracketCount !== 0) {
-        throw new Error(`Invalid redaction path (${path})`);
+        throw new Error(`Invalid redaction path (${path2})`);
       }
     }
     function validatePaths(paths) {
       if (!Array.isArray(paths)) {
         throw new TypeError("paths must be an array");
       }
-      for (const path of paths) {
-        validatePath(path);
+      for (const path2 of paths) {
+        validatePath(path2);
       }
     }
     function slowRedact(options = {}) {
@@ -25026,8 +25026,8 @@ var require_redaction = __commonJS({
         if (shape[k] === null) {
           o[k] = (value) => topCensor(value, [k]);
         } else {
-          const wrappedCensor = typeof censor === "function" ? (value, path) => {
-            return censor(value, [k, ...path]);
+          const wrappedCensor = typeof censor === "function" ? (value, path2) => {
+            return censor(value, [k, ...path2]);
           } : censor;
           o[k] = Redact({
             paths: shape[k],
@@ -25211,7 +25211,7 @@ var require_atomic_sleep = __commonJS({
   "../../node_modules/.pnpm/atomic-sleep@1.0.0/node_modules/atomic-sleep/index.js"(exports, module) {
     "use strict";
     if (typeof SharedArrayBuffer !== "undefined" && typeof Atomics !== "undefined") {
-      let sleep = function(ms) {
+      let sleep2 = function(ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
@@ -25222,9 +25222,9 @@ var require_atomic_sleep = __commonJS({
         Atomics.wait(nil, 0, 0, Number(ms));
       };
       const nil = new Int32Array(new SharedArrayBuffer(4));
-      module.exports = sleep;
+      module.exports = sleep2;
     } else {
-      let sleep = function(ms) {
+      let sleep2 = function(ms) {
         const valid = ms > 0 && ms < Infinity;
         if (valid === false) {
           if (typeof ms !== "number" && typeof ms !== "bigint") {
@@ -25236,7 +25236,7 @@ var require_atomic_sleep = __commonJS({
         while (target > Date.now()) {
         }
       };
-      module.exports = sleep;
+      module.exports = sleep2;
     }
   }
 });
@@ -25248,8 +25248,8 @@ var require_sonic_boom = __commonJS({
     var fs = __require("fs");
     var EventEmitter = __require("events");
     var inherits = __require("util").inherits;
-    var path = __require("path");
-    var sleep = require_atomic_sleep();
+    var path2 = __require("path");
+    var sleep2 = require_atomic_sleep();
     var assert = __require("assert");
     var BUSY_WRITE_TIMEOUT = 100;
     var kEmptyBuffer = Buffer.allocUnsafe(0);
@@ -25302,7 +25302,7 @@ var require_sonic_boom = __commonJS({
       const mode = sonic.mode;
       if (sonic.sync) {
         try {
-          if (sonic.mkdir) fs.mkdirSync(path.dirname(file), { recursive: true });
+          if (sonic.mkdir) fs.mkdirSync(path2.dirname(file), { recursive: true });
           const fd = fs.openSync(file, flags, mode);
           fileOpened(null, fd);
         } catch (err) {
@@ -25310,7 +25310,7 @@ var require_sonic_boom = __commonJS({
           throw err;
         }
       } else if (sonic.mkdir) {
-        fs.mkdir(path.dirname(file), { recursive: true }, (err) => {
+        fs.mkdir(path2.dirname(file), { recursive: true }, (err) => {
           if (err) return fileOpened(err);
           fs.open(file, flags, mode, fileOpened);
         });
@@ -25395,7 +25395,7 @@ var require_sonic_boom = __commonJS({
           if ((err.code === "EAGAIN" || err.code === "EBUSY") && this.retryEAGAIN(err, this._writingBuf.length, this._len - this._writingBuf.length)) {
             if (this.sync) {
               try {
-                sleep(BUSY_WRITE_TIMEOUT);
+                sleep2(BUSY_WRITE_TIMEOUT);
                 this.release(void 0, 0);
               } catch (err2) {
                 this.release(err2);
@@ -25708,7 +25708,7 @@ var require_sonic_boom = __commonJS({
           if (shouldRetry && !this.retryEAGAIN(err, buf2.length, this._len - buf2.length)) {
             throw err;
           }
-          sleep(BUSY_WRITE_TIMEOUT);
+          sleep2(BUSY_WRITE_TIMEOUT);
         }
       }
       try {
@@ -25745,7 +25745,7 @@ var require_sonic_boom = __commonJS({
           if (shouldRetry && !this.retryEAGAIN(err, buf2.length, this._len - buf2.length)) {
             throw err;
           }
-          sleep(BUSY_WRITE_TIMEOUT);
+          sleep2(BUSY_WRITE_TIMEOUT);
         }
       }
     }
@@ -26486,7 +26486,7 @@ var require_transport = __commonJS({
     var { createRequire } = __require("module");
     var getCallers = require_caller();
     var { join, isAbsolute, sep } = __require("node:path");
-    var sleep = require_atomic_sleep();
+    var sleep2 = require_atomic_sleep();
     var onExit = require_on_exit_leak_free();
     var ThreadStream = require_thread_stream();
     function setupOnExit(stream) {
@@ -26520,7 +26520,7 @@ var require_transport = __commonJS({
           return;
         }
         stream.flushSync();
-        sleep(100);
+        sleep2(100);
         stream.end();
       }
       return stream;
@@ -26650,7 +26650,7 @@ var require_tools = __commonJS({
         }
       };
     }
-    function noop() {
+    function noop2() {
     }
     function genLog(level, hook) {
       if (!hook) return LOG;
@@ -26836,10 +26836,10 @@ var require_tools = __commonJS({
       return stream;
       function filterBrokenPipe(err) {
         if (err.code === "EPIPE") {
-          stream.write = noop;
-          stream.end = noop;
-          stream.flushSync = noop;
-          stream.destroy = noop;
+          stream.write = noop2;
+          stream.end = noop2;
+          stream.flushSync = noop2;
+          stream.destroy = noop2;
           return;
         }
         stream.removeListener("error", filterBrokenPipe);
@@ -26893,7 +26893,7 @@ var require_tools = __commonJS({
         }
         const { enabled, onChild } = opts;
         if (enabled === false) opts.level = "silent";
-        if (!onChild) opts.onChild = noop;
+        if (!onChild) opts.onChild = noop2;
         if (!stream) {
           if (!hasBeenTampered(process.stdout)) {
             stream = buildSafeSonicBoom({ fd: process.stdout.fd || 1 });
@@ -26934,7 +26934,7 @@ var require_tools = __commonJS({
       return destination;
     }
     module.exports = {
-      noop,
+      noop: noop2,
       buildSafeSonicBoom,
       asChindings,
       asJson,
@@ -26982,7 +26982,7 @@ var require_levels = __commonJS({
       hooksSym,
       levelCompSym
     } = require_symbols();
-    var { noop, genLog } = require_tools();
+    var { noop: noop2, genLog } = require_tools();
     var { DEFAULT_LEVELS, SORTING_ORDER } = require_constants();
     var levelMethods = {
       fatal: (hook) => {
@@ -27053,7 +27053,7 @@ var require_levels = __commonJS({
       const hook = this[hooksSym].logMethod;
       for (const key in values) {
         if (levelComparison(values[key], levelVal) === false) {
-          this[key] = noop;
+          this[key] = noop2;
           continue;
         }
         this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values[key], hook);
@@ -27216,7 +27216,7 @@ var require_proto = __commonJS({
       asJson,
       buildFormatters,
       stringify,
-      noop
+      noop: noop2
     } = require_tools();
     var {
       version: version2
@@ -27278,7 +27278,7 @@ var require_proto = __commonJS({
         }
         instance[chindingsSym] = asChindings(instance, bindings2);
         instance[setLevelSym](this.level);
-        if (this.onChild !== noop) {
+        if (this.onChild !== noop2) {
           this.onChild(instance);
         }
         return instance;
@@ -27395,7 +27395,7 @@ var require_proto = __commonJS({
       }
       const stream = this[streamSym];
       if (typeof stream.flush === "function") {
-        stream.flush(cb || noop);
+        stream.flush(cb || noop2);
       } else if (cb) cb();
     }
   }
@@ -28170,9 +28170,9 @@ var require_pino = __commonJS({
   "../../node_modules/.pnpm/pino@9.14.0/node_modules/pino/pino.js"(exports, module) {
     function pinoBundlerAbsolutePath(p) {
       try {
-        const path = __require("path");
+        const path2 = __require("path");
         const outputDir = "/home/runner/workspace/artifacts/api-server/dist";
-        return path.resolve(outputDir, p.replace(/^\.\//, ""));
+        return path2.resolve(outputDir, p.replace(/^\.\//, ""));
       } catch (e2) {
         const f = new Function("p", "return new URL(p, import.meta.url).pathname");
         return f(p);
@@ -28196,7 +28196,7 @@ var require_pino = __commonJS({
       buildFormatters,
       stringify,
       normalizeDestFileDescriptor,
-      noop
+      noop: noop2
     } = require_tools();
     var { version: version2 } = require_meta();
     var {
@@ -28355,7 +28355,7 @@ var require_pino = __commonJS({
         [chindingsSym]: chindings,
         [formattersSym]: allFormatters,
         [hooksSym]: hooks,
-        silent: noop,
+        silent: noop2,
         onChild,
         [msgPrefixSym]: msgPrefix
       });
@@ -31983,12 +31983,12 @@ var require_split2 = __commonJS({
         self2.push(val);
       }
     }
-    function noop(incoming) {
+    function noop2(incoming) {
       return incoming;
     }
     function split(matcher, mapper, options) {
       matcher = matcher || /\r?\n/;
-      mapper = mapper || noop;
+      mapper = mapper || noop2;
       options = options || {};
       switch (arguments.length) {
         case 1:
@@ -32007,7 +32007,7 @@ var require_split2 = __commonJS({
             matcher = /\r?\n/;
           } else if (typeof mapper === "object") {
             options = mapper;
-            mapper = noop;
+            mapper = noop2;
           }
       }
       options = Object.assign({}, options);
@@ -32037,8 +32037,8 @@ var require_split2 = __commonJS({
 var require_helper = __commonJS({
   "../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/helper.js"(exports, module) {
     "use strict";
-    var path = __require("path");
-    var Stream = __require("stream").Stream;
+    var path2 = __require("path");
+    var Stream2 = __require("stream").Stream;
     var split = require_split2();
     var util2 = __require("util");
     var defaultPort = 5432;
@@ -32055,7 +32055,7 @@ var require_helper = __commonJS({
     var nrOfFields = fieldNames.length;
     var passKey = fieldNames[nrOfFields - 1];
     function warn() {
-      var isWritable = warnStream instanceof Stream && true === warnStream.writable;
+      var isWritable = warnStream instanceof Stream2 && true === warnStream.writable;
       if (isWritable) {
         var args = Array.prototype.slice.call(arguments).concat("\n");
         warnStream.write(util2.format.apply(util2, args));
@@ -32076,7 +32076,7 @@ var require_helper = __commonJS({
     };
     module.exports.getFileName = function(rawEnv) {
       var env = rawEnv || process.env;
-      var file = env.PGPASSFILE || (isWin ? path.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path.join(env.HOME || "./", ".pgpass"));
+      var file = env.PGPASSFILE || (isWin ? path2.join(env.APPDATA || "./", "postgresql", "pgpass.conf") : path2.join(env.HOME || "./", ".pgpass"));
       return file;
     };
     module.exports.usePgPass = function(stats, fname) {
@@ -32208,7 +32208,7 @@ var require_helper = __commonJS({
 var require_lib4 = __commonJS({
   "../../node_modules/.pnpm/pgpass@1.0.5/node_modules/pgpass/lib/index.js"(exports, module) {
     "use strict";
-    var path = __require("path");
+    var path2 = __require("path");
     var fs = __require("fs");
     var helper = require_helper();
     module.exports = function(connInfo, cb) {
@@ -42968,7 +42968,7 @@ var require_UnprocessableEntityError = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UnprocessableEntityError = void 0;
     var errors = __importStar(require_errors());
-    var UnprocessableEntityError = class _UnprocessableEntityError extends errors.ElevenLabsError {
+    var UnprocessableEntityError2 = class _UnprocessableEntityError extends errors.ElevenLabsError {
       constructor(body) {
         super({
           message: "UnprocessableEntityError",
@@ -42978,7 +42978,7 @@ var require_UnprocessableEntityError = __commonJS({
         Object.setPrototypeOf(this, _UnprocessableEntityError.prototype);
       }
     };
-    exports.UnprocessableEntityError = UnprocessableEntityError;
+    exports.UnprocessableEntityError = UnprocessableEntityError2;
   }
 });
 
@@ -43026,7 +43026,7 @@ var require_BadRequestError = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BadRequestError = void 0;
     var errors = __importStar(require_errors());
-    var BadRequestError = class _BadRequestError extends errors.ElevenLabsError {
+    var BadRequestError2 = class _BadRequestError extends errors.ElevenLabsError {
       constructor(body) {
         super({
           message: "BadRequestError",
@@ -43036,7 +43036,7 @@ var require_BadRequestError = __commonJS({
         Object.setPrototypeOf(this, _BadRequestError.prototype);
       }
     };
-    exports.BadRequestError = BadRequestError;
+    exports.BadRequestError = BadRequestError2;
   }
 });
 
@@ -43142,7 +43142,7 @@ var require_NotFoundError = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.NotFoundError = void 0;
     var errors = __importStar(require_errors());
-    var NotFoundError = class _NotFoundError extends errors.ElevenLabsError {
+    var NotFoundError2 = class _NotFoundError extends errors.ElevenLabsError {
       constructor(body) {
         super({
           message: "NotFoundError",
@@ -43152,7 +43152,7 @@ var require_NotFoundError = __commonJS({
         Object.setPrototypeOf(this, _NotFoundError.prototype);
       }
     };
-    exports.NotFoundError = NotFoundError;
+    exports.NotFoundError = NotFoundError2;
   }
 });
 
@@ -43317,7 +43317,7 @@ var require_runtime = __commonJS({
     exports.RUNTIME = void 0;
     exports.RUNTIME = evaluateRuntime();
     function evaluateRuntime() {
-      var _a, _b, _c, _d, _e;
+      var _a2, _b, _c, _d, _e;
       const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
       if (isBrowser) {
         return {
@@ -43325,7 +43325,7 @@ var require_runtime = __commonJS({
           version: window.navigator.userAgent
         };
       }
-      const isCloudflare = typeof globalThis !== "undefined" && ((_a = globalThis === null || globalThis === void 0 ? void 0 : globalThis.navigator) === null || _a === void 0 ? void 0 : _a.userAgent) === "Cloudflare-Workers";
+      const isCloudflare = typeof globalThis !== "undefined" && ((_a2 = globalThis === null || globalThis === void 0 ? void 0 : globalThis.navigator) === null || _a2 === void 0 ? void 0 : _a2.userAgent) === "Cloudflare-Workers";
       if (isCloudflare) {
         return {
           type: "workerd"
@@ -44124,14 +44124,14 @@ var require_url_state_machine = __commonJS({
       return url.replace(/\u0009|\u000A|\u000D/g, "");
     }
     function shortenPath(url) {
-      const path = url.path;
-      if (path.length === 0) {
+      const path2 = url.path;
+      if (path2.length === 0) {
         return;
       }
-      if (url.scheme === "file" && path.length === 1 && isNormalizedWindowsDriveLetter(path[0])) {
+      if (url.scheme === "file" && path2.length === 1 && isNormalizedWindowsDriveLetter(path2[0])) {
         return;
       }
-      path.pop();
+      path2.pop();
     }
     function includesCredentials(url) {
       return url.username !== "" || url.password !== "";
@@ -45169,13 +45169,13 @@ var require_lib7 = __commonJS({
     function _interopDefault(ex) {
       return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
     }
-    var Stream = _interopDefault(__require("stream"));
+    var Stream2 = _interopDefault(__require("stream"));
     var http = _interopDefault(__require("http"));
     var Url = _interopDefault(__require("url"));
     var whatwgUrl = _interopDefault(require_public_api());
     var https = _interopDefault(__require("https"));
     var zlib = _interopDefault(__require("zlib"));
-    var Readable = Stream.Readable;
+    var Readable = Stream2.Readable;
     var BUFFER = /* @__PURE__ */ Symbol("buffer");
     var TYPE = /* @__PURE__ */ Symbol("type");
     var Blob2 = class _Blob {
@@ -45293,7 +45293,7 @@ var require_lib7 = __commonJS({
     } catch (e2) {
     }
     var INTERNALS = /* @__PURE__ */ Symbol("Body internals");
-    var PassThrough = Stream.PassThrough;
+    var PassThrough = Stream2.PassThrough;
     function Body(body) {
       var _this = this;
       var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$size = _ref.size;
@@ -45310,7 +45310,7 @@ var require_lib7 = __commonJS({
         body = Buffer.from(body);
       } else if (ArrayBuffer.isView(body)) {
         body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
-      } else if (body instanceof Stream) ;
+      } else if (body instanceof Stream2) ;
       else {
         body = Buffer.from(String(body));
       }
@@ -45321,7 +45321,7 @@ var require_lib7 = __commonJS({
       };
       this.size = size;
       this.timeout = timeout;
-      if (body instanceof Stream) {
+      if (body instanceof Stream2) {
         body.on("error", function(err) {
           const error = err.name === "AbortError" ? err : new FetchError(`Invalid response body while trying to fetch ${_this.url}: ${err.message}`, "system", err);
           _this[INTERNALS].error = error;
@@ -45445,7 +45445,7 @@ var require_lib7 = __commonJS({
       if (Buffer.isBuffer(body)) {
         return Body.Promise.resolve(body);
       }
-      if (!(body instanceof Stream)) {
+      if (!(body instanceof Stream2)) {
         return Body.Promise.resolve(Buffer.alloc(0));
       }
       let accum = [];
@@ -45544,7 +45544,7 @@ var require_lib7 = __commonJS({
       if (instance.bodyUsed) {
         throw new Error("cannot clone body after it is used");
       }
-      if (body instanceof Stream && typeof body.getBoundary !== "function") {
+      if (body instanceof Stream2 && typeof body.getBoundary !== "function") {
         p1 = new PassThrough();
         p2 = new PassThrough();
         body.pipe(p1);
@@ -45571,7 +45571,7 @@ var require_lib7 = __commonJS({
         return null;
       } else if (typeof body.getBoundary === "function") {
         return `multipart/form-data;boundary=${body.getBoundary()}`;
-      } else if (body instanceof Stream) {
+      } else if (body instanceof Stream2) {
         return null;
       } else {
         return "text/plain;charset=UTF-8";
@@ -45995,7 +45995,7 @@ var require_lib7 = __commonJS({
       }
       return parse_url(urlStr);
     }
-    var streamDestructionSupported = "destroy" in Stream.Readable.prototype;
+    var streamDestructionSupported = "destroy" in Stream2.Readable.prototype;
     function isRequest(input) {
       return typeof input === "object" && typeof input[INTERNALS$2] === "object";
     }
@@ -46102,7 +46102,7 @@ var require_lib7 = __commonJS({
       if (!/^https?:$/.test(parsedURL.protocol)) {
         throw new TypeError("Only HTTP(S) protocols are supported");
       }
-      if (request.signal && request.body instanceof Stream.Readable && !streamDestructionSupported) {
+      if (request.signal && request.body instanceof Stream2.Readable && !streamDestructionSupported) {
         throw new Error("Cancellation of streamed requests with AbortSignal is not supported in node < 8");
       }
       let contentLengthValue = null;
@@ -46144,7 +46144,7 @@ var require_lib7 = __commonJS({
     AbortError.prototype.constructor = AbortError;
     AbortError.prototype.name = "AbortError";
     var URL$1 = Url.URL || whatwgUrl.URL;
-    var PassThrough$1 = Stream.PassThrough;
+    var PassThrough$1 = Stream2.PassThrough;
     var isDomainOrSubdomain = function isDomainOrSubdomain2(destination, original) {
       const orig = new URL$1(original).hostname;
       const dest = new URL$1(destination).hostname;
@@ -46169,7 +46169,7 @@ var require_lib7 = __commonJS({
         const abort = function abort2() {
           let error = new AbortError("The user aborted a request.");
           reject(error);
-          if (request.body && request.body instanceof Stream.Readable) {
+          if (request.body && request.body instanceof Stream2.Readable) {
             destroyStream(request.body, error);
           }
           if (!response || !response.body) return;
@@ -46522,7 +46522,7 @@ var require_getRequestBody = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRequestBody = getRequestBody;
     var json_1 = require_json2();
-    function getRequestBody(_a) {
+    function getRequestBody(_a2) {
       return __awaiter(this, arguments, void 0, function* ({ body, type }) {
         if (type.includes("json")) {
           return (0, json_1.toJson)(body);
@@ -47007,13 +47007,13 @@ var require_form_data = __commonJS({
     var src_exports = {};
     __export2(src_exports, {
       Blob: () => Blob2,
-      File: () => File,
+      File: () => File2,
       FormData: () => FormData2
     });
     module.exports = __toCommonJS(src_exports);
     var isFunction = (value) => typeof value === "function";
     var isObject = (value) => typeof value === "object" && value != null && !Array.isArray(value);
-    var isAsyncIterable = (value) => isObject(value) && isFunction(value[Symbol.asyncIterator]);
+    var isAsyncIterable2 = (value) => isObject(value) && isFunction(value[Symbol.asyncIterator]);
     var MAX_CHUNK_SIZE = 65536;
     async function* clonePart(value) {
       if (value.byteLength <= MAX_CHUNK_SIZE) {
@@ -47044,7 +47044,7 @@ var require_form_data = __commonJS({
       }
     }
     var getStreamIterator = (source) => {
-      if (isAsyncIterable(source)) {
+      if (isAsyncIterable2(source)) {
         return chunkStream(source);
       }
       if (isFunction(source.getReader)) {
@@ -47252,7 +47252,7 @@ var require_form_data = __commonJS({
     var isBlob = (value) => value instanceof Blob2;
     var _name;
     var _lastModified;
-    var File = class extends Blob2 {
+    var File2 = class extends Blob2 {
       /**
        * Creates a new File instance.
        *
@@ -47300,7 +47300,7 @@ var require_form_data = __commonJS({
     };
     _name = /* @__PURE__ */ new WeakMap();
     _lastModified = /* @__PURE__ */ new WeakMap();
-    var isFile = (value) => value instanceof File;
+    var isFile = (value) => value instanceof File2;
     var _entries;
     var _setEntry;
     var setEntry_fn;
@@ -47470,13 +47470,13 @@ var require_form_data = __commonJS({
       name = String(name);
       let value;
       if (isFile(rawValue)) {
-        value = fileName === void 0 ? rawValue : new File([rawValue], fileName, {
+        value = fileName === void 0 ? rawValue : new File2([rawValue], fileName, {
           // otherwise, create new File with given fileName
           type: rawValue.type,
           lastModified: rawValue.lastModified
         });
       } else if (isBlob(rawValue)) {
-        value = new File([rawValue], fileName === void 0 ? "blob" : fileName, {
+        value = new File2([rawValue], fileName === void 0 ? "blob" : fileName, {
           type: rawValue.type
         });
       } else if (fileName) {
@@ -47560,7 +47560,7 @@ var require_lib8 = __commonJS({
     var escapeName = (name) => String(name).replace(/\r/g, "%0D").replace(/\n/g, "%0A").replace(/"/g, "%22");
     var isFunction = (value) => typeof value === "function";
     var isReadableStreamFallback = (value) => !!value && typeof value === "object" && !Array.isArray(value) && isFunction(value.getReader);
-    var isAsyncIterable = (value) => isFunction(value[Symbol.asyncIterator]);
+    var isAsyncIterable2 = (value) => isFunction(value[Symbol.asyncIterator]);
     async function* readStream(readable) {
       const reader = readable.getReader();
       while (true) {
@@ -47577,7 +47577,7 @@ var require_lib8 = __commonJS({
       }
     }
     var getStreamIterator = (source) => {
-      if (isAsyncIterable(source)) {
+      if (isAsyncIterable2(source)) {
         return chunkStream(source);
       }
       if (isReadableStreamFallback(source)) {
@@ -50140,12 +50140,12 @@ var require_legacy = __commonJS({
     "use strict";
     var { ArrayIsArray, ObjectSetPrototypeOf } = require_primordials();
     var { EventEmitter: EE } = __require("events");
-    function Stream(opts) {
+    function Stream2(opts) {
       EE.call(this, opts);
     }
-    ObjectSetPrototypeOf(Stream.prototype, EE.prototype);
-    ObjectSetPrototypeOf(Stream, EE);
-    Stream.prototype.pipe = function(dest, options) {
+    ObjectSetPrototypeOf(Stream2.prototype, EE.prototype);
+    ObjectSetPrototypeOf(Stream2, EE);
+    Stream2.prototype.pipe = function(dest, options) {
       const source = this;
       function ondata(chunk) {
         if (dest.writable && dest.write(chunk) === false && source.pause) {
@@ -50206,7 +50206,7 @@ var require_legacy = __commonJS({
       else emitter._events[event] = [fn, emitter._events[event]];
     }
     module.exports = {
-      Stream,
+      Stream: Stream2,
       prependListener
     };
   }
@@ -50873,7 +50873,7 @@ var require_readable = __commonJS({
     module.exports = Readable;
     Readable.ReadableState = ReadableState;
     var { EventEmitter: EE } = __require("events");
-    var { Stream, prependListener } = require_legacy();
+    var { Stream: Stream2, prependListener } = require_legacy();
     var { Buffer: Buffer2 } = __require("buffer");
     var { addAbortSignal } = require_add_abort_signal();
     var eos = require_end_of_stream();
@@ -50898,8 +50898,8 @@ var require_readable = __commonJS({
     var kPaused = Symbol2("kPaused");
     var { StringDecoder } = require_string_decoder();
     var from = require_from();
-    ObjectSetPrototypeOf(Readable.prototype, Stream.prototype);
-    ObjectSetPrototypeOf(Readable, Stream);
+    ObjectSetPrototypeOf(Readable.prototype, Stream2.prototype);
+    ObjectSetPrototypeOf(Readable, Stream2);
     var nop = () => {
     };
     var { errorOrDestroy } = destroyImpl;
@@ -51004,7 +51004,7 @@ var require_readable = __commonJS({
         if (typeof options.construct === "function") this._construct = options.construct;
         if (options.signal && !isDuplex) addAbortSignal(options.signal, this);
       }
-      Stream.call(this, options);
+      Stream2.call(this, options);
       destroyImpl.construct(this, () => {
         if (this._readableState.needReadable) {
           maybeReadMore(this, this._readableState);
@@ -51050,8 +51050,8 @@ var require_readable = __commonJS({
           }
         } else if (chunk instanceof Buffer2) {
           encoding = "";
-        } else if (Stream._isUint8Array(chunk)) {
-          chunk = Stream._uint8ArrayToBuffer(chunk);
+        } else if (Stream2._isUint8Array(chunk)) {
+          chunk = Stream2._uint8ArrayToBuffer(chunk);
           encoding = "";
         } else if (chunk != null) {
           err = new ERR_INVALID_ARG_TYPE3("chunk", ["string", "Buffer", "Uint8Array"], chunk);
@@ -51421,7 +51421,7 @@ var require_readable = __commonJS({
       return this;
     };
     Readable.prototype.on = function(ev, fn) {
-      const res = Stream.prototype.on.call(this, ev, fn);
+      const res = Stream2.prototype.on.call(this, ev, fn);
       const state = this._readableState;
       if (ev === "data") {
         state.readableListening = this.listenerCount("readable") > 0;
@@ -51443,7 +51443,7 @@ var require_readable = __commonJS({
     };
     Readable.prototype.addListener = Readable.prototype.on;
     Readable.prototype.removeListener = function(ev, fn) {
-      const res = Stream.prototype.removeListener.call(this, ev, fn);
+      const res = Stream2.prototype.removeListener.call(this, ev, fn);
       if (ev === "readable") {
         process2.nextTick(updateReadableListening, this);
       }
@@ -51451,7 +51451,7 @@ var require_readable = __commonJS({
     };
     Readable.prototype.off = Readable.prototype.removeListener;
     Readable.prototype.removeAllListeners = function(ev) {
-      const res = Stream.prototype.removeAllListeners.apply(this, arguments);
+      const res = Stream2.prototype.removeAllListeners.apply(this, arguments);
       if (ev === "readable" || ev === void 0) {
         process2.nextTick(updateReadableListening, this);
       }
@@ -51836,7 +51836,7 @@ var require_writable = __commonJS({
     module.exports = Writable;
     Writable.WritableState = WritableState;
     var { EventEmitter: EE } = __require("events");
-    var Stream = require_legacy().Stream;
+    var Stream2 = require_legacy().Stream;
     var { Buffer: Buffer2 } = __require("buffer");
     var destroyImpl = require_destroy();
     var { addAbortSignal } = require_add_abort_signal();
@@ -51853,8 +51853,8 @@ var require_writable = __commonJS({
       ERR_UNKNOWN_ENCODING
     } = require_errors3().codes;
     var { errorOrDestroy } = destroyImpl;
-    ObjectSetPrototypeOf(Writable.prototype, Stream.prototype);
-    ObjectSetPrototypeOf(Writable, Stream);
+    ObjectSetPrototypeOf(Writable.prototype, Stream2.prototype);
+    ObjectSetPrototypeOf(Writable, Stream2);
     function nop() {
     }
     var kOnFinished = Symbol2("kOnFinished");
@@ -51920,7 +51920,7 @@ var require_writable = __commonJS({
         if (typeof options.construct === "function") this._construct = options.construct;
         if (options.signal) addAbortSignal(options.signal, this);
       }
-      Stream.call(this, options);
+      Stream2.call(this, options);
       destroyImpl.construct(this, () => {
         const state = this._writableState;
         if (!state.writing) {
@@ -51960,8 +51960,8 @@ var require_writable = __commonJS({
           }
         } else if (chunk instanceof Buffer2) {
           encoding = "buffer";
-        } else if (Stream._isUint8Array(chunk)) {
-          chunk = Stream._uint8ArrayToBuffer(chunk);
+        } else if (Stream2._isUint8Array(chunk)) {
+          chunk = Stream2._uint8ArrayToBuffer(chunk);
           encoding = "buffer";
         } else {
           throw new ERR_INVALID_ARG_TYPE3("chunk", ["string", "Buffer", "Uint8Array"], chunk);
@@ -54111,19 +54111,19 @@ var require_stream2 = __commonJS({
     var eos = require_end_of_stream();
     var promises = require_promises();
     var utils = require_utils7();
-    var Stream = module.exports = require_legacy().Stream;
-    Stream.isDestroyed = utils.isDestroyed;
-    Stream.isDisturbed = utils.isDisturbed;
-    Stream.isErrored = utils.isErrored;
-    Stream.isReadable = utils.isReadable;
-    Stream.isWritable = utils.isWritable;
-    Stream.Readable = require_readable();
+    var Stream2 = module.exports = require_legacy().Stream;
+    Stream2.isDestroyed = utils.isDestroyed;
+    Stream2.isDisturbed = utils.isDisturbed;
+    Stream2.isErrored = utils.isErrored;
+    Stream2.isReadable = utils.isReadable;
+    Stream2.isWritable = utils.isWritable;
+    Stream2.Readable = require_readable();
     for (const key of ObjectKeys(streamReturningOperators)) {
       let fn = function(...args) {
         if (new.target) {
           throw ERR_ILLEGAL_CONSTRUCTOR();
         }
-        return Stream.Readable.from(ReflectApply(op, this, args));
+        return Stream2.Readable.from(ReflectApply(op, this, args));
       };
       const op = streamReturningOperators[key];
       ObjectDefineProperty(fn, "name", {
@@ -54134,7 +54134,7 @@ var require_stream2 = __commonJS({
         __proto__: null,
         value: op.length
       });
-      ObjectDefineProperty(Stream.Readable.prototype, key, {
+      ObjectDefineProperty(Stream2.Readable.prototype, key, {
         __proto__: null,
         value: fn,
         enumerable: false,
@@ -54158,7 +54158,7 @@ var require_stream2 = __commonJS({
         __proto__: null,
         value: op.length
       });
-      ObjectDefineProperty(Stream.Readable.prototype, key, {
+      ObjectDefineProperty(Stream2.Readable.prototype, key, {
         __proto__: null,
         value: fn,
         enumerable: false,
@@ -54166,19 +54166,19 @@ var require_stream2 = __commonJS({
         writable: true
       });
     }
-    Stream.Writable = require_writable();
-    Stream.Duplex = require_duplex();
-    Stream.Transform = require_transform();
-    Stream.PassThrough = require_passthrough();
-    Stream.pipeline = pipeline;
+    Stream2.Writable = require_writable();
+    Stream2.Duplex = require_duplex();
+    Stream2.Transform = require_transform();
+    Stream2.PassThrough = require_passthrough();
+    Stream2.pipeline = pipeline;
     var { addAbortSignal } = require_add_abort_signal();
-    Stream.addAbortSignal = addAbortSignal;
-    Stream.finished = eos;
-    Stream.destroy = destroyer;
-    Stream.compose = compose;
-    Stream.setDefaultHighWaterMark = setDefaultHighWaterMark;
-    Stream.getDefaultHighWaterMark = getDefaultHighWaterMark;
-    ObjectDefineProperty(Stream, "promises", {
+    Stream2.addAbortSignal = addAbortSignal;
+    Stream2.finished = eos;
+    Stream2.destroy = destroyer;
+    Stream2.compose = compose;
+    Stream2.setDefaultHighWaterMark = setDefaultHighWaterMark;
+    Stream2.getDefaultHighWaterMark = getDefaultHighWaterMark;
+    ObjectDefineProperty(Stream2, "promises", {
       __proto__: null,
       configurable: true,
       enumerable: true,
@@ -54200,11 +54200,11 @@ var require_stream2 = __commonJS({
         return promises.finished;
       }
     });
-    Stream.Stream = Stream;
-    Stream._isUint8Array = function isUint8Array(value) {
+    Stream2.Stream = Stream2;
+    Stream2._isUint8Array = function isUint8Array(value) {
       return value instanceof Uint8Array;
     };
-    Stream._uint8ArrayToBuffer = function _uint8ArrayToBuffer(chunk) {
+    Stream2._uint8ArrayToBuffer = function _uint8ArrayToBuffer(chunk) {
       return Buffer2.from(chunk.buffer, chunk.byteOffset, chunk.byteLength);
     };
   }
@@ -54214,32 +54214,32 @@ var require_stream2 = __commonJS({
 var require_ours = __commonJS({
   "../../node_modules/.pnpm/readable-stream@4.7.0/node_modules/readable-stream/lib/ours/index.js"(exports, module) {
     "use strict";
-    var Stream = __require("stream");
-    if (Stream && process.env.READABLE_STREAM === "disable") {
-      const promises = Stream.promises;
-      module.exports._uint8ArrayToBuffer = Stream._uint8ArrayToBuffer;
-      module.exports._isUint8Array = Stream._isUint8Array;
-      module.exports.isDisturbed = Stream.isDisturbed;
-      module.exports.isErrored = Stream.isErrored;
-      module.exports.isReadable = Stream.isReadable;
-      module.exports.Readable = Stream.Readable;
-      module.exports.Writable = Stream.Writable;
-      module.exports.Duplex = Stream.Duplex;
-      module.exports.Transform = Stream.Transform;
-      module.exports.PassThrough = Stream.PassThrough;
-      module.exports.addAbortSignal = Stream.addAbortSignal;
-      module.exports.finished = Stream.finished;
-      module.exports.destroy = Stream.destroy;
-      module.exports.pipeline = Stream.pipeline;
-      module.exports.compose = Stream.compose;
-      Object.defineProperty(Stream, "promises", {
+    var Stream2 = __require("stream");
+    if (Stream2 && process.env.READABLE_STREAM === "disable") {
+      const promises = Stream2.promises;
+      module.exports._uint8ArrayToBuffer = Stream2._uint8ArrayToBuffer;
+      module.exports._isUint8Array = Stream2._isUint8Array;
+      module.exports.isDisturbed = Stream2.isDisturbed;
+      module.exports.isErrored = Stream2.isErrored;
+      module.exports.isReadable = Stream2.isReadable;
+      module.exports.Readable = Stream2.Readable;
+      module.exports.Writable = Stream2.Writable;
+      module.exports.Duplex = Stream2.Duplex;
+      module.exports.Transform = Stream2.Transform;
+      module.exports.PassThrough = Stream2.PassThrough;
+      module.exports.addAbortSignal = Stream2.addAbortSignal;
+      module.exports.finished = Stream2.finished;
+      module.exports.destroy = Stream2.destroy;
+      module.exports.pipeline = Stream2.pipeline;
+      module.exports.compose = Stream2.compose;
+      Object.defineProperty(Stream2, "promises", {
         configurable: true,
         enumerable: true,
         get() {
           return promises;
         }
       });
-      module.exports.Stream = Stream.Stream;
+      module.exports.Stream = Stream2.Stream;
     } else {
       const CustomStream = require_stream2();
       const promises = require_promises();
@@ -54277,7 +54277,7 @@ var require_ours = __commonJS({
 // ../../node_modules/.pnpm/delayed-stream@1.0.0/node_modules/delayed-stream/lib/delayed_stream.js
 var require_delayed_stream = __commonJS({
   "../../node_modules/.pnpm/delayed-stream@1.0.0/node_modules/delayed-stream/lib/delayed_stream.js"(exports, module) {
-    var Stream = __require("stream").Stream;
+    var Stream2 = __require("stream").Stream;
     var util2 = __require("util");
     module.exports = DelayedStream;
     function DelayedStream() {
@@ -54289,7 +54289,7 @@ var require_delayed_stream = __commonJS({
       this._released = false;
       this._bufferedEvents = [];
     }
-    util2.inherits(DelayedStream, Stream);
+    util2.inherits(DelayedStream, Stream2);
     DelayedStream.create = function(source, options) {
       var delayedStream = new this();
       options = options || {};
@@ -54336,7 +54336,7 @@ var require_delayed_stream = __commonJS({
       this._bufferedEvents = [];
     };
     DelayedStream.prototype.pipe = function() {
-      var r = Stream.prototype.pipe.apply(this, arguments);
+      var r = Stream2.prototype.pipe.apply(this, arguments);
       this.resume();
       return r;
     };
@@ -54369,7 +54369,7 @@ var require_delayed_stream = __commonJS({
 var require_combined_stream = __commonJS({
   "../../node_modules/.pnpm/combined-stream@1.0.8/node_modules/combined-stream/lib/combined_stream.js"(exports, module) {
     var util2 = __require("util");
-    var Stream = __require("stream").Stream;
+    var Stream2 = __require("stream").Stream;
     var DelayedStream = require_delayed_stream();
     module.exports = CombinedStream;
     function CombinedStream() {
@@ -54384,7 +54384,7 @@ var require_combined_stream = __commonJS({
       this._insideLoop = false;
       this._pendingNext = false;
     }
-    util2.inherits(CombinedStream, Stream);
+    util2.inherits(CombinedStream, Stream2);
     CombinedStream.create = function(options) {
       var combinedStream = new this();
       options = options || {};
@@ -54416,7 +54416,7 @@ var require_combined_stream = __commonJS({
       return this;
     };
     CombinedStream.prototype.pipe = function(dest, options) {
-      Stream.prototype.pipe.call(this, dest, options);
+      Stream2.prototype.pipe.call(this, dest, options);
       this.resume();
       return dest;
     };
@@ -63121,11 +63121,11 @@ var require_mime_types2 = __commonJS({
       }
       return exts[0];
     }
-    function lookup(path) {
-      if (!path || typeof path !== "string") {
+    function lookup(path2) {
+      if (!path2 || typeof path2 !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path).toLowerCase().substr(1);
+      var extension2 = extname("x." + path2).toLowerCase().substr(1);
       if (!extension2) {
         return false;
       }
@@ -63383,7 +63383,7 @@ var require_es_set_tostringtag = __commonJS({
     var GetIntrinsic = require_get_intrinsic();
     var $defineProperty = GetIntrinsic("%Object.defineProperty%", true);
     var hasToStringTag = require_shams2()();
-    var hasOwn = require_hasown();
+    var hasOwn2 = require_hasown();
     var $TypeError = require_type();
     var toStringTag = hasToStringTag ? Symbol.toStringTag : null;
     module.exports = function setToStringTag(object, value) {
@@ -63392,7 +63392,7 @@ var require_es_set_tostringtag = __commonJS({
       if (typeof overrideIfSet !== "undefined" && typeof overrideIfSet !== "boolean" || typeof nonConfigurable !== "undefined" && typeof nonConfigurable !== "boolean") {
         throw new $TypeError("if provided, the `overrideIfSet` and `nonConfigurable` options must be booleans");
       }
-      if (toStringTag && (overrideIfSet || !hasOwn(object, toStringTag))) {
+      if (toStringTag && (overrideIfSet || !hasOwn2(object, toStringTag))) {
         if ($defineProperty) {
           $defineProperty(object, toStringTag, {
             configurable: !nonConfigurable,
@@ -63427,17 +63427,17 @@ var require_form_data2 = __commonJS({
     "use strict";
     var CombinedStream = require_combined_stream();
     var util2 = __require("util");
-    var path = __require("path");
+    var path2 = __require("path");
     var http = __require("http");
     var https = __require("https");
     var parseUrl = __require("url").parse;
     var fs = __require("fs");
-    var Stream = __require("stream").Stream;
+    var Stream2 = __require("stream").Stream;
     var crypto3 = __require("crypto");
     var mime = require_mime_types2();
     var asynckit = require_asynckit();
     var setToStringTag = require_es_set_tostringtag();
-    var hasOwn = require_hasown();
+    var hasOwn2 = require_hasown();
     var populate = require_populate();
     function FormData2(options) {
       if (!(this instanceof FormData2)) {
@@ -63486,7 +63486,7 @@ var require_form_data2 = __commonJS({
       }
       this._valueLength += valueLength;
       this._overheadLength += Buffer.byteLength(header) + FormData2.LINE_BREAK.length;
-      if (!value || !value.path && !(value.readable && hasOwn(value, "httpVersion")) && !(value instanceof Stream)) {
+      if (!value || !value.path && !(value.readable && hasOwn2(value, "httpVersion")) && !(value instanceof Stream2)) {
         return;
       }
       if (!options.knownLength) {
@@ -63494,7 +63494,7 @@ var require_form_data2 = __commonJS({
       }
     };
     FormData2.prototype._lengthRetriever = function(value, callback) {
-      if (hasOwn(value, "fd")) {
+      if (hasOwn2(value, "fd")) {
         if (value.end != void 0 && value.end != Infinity && value.start != void 0) {
           callback(null, value.end + 1 - (value.start ? value.start : 0));
         } else {
@@ -63507,9 +63507,9 @@ var require_form_data2 = __commonJS({
             callback(null, fileSize);
           });
         }
-      } else if (hasOwn(value, "httpVersion")) {
+      } else if (hasOwn2(value, "httpVersion")) {
         callback(null, Number(value.headers["content-length"]));
-      } else if (hasOwn(value, "httpModule")) {
+      } else if (hasOwn2(value, "httpModule")) {
         value.on("response", function(response) {
           value.pause();
           callback(null, Number(response.headers["content-length"]));
@@ -63537,7 +63537,7 @@ var require_form_data2 = __commonJS({
       }
       var header;
       for (var prop in headers2) {
-        if (hasOwn(headers2, prop)) {
+        if (hasOwn2(headers2, prop)) {
           header = headers2[prop];
           if (header == null) {
             continue;
@@ -63555,11 +63555,11 @@ var require_form_data2 = __commonJS({
     FormData2.prototype._getContentDisposition = function(value, options) {
       var filename;
       if (typeof options.filepath === "string") {
-        filename = path.normalize(options.filepath).replace(/\\/g, "/");
+        filename = path2.normalize(options.filepath).replace(/\\/g, "/");
       } else if (options.filename || value && (value.name || value.path)) {
-        filename = path.basename(options.filename || value && (value.name || value.path));
-      } else if (value && value.readable && hasOwn(value, "httpVersion")) {
-        filename = path.basename(value.client._httpMessage.path || "");
+        filename = path2.basename(options.filename || value && (value.name || value.path));
+      } else if (value && value.readable && hasOwn2(value, "httpVersion")) {
+        filename = path2.basename(value.client._httpMessage.path || "");
       }
       if (filename) {
         return 'filename="' + filename + '"';
@@ -63573,7 +63573,7 @@ var require_form_data2 = __commonJS({
       if (!contentType && value && value.path) {
         contentType = mime.lookup(value.path);
       }
-      if (!contentType && value && value.readable && hasOwn(value, "httpVersion")) {
+      if (!contentType && value && value.readable && hasOwn2(value, "httpVersion")) {
         contentType = value.headers["content-type"];
       }
       if (!contentType && (options.filepath || options.filename)) {
@@ -63603,7 +63603,7 @@ var require_form_data2 = __commonJS({
         "content-type": "multipart/form-data; boundary=" + this.getBoundary()
       };
       for (header in userHeaders) {
-        if (hasOwn(userHeaders, header)) {
+        if (hasOwn2(userHeaders, header)) {
           formHeaders[header.toLowerCase()] = userHeaders[header];
         }
       }
@@ -63836,17 +63836,17 @@ var require_FormDataWrapper = __commonJS({
         });
       }
       append(key, value) {
-        var _a;
-        (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, value);
+        var _a2;
+        (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, value);
       }
       appendFile(key, value, fileName) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           if (fileName == null && isNamedValue(value)) {
             fileName = value.name;
           }
           if (value instanceof Blob) {
-            (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, value, fileName);
+            (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, value, fileName);
           } else {
             (_b = this.fd) === null || _b === void 0 ? void 0 : _b.append(key, {
               type: void 0,
@@ -63878,12 +63878,12 @@ var require_FormDataWrapper = __commonJS({
         });
       }
       append(key, value) {
-        var _a;
-        (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, value);
+        var _a2;
+        (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, value);
       }
       appendFile(key, value, fileName) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           if (fileName == null && isNamedValue(value)) {
             fileName = value.name;
           }
@@ -63894,7 +63894,7 @@ var require_FormDataWrapper = __commonJS({
             bufferedValue = value;
           }
           if (fileName == null) {
-            (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, bufferedValue);
+            (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, bufferedValue);
           } else {
             (_b = this.fd) === null || _b === void 0 ? void 0 : _b.append(key, bufferedValue, { filename: fileName });
           }
@@ -63915,17 +63915,17 @@ var require_FormDataWrapper = __commonJS({
         });
       }
       append(key, value) {
-        var _a;
-        (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, value);
+        var _a2;
+        (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, value);
       }
       appendFile(key, value, fileName) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           if (fileName == null && isNamedValue(value)) {
             fileName = value.name;
           }
           if (value instanceof Blob) {
-            (_a = this.fd) === null || _a === void 0 ? void 0 : _a.append(key, value, fileName);
+            (_a2 = this.fd) === null || _a2 === void 0 ? void 0 : _a2.append(key, value, fileName);
             return;
           }
           (_b = this.fd) === null || _b === void 0 ? void 0 : _b.append(key, new Blob([value]), fileName);
@@ -64066,7 +64066,7 @@ var require_Stream = __commonJS({
     exports.readableStreamAsyncIterable = readableStreamAsyncIterable;
     var runtime_1 = require_runtime2();
     var DATA_PREFIX = "data:";
-    var Stream = class {
+    var Stream2 = class {
       constructor({ stream, parse, eventShape, signal: signal3 }) {
         this.controller = new AbortController();
         this.stream = stream;
@@ -64082,13 +64082,13 @@ var require_Stream = __commonJS({
       }
       iterMessages() {
         return __asyncGenerator(this, arguments, function* iterMessages_1() {
-          var _a, e_1, _b, _c;
+          var _a2, e_1, _b, _c;
           this.controller.signal;
           const stream = readableStreamAsyncIterable(this.stream);
           let buf2 = "";
           let prefixSeen = false;
           try {
-            for (var _d = true, stream_1 = __asyncValues(stream), stream_1_1; stream_1_1 = yield __await(stream_1.next()), _a = stream_1_1.done, !_a; _d = true) {
+            for (var _d = true, stream_1 = __asyncValues(stream), stream_1_1; stream_1_1 = yield __await(stream_1.next()), _a2 = stream_1_1.done, !_a2; _d = true) {
               _c = stream_1_1.value;
               _d = false;
               const chunk = _c;
@@ -64120,7 +64120,7 @@ var require_Stream = __commonJS({
             e_1 = { error: e_1_1 };
           } finally {
             try {
-              if (!_d && !_a && (_b = stream_1.return)) yield __await(_b.call(stream_1));
+              if (!_d && !_a2 && (_b = stream_1.return)) yield __await(_b.call(stream_1));
             } finally {
               if (e_1) throw e_1.error;
             }
@@ -64128,7 +64128,7 @@ var require_Stream = __commonJS({
         });
       }
       [Symbol.asyncIterator]() {
-        return __asyncGenerator(this, arguments, function* _a() {
+        return __asyncGenerator(this, arguments, function* _a2() {
           var _b, e_2, _c, _d;
           try {
             for (var _e = true, _f = __asyncValues(this.iterMessages()), _g; _g = yield __await(_f.next()), _b = _g.done, !_b; _e = true) {
@@ -64159,7 +64159,7 @@ var require_Stream = __commonJS({
         return decoded;
       }
     };
-    exports.Stream = Stream;
+    exports.Stream = Stream2;
     function readableStreamAsyncIterable(stream) {
       if (stream[Symbol.asyncIterator]) {
         return stream;
@@ -64394,7 +64394,7 @@ var require_Client = __commonJS({
        */
       getAll() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { page_size: pageSize, start_after_history_item_id: startAfterHistoryItemId, voice_id: voiceId, search, source } = request;
           const _queryParams = {};
           if (pageSize != null) {
@@ -64413,7 +64413,7 @@ var require_Client = __commonJS({
             _queryParams["source"] = source;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/history"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/history"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64465,9 +64465,9 @@ var require_Client = __commonJS({
        */
       get(historyItemId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64518,9 +64518,9 @@ var require_Client = __commonJS({
        */
       delete(historyItemId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64564,9 +64564,9 @@ var require_Client = __commonJS({
        */
       getAudio(historyItemId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}/audio`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/history/${encodeURIComponent(historyItemId)}/audio`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64612,9 +64612,9 @@ var require_Client = __commonJS({
        */
       download(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/history/download"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/history/download"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64760,14 +64760,14 @@ var require_Client2 = __commonJS({
        */
       convert(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { output_format: outputFormat } = request, _body = __rest(request, ["output_format"]);
           const _queryParams = {};
           if (outputFormat != null) {
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/sound-generation"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/sound-generation"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -64901,7 +64901,7 @@ var require_Client3 = __commonJS({
        */
       audioIsolation(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("audio", request.audio);
           if (request.file_format != null) {
@@ -64909,7 +64909,7 @@ var require_Client3 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-isolation"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-isolation"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -64955,7 +64955,7 @@ var require_Client3 = __commonJS({
        */
       audioIsolationStream(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("audio", request.audio);
           if (request.file_format != null) {
@@ -64963,7 +64963,7 @@ var require_Client3 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-isolation/stream"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-isolation/stream"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -65104,9 +65104,9 @@ var require_Client4 = __commonJS({
        */
       delete(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65150,9 +65150,9 @@ var require_Client4 = __commonJS({
        */
       getAudio(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/audio`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/audio`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65295,7 +65295,7 @@ var require_Client5 = __commonJS({
        */
       convert(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { enable_logging: enableLogging, optimize_streaming_latency: optimizeStreamingLatency, output_format: outputFormat } = request, _body = __rest(request, ["enable_logging", "optimize_streaming_latency", "output_format"]);
           const _queryParams = {};
           if (enableLogging != null) {
@@ -65308,7 +65308,7 @@ var require_Client5 = __commonJS({
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65365,7 +65365,7 @@ var require_Client5 = __commonJS({
        */
       convertWithTimestamps(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { enable_logging: enableLogging, optimize_streaming_latency: optimizeStreamingLatency, output_format: outputFormat } = request, _body = __rest(request, ["enable_logging", "optimize_streaming_latency", "output_format"]);
           const _queryParams = {};
           if (enableLogging != null) {
@@ -65378,7 +65378,7 @@ var require_Client5 = __commonJS({
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/with-timestamps`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/with-timestamps`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65424,7 +65424,7 @@ var require_Client5 = __commonJS({
        */
       convertAsStream(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { enable_logging: enableLogging, optimize_streaming_latency: optimizeStreamingLatency, output_format: outputFormat } = request, _body = __rest(request, ["enable_logging", "optimize_streaming_latency", "output_format"]);
           const _queryParams = {};
           if (enableLogging != null) {
@@ -65437,7 +65437,7 @@ var require_Client5 = __commonJS({
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/stream`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/stream`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65483,7 +65483,7 @@ var require_Client5 = __commonJS({
        */
       streamWithTimestamps(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { enable_logging: enableLogging, optimize_streaming_latency: optimizeStreamingLatency, output_format: outputFormat } = request, _body = __rest(request, ["enable_logging", "optimize_streaming_latency", "output_format"]);
           const _queryParams = {};
           if (enableLogging != null) {
@@ -65496,7 +65496,7 @@ var require_Client5 = __commonJS({
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/stream/with-timestamps`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/text-to-speech/${encodeURIComponent(voiceId)}/stream/with-timestamps`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65638,7 +65638,7 @@ var require_Client6 = __commonJS({
        */
       convert(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _queryParams = {};
           if (request.enable_logging != null) {
             _queryParams["enable_logging"] = request.enable_logging.toString();
@@ -65668,7 +65668,7 @@ var require_Client6 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/speech-to-speech/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/speech-to-speech/${encodeURIComponent(voiceId)}`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             queryParameters: _queryParams,
@@ -65715,7 +65715,7 @@ var require_Client6 = __commonJS({
        */
       convertAsStream(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _queryParams = {};
           if (request.enable_logging != null) {
             _queryParams["enable_logging"] = request.enable_logging.toString();
@@ -65745,7 +65745,7 @@ var require_Client6 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/speech-to-speech/${encodeURIComponent(voiceId)}/stream`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/speech-to-speech/${encodeURIComponent(voiceId)}/stream`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             queryParameters: _queryParams,
@@ -65899,14 +65899,14 @@ var require_Client7 = __commonJS({
        */
       createPreviews(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { output_format: outputFormat } = request, _body = __rest(request, ["output_format"]);
           const _queryParams = {};
           if (outputFormat != null) {
             _queryParams["output_format"] = outputFormat;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/text-to-voice/create-previews"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/text-to-voice/create-previews"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -65963,9 +65963,9 @@ var require_Client7 = __commonJS({
        */
       createVoiceFromPreview(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/text-to-voice/create-voice-from-preview"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/text-to-voice/create-voice-from-preview"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66103,9 +66103,9 @@ var require_Client8 = __commonJS({
        */
       getSubscription(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/user/subscription"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/user/subscription"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66155,9 +66155,9 @@ var require_Client8 = __commonJS({
        */
       get(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/user"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/user"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66296,9 +66296,9 @@ var require_Client9 = __commonJS({
        */
       get(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/audio`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/audio`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66437,9 +66437,9 @@ var require_Client10 = __commonJS({
        */
       get(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/waveform`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/waveform`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66579,9 +66579,9 @@ var require_Client11 = __commonJS({
        */
       get(voiceId, sampleId, speakerId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/speakers/${encodeURIComponent(speakerId)}/audio`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/speakers/${encodeURIComponent(speakerId)}/audio`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66708,8 +66708,8 @@ var require_Client12 = __commonJS({
         this._options = _options;
       }
       get audio() {
-        var _a;
-        return (_a = this._audio) !== null && _a !== void 0 ? _a : this._audio = new Client_1.Audio(this._options);
+        var _a2;
+        return (_a2 = this._audio) !== null && _a2 !== void 0 ? _a2 : this._audio = new Client_1.Audio(this._options);
       }
       /**
        * Retrieve the status of the speaker separation process and the list of detected speakers if complete.
@@ -66725,9 +66725,9 @@ var require_Client12 = __commonJS({
        */
       get(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/speakers`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/speakers`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66779,9 +66779,9 @@ var require_Client12 = __commonJS({
        */
       separate(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/separate-speakers`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}/separate-speakers`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -66910,16 +66910,16 @@ var require_Client13 = __commonJS({
         this._options = _options;
       }
       get audio() {
-        var _a;
-        return (_a = this._audio) !== null && _a !== void 0 ? _a : this._audio = new Client_1.Audio(this._options);
+        var _a2;
+        return (_a2 = this._audio) !== null && _a2 !== void 0 ? _a2 : this._audio = new Client_1.Audio(this._options);
       }
       get waveform() {
-        var _a;
-        return (_a = this._waveform) !== null && _a !== void 0 ? _a : this._waveform = new Client_2.Waveform(this._options);
+        var _a2;
+        return (_a2 = this._waveform) !== null && _a2 !== void 0 ? _a2 : this._waveform = new Client_2.Waveform(this._options);
       }
       get speakers() {
-        var _a;
-        return (_a = this._speakers) !== null && _a !== void 0 ? _a : this._speakers = new Client_3.Speakers(this._options);
+        var _a2;
+        return (_a2 = this._speakers) !== null && _a2 !== void 0 ? _a2 : this._speakers = new Client_3.Speakers(this._options);
       }
       /**
        * Add audio samples to a PVC voice
@@ -66937,7 +66937,7 @@ var require_Client13 = __commonJS({
        */
       create(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           for (const _file of request.files) {
             yield _request.appendFile("files", _file);
@@ -66947,7 +66947,7 @@ var require_Client13 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -67001,9 +67001,9 @@ var require_Client13 = __commonJS({
        */
       update(voiceId_1, sampleId_1) {
         return __awaiter(this, arguments, void 0, function* (voiceId, sampleId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67056,9 +67056,9 @@ var require_Client13 = __commonJS({
        */
       delete(voiceId, sampleId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/samples/${encodeURIComponent(sampleId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67196,9 +67196,9 @@ var require_Client14 = __commonJS({
        */
       get(voiceId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/captcha`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/captcha`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67252,12 +67252,12 @@ var require_Client14 = __commonJS({
        */
       verify(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("recording", request.recording);
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/captcha`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/captcha`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -67385,8 +67385,8 @@ var require_Client15 = __commonJS({
         this._options = _options;
       }
       get captcha() {
-        var _a;
-        return (_a = this._captcha) !== null && _a !== void 0 ? _a : this._captcha = new Client_1.Captcha(this._options);
+        var _a2;
+        return (_a2 = this._captcha) !== null && _a2 !== void 0 ? _a2 : this._captcha = new Client_1.Captcha(this._options);
       }
       /**
        * Request manual verification for a PVC voice.
@@ -67404,7 +67404,7 @@ var require_Client15 = __commonJS({
        */
       request(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           for (const _file of request.files) {
             yield _request.appendFile("files", _file);
@@ -67414,7 +67414,7 @@ var require_Client15 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/verification`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/verification`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -67543,12 +67543,12 @@ var require_Client16 = __commonJS({
         this._options = _options;
       }
       get samples() {
-        var _a;
-        return (_a = this._samples) !== null && _a !== void 0 ? _a : this._samples = new Client_1.Samples(this._options);
+        var _a2;
+        return (_a2 = this._samples) !== null && _a2 !== void 0 ? _a2 : this._samples = new Client_1.Samples(this._options);
       }
       get verification() {
-        var _a;
-        return (_a = this._verification) !== null && _a !== void 0 ? _a : this._verification = new Client_2.Verification(this._options);
+        var _a2;
+        return (_a2 = this._verification) !== null && _a2 !== void 0 ? _a2 : this._verification = new Client_2.Verification(this._options);
       }
       /**
        * Creates a new PVC voice with metadata but no samples
@@ -67566,9 +67566,9 @@ var require_Client16 = __commonJS({
        */
       create(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/pvc"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/pvc"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67621,9 +67621,9 @@ var require_Client16 = __commonJS({
        */
       update(voiceId_1) {
         return __awaiter(this, arguments, void 0, function* (voiceId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67676,9 +67676,9 @@ var require_Client16 = __commonJS({
        */
       train(voiceId_1) {
         return __awaiter(this, arguments, void 0, function* (voiceId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/train`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/pvc/${encodeURIComponent(voiceId)}/train`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67806,8 +67806,8 @@ var require_Client17 = __commonJS({
         this._options = _options;
       }
       get pvc() {
-        var _a;
-        return (_a = this._pvc) !== null && _a !== void 0 ? _a : this._pvc = new Client_1.Pvc(this._options);
+        var _a2;
+        return (_a2 = this._pvc) !== null && _a2 !== void 0 ? _a2 : this._pvc = new Client_1.Pvc(this._options);
       }
       /**
        * Returns a list of all available voices for a user.
@@ -67822,14 +67822,14 @@ var require_Client17 = __commonJS({
        */
       getAll() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { show_legacy: showLegacy } = request;
           const _queryParams = {};
           if (showLegacy != null) {
             _queryParams["show_legacy"] = showLegacy.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67883,7 +67883,7 @@ var require_Client17 = __commonJS({
        */
       search() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { next_page_token: nextPageToken, page_size: pageSize, search, sort, sort_direction: sortDirection, voice_type: voiceType, category, fine_tuning_state: fineTuningState, collection_id: collectionId, include_total_count: includeTotalCount } = request;
           const _queryParams = {};
           if (nextPageToken != null) {
@@ -67917,7 +67917,7 @@ var require_Client17 = __commonJS({
             _queryParams["include_total_count"] = includeTotalCount.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v2/voices"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v2/voices"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -67966,9 +67966,9 @@ var require_Client17 = __commonJS({
        */
       getDefaultSettings(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/settings/default"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/settings/default"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68014,9 +68014,9 @@ var require_Client17 = __commonJS({
        */
       getSettings(voiceId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/settings`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/settings`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68068,14 +68068,14 @@ var require_Client17 = __commonJS({
        */
       get(voiceId_1) {
         return __awaiter(this, arguments, void 0, function* (voiceId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { with_settings: withSettings } = request;
           const _queryParams = {};
           if (withSettings != null) {
             _queryParams["with_settings"] = withSettings.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68127,9 +68127,9 @@ var require_Client17 = __commonJS({
        */
       delete(voiceId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68187,9 +68187,9 @@ var require_Client17 = __commonJS({
        */
       editSettings(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/settings/edit`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/settings/edit`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68244,7 +68244,7 @@ var require_Client17 = __commonJS({
        */
       add(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           _request.append("name", request.name);
           for (const _file of request.files) {
@@ -68261,7 +68261,7 @@ var require_Client17 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/add"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/voices/add"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -68316,7 +68316,7 @@ var require_Client17 = __commonJS({
        */
       edit(voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           _request.append("name", request.name);
           if (request.files != null) {
@@ -68335,7 +68335,7 @@ var require_Client17 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/edit`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/${encodeURIComponent(voiceId)}/edit`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -68391,9 +68391,9 @@ var require_Client17 = __commonJS({
        */
       addSharingVoice(publicUserId, voiceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/add/${encodeURIComponent(publicUserId)}/${encodeURIComponent(voiceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/voices/add/${encodeURIComponent(publicUserId)}/${encodeURIComponent(voiceId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68448,7 +68448,7 @@ var require_Client17 = __commonJS({
        */
       getShared() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { page_size: pageSize, category, gender, age, accent, language, locale, search, use_cases: useCases, descriptives, featured, min_notice_period_days: minNoticePeriodDays, include_custom_rates: includeCustomRates, reader_app_enabled: readerAppEnabled, owner_id: ownerId, sort, page } = request;
           const _queryParams = {};
           if (pageSize != null) {
@@ -68511,7 +68511,7 @@ var require_Client17 = __commonJS({
             _queryParams["page"] = page.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/shared-voices"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/shared-voices"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68563,7 +68563,7 @@ var require_Client17 = __commonJS({
        */
       getSimilarLibraryVoices(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           if (request.audio_file != null) {
             yield _request.appendFile("audio_file", request.audio_file);
@@ -68576,7 +68576,7 @@ var require_Client17 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/similar-voices"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/similar-voices"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -68714,9 +68714,9 @@ var require_Client18 = __commonJS({
        */
       getAll(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/projects"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/projects"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68772,7 +68772,7 @@ var require_Client18 = __commonJS({
        */
       add(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           _request.append("name", request.name);
           _request.append("default_title_voice_id", request.default_title_voice_id);
@@ -68850,7 +68850,7 @@ var require_Client18 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/projects"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/projects"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -68902,9 +68902,9 @@ var require_Client18 = __commonJS({
        */
       get(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -68960,9 +68960,9 @@ var require_Client18 = __commonJS({
        */
       updateMetadata(projectId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69014,9 +69014,9 @@ var require_Client18 = __commonJS({
        */
       delete(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69068,7 +69068,7 @@ var require_Client18 = __commonJS({
        */
       updateContent(projectId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           if (request.from_url != null) {
             _request.append("from_url", request.from_url);
@@ -69081,7 +69081,7 @@ var require_Client18 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/content`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/content`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -69133,9 +69133,9 @@ var require_Client18 = __commonJS({
        */
       convert(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/convert`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/convert`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69186,9 +69186,9 @@ var require_Client18 = __commonJS({
        */
       getSnapshots(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69240,9 +69240,9 @@ var require_Client18 = __commonJS({
        */
       getProjectSnapshot(projectId, projectSnapshotId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69286,9 +69286,9 @@ var require_Client18 = __commonJS({
        */
       streamAudio(projectId_1, projectSnapshotId_1) {
         return __awaiter(this, arguments, void 0, function* (projectId, projectSnapshotId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}/stream`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}/stream`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69334,9 +69334,9 @@ var require_Client18 = __commonJS({
        */
       streamArchive(projectId, projectSnapshotId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}/archive`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/snapshots/${encodeURIComponent(projectSnapshotId)}/archive`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69393,9 +69393,9 @@ var require_Client18 = __commonJS({
        */
       updatePronunciationDictionaries(projectId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/pronunciation-dictionaries`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/pronunciation-dictionaries`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69534,9 +69534,9 @@ var require_Client19 = __commonJS({
        */
       getAll(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69590,9 +69590,9 @@ var require_Client19 = __commonJS({
        */
       create(projectId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69645,9 +69645,9 @@ var require_Client19 = __commonJS({
        */
       get(projectId, chapterId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69700,9 +69700,9 @@ var require_Client19 = __commonJS({
        */
       edit(projectId_1, chapterId_1) {
         return __awaiter(this, arguments, void 0, function* (projectId, chapterId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69755,9 +69755,9 @@ var require_Client19 = __commonJS({
        */
       delete(projectId, chapterId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69809,9 +69809,9 @@ var require_Client19 = __commonJS({
        */
       convert(projectId, chapterId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/convert`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/convert`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69863,9 +69863,9 @@ var require_Client19 = __commonJS({
        */
       getAllSnapshots(projectId, chapterId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69918,9 +69918,9 @@ var require_Client19 = __commonJS({
        */
       getChapterSnapshot(projectId, chapterId, chapterSnapshotId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots/${encodeURIComponent(chapterSnapshotId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots/${encodeURIComponent(chapterSnapshotId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -69964,9 +69964,9 @@ var require_Client19 = __commonJS({
        */
       streamSnapshot(projectId_1, chapterId_1, chapterSnapshotId_1) {
         return __awaiter(this, arguments, void 0, function* (projectId, chapterId, chapterSnapshotId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots/${encodeURIComponent(chapterSnapshotId)}/stream`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/studio/projects/${encodeURIComponent(projectId)}/chapters/${encodeURIComponent(chapterId)}/snapshots/${encodeURIComponent(chapterSnapshotId)}/stream`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70096,12 +70096,12 @@ var require_Client20 = __commonJS({
         this._options = _options;
       }
       get projects() {
-        var _a;
-        return (_a = this._projects) !== null && _a !== void 0 ? _a : this._projects = new Client_1.Projects(this._options);
+        var _a2;
+        return (_a2 = this._projects) !== null && _a2 !== void 0 ? _a2 : this._projects = new Client_1.Projects(this._options);
       }
       get chapters() {
-        var _a;
-        return (_a = this._chapters) !== null && _a !== void 0 ? _a : this._chapters = new Client_2.Chapters(this._options);
+        var _a2;
+        return (_a2 = this._chapters) !== null && _a2 !== void 0 ? _a2 : this._chapters = new Client_2.Chapters(this._options);
       }
       /**
        * Create and auto-convert a podcast project. Currently, the LLM cost is covered by us but you will still be charged for the audio generation. In the future, you will be charged for both the LLM and audio generation costs.
@@ -70128,9 +70128,9 @@ var require_Client20 = __commonJS({
        */
       createPodcast(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/podcasts"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/studio/podcasts"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70274,9 +70274,9 @@ var require_Client21 = __commonJS({
        */
       create(dubbingId, speakerId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}/segment`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}/segment`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70404,8 +70404,8 @@ var require_Client22 = __commonJS({
         this._options = _options;
       }
       get segment() {
-        var _a;
-        return (_a = this._segment) !== null && _a !== void 0 ? _a : this._segment = new Client_1.Segment(this._options);
+        var _a2;
+        return (_a2 = this._segment) !== null && _a2 !== void 0 ? _a2 : this._segment = new Client_1.Segment(this._options);
       }
       /**
        * Amend the metadata associated with a speaker, such as their voice. Both voice cloning and using voices from the ElevenLabs library are supported.
@@ -70422,9 +70422,9 @@ var require_Client22 = __commonJS({
        */
       update(dubbingId_1, speakerId_1) {
         return __awaiter(this, arguments, void 0, function* (dubbingId, speakerId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}`),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70477,9 +70477,9 @@ var require_Client22 = __commonJS({
        */
       similarVoices(dubbingId, speakerId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}/similar-voices`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/speaker/${encodeURIComponent(speakerId)}/similar-voices`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70606,8 +70606,8 @@ var require_Client23 = __commonJS({
         this._options = _options;
       }
       get speaker() {
-        var _a;
-        return (_a = this._speaker) !== null && _a !== void 0 ? _a : this._speaker = new Client_1.Speaker(this._options);
+        var _a2;
+        return (_a2 = this._speaker) !== null && _a2 !== void 0 ? _a2 : this._speaker = new Client_1.Speaker(this._options);
       }
       /**
        * Given a dubbing ID generated from the '/v1/dubbing' endpoint with studio enabled, returns the dubbing resource.
@@ -70622,9 +70622,9 @@ var require_Client23 = __commonJS({
        */
       getDubbingResource(dubbingId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70676,9 +70676,9 @@ var require_Client23 = __commonJS({
        */
       addLanguageToResource(dubbingId_1) {
         return __awaiter(this, arguments, void 0, function* (dubbingId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/language`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/language`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70733,9 +70733,9 @@ var require_Client23 = __commonJS({
        */
       updateSegmentLanguage(dubbingId_1, segmentId_1, language_1) {
         return __awaiter(this, arguments, void 0, function* (dubbingId, segmentId, language, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/segment/${encodeURIComponent(segmentId)}/${encodeURIComponent(language)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/segment/${encodeURIComponent(segmentId)}/${encodeURIComponent(language)}`),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70788,9 +70788,9 @@ var require_Client23 = __commonJS({
        */
       deleteSegment(dubbingId, segmentId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/segment/${encodeURIComponent(segmentId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/segment/${encodeURIComponent(segmentId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70844,9 +70844,9 @@ var require_Client23 = __commonJS({
        */
       transcribeSegments(dubbingId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/transcribe`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/transcribe`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70901,9 +70901,9 @@ var require_Client23 = __commonJS({
        */
       translateSegments(dubbingId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/translate`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/translate`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -70958,9 +70958,9 @@ var require_Client23 = __commonJS({
        */
       dubSegments(dubbingId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/dub`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/dub`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71016,9 +71016,9 @@ var require_Client23 = __commonJS({
        */
       renderDub(dubbingId, language, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/render/${encodeURIComponent(language)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/resource/${encodeURIComponent(dubbingId)}/render/${encodeURIComponent(language)}`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71070,7 +71070,7 @@ var require_Client23 = __commonJS({
        */
       dubAVideoOrAnAudioFile(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           if (request.file != null) {
             yield _request.appendFile("file", request.file);
@@ -71128,7 +71128,7 @@ var require_Client23 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/dubbing"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/dubbing"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -71180,9 +71180,9 @@ var require_Client23 = __commonJS({
        */
       getDubbingProjectMetadata(dubbingId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71233,9 +71233,9 @@ var require_Client23 = __commonJS({
        */
       deleteDubbingProject(dubbingId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71282,9 +71282,9 @@ var require_Client23 = __commonJS({
        */
       getDubbedFile(dubbingId, languageCode, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}/audio/${encodeURIComponent(languageCode)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}/audio/${encodeURIComponent(languageCode)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71347,14 +71347,14 @@ var require_Client23 = __commonJS({
        */
       getTranscriptForDub(dubbingId_1, languageCode_1) {
         return __awaiter(this, arguments, void 0, function* (dubbingId, languageCode, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { format_type: formatType } = request;
           const _queryParams = {};
           if (formatType != null) {
             _queryParams["format_type"] = formatType;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}/transcript/${encodeURIComponent(languageCode)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/dubbing/${encodeURIComponent(dubbingId)}/transcript/${encodeURIComponent(languageCode)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71483,7 +71483,7 @@ var require_Client24 = __commonJS({
     var ElevenLabs = __importStar(require_api());
     var url_join_1 = __importDefault(require_url_join());
     var errors = __importStar(require_errors());
-    var Models = class {
+    var Models3 = class {
       constructor(_options = {}) {
         this._options = _options;
       }
@@ -71499,9 +71499,9 @@ var require_Client24 = __commonJS({
        */
       getAll(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/models"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/models"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71540,7 +71540,7 @@ var require_Client24 = __commonJS({
         });
       }
     };
-    exports.Models = Models;
+    exports.Models = Models3;
   }
 });
 
@@ -71641,7 +71641,7 @@ var require_Client25 = __commonJS({
        */
       create(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           _request.append("name", request.name);
           if (request.image != null) {
@@ -71679,7 +71679,7 @@ var require_Client25 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-native"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/audio-native"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -71731,9 +71731,9 @@ var require_Client25 = __commonJS({
        */
       getSettings(projectId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/audio-native/${encodeURIComponent(projectId)}/settings`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/audio-native/${encodeURIComponent(projectId)}/settings`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -71785,7 +71785,7 @@ var require_Client25 = __commonJS({
        */
       updateContent(projectId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           if (request.file != null) {
             yield _request.appendFile("file", request.file);
@@ -71798,7 +71798,7 @@ var require_Client25 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/audio-native/${encodeURIComponent(projectId)}/content`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/audio-native/${encodeURIComponent(projectId)}/content`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -71940,7 +71940,7 @@ var require_Client26 = __commonJS({
        */
       getCharactersUsageMetrics(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { start_unix: startUnix, end_unix: endUnix, include_workspace_metrics: includeWorkspaceMetrics, breakdown_type: breakdownType, aggregation_interval: aggregationInterval, metric } = request;
           const _queryParams = {};
           _queryParams["start_unix"] = startUnix.toString();
@@ -71958,7 +71958,7 @@ var require_Client26 = __commonJS({
             _queryParams["metric"] = metric;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/usage/character-stats"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/usage/character-stats"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72099,7 +72099,7 @@ var require_Client27 = __commonJS({
        */
       addFromFile(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           _request.append("name", request.name);
           if (request.file != null) {
@@ -72113,7 +72113,7 @@ var require_Client27 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/add-from-file"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/add-from-file"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -72172,9 +72172,9 @@ var require_Client27 = __commonJS({
        */
       addFromRules(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/add-from-rules"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/add-from-rules"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72233,9 +72233,9 @@ var require_Client27 = __commonJS({
        */
       addRules(pronunciationDictionaryId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/add-rules`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/add-rules`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72290,9 +72290,9 @@ var require_Client27 = __commonJS({
        */
       removeRules(pronunciationDictionaryId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/remove-rules`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/remove-rules`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72337,9 +72337,9 @@ var require_Client27 = __commonJS({
        */
       download(dictionaryId, versionId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(dictionaryId)}/${encodeURIComponent(versionId)}/download`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(dictionaryId)}/${encodeURIComponent(versionId)}/download`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72391,9 +72391,9 @@ var require_Client27 = __commonJS({
        */
       get(pronunciationDictionaryId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/pronunciation-dictionaries/${encodeURIComponent(pronunciationDictionaryId)}/`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72444,7 +72444,7 @@ var require_Client27 = __commonJS({
        */
       getAll() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { cursor, page_size: pageSize, sort, sort_direction: sortDirection } = request;
           const _queryParams = {};
           if (cursor != null) {
@@ -72460,7 +72460,7 @@ var require_Client27 = __commonJS({
             _queryParams["sort_direction"] = sortDirection;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/pronunciation-dictionaries/"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72601,12 +72601,12 @@ var require_Client28 = __commonJS({
        */
       searchUserGroups(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { name } = request;
           const _queryParams = {};
           _queryParams["name"] = name;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/groups/search"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/groups/search"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72661,9 +72661,9 @@ var require_Client28 = __commonJS({
        */
       deleteMemberFromUserGroup(groupId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/groups/${encodeURIComponent(groupId)}/members/remove`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/groups/${encodeURIComponent(groupId)}/members/remove`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72718,9 +72718,9 @@ var require_Client28 = __commonJS({
        */
       addMemberToUserGroup(groupId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/groups/${encodeURIComponent(groupId)}/members`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/groups/${encodeURIComponent(groupId)}/members`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72774,9 +72774,9 @@ var require_Client28 = __commonJS({
        */
       inviteUser(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites/add"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites/add"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72830,9 +72830,9 @@ var require_Client28 = __commonJS({
        */
       inviteMultipleUsers(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites/add-bulk"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites/add-bulk"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72886,9 +72886,9 @@ var require_Client28 = __commonJS({
        */
       deleteExistingInvitation(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/invites"),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72942,9 +72942,9 @@ var require_Client28 = __commonJS({
        */
       updateMember(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/members"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/members"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -72998,9 +72998,9 @@ var require_Client28 = __commonJS({
        */
       deleteMember(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/members"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/workspace/members"),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73055,12 +73055,12 @@ var require_Client28 = __commonJS({
        */
       getResource(resourceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { resource_type: resourceType } = request;
           const _queryParams = {};
           _queryParams["resource_type"] = resourceType;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73116,9 +73116,9 @@ var require_Client28 = __commonJS({
        */
       shareWorkspaceResource(resourceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}/share`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}/share`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73173,9 +73173,9 @@ var require_Client28 = __commonJS({
        */
       unshareWorkspaceResource(resourceId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}/unshare`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/workspace/resources/${encodeURIComponent(resourceId)}/unshare`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73318,7 +73318,7 @@ var require_Client29 = __commonJS({
        */
       convert(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _queryParams = {};
           if (request.enable_logging != null) {
             _queryParams["enable_logging"] = request.enable_logging.toString();
@@ -73346,7 +73346,7 @@ var require_Client29 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/speech-to-text"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/speech-to-text"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "1.56.0", "User-Agent": "elevenlabs/1.56.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             queryParameters: _queryParams,
@@ -73489,7 +73489,7 @@ var require_Client30 = __commonJS({
        */
       create(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("file", request.file);
           _request.append("text", request.text);
@@ -73498,7 +73498,7 @@ var require_Client30 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/forced-alignment"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/forced-alignment"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -73645,9 +73645,9 @@ var require_Client31 = __commonJS({
        */
       simulateConversation(agentId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/simulate-conversation`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/simulate-conversation`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73707,9 +73707,9 @@ var require_Client31 = __commonJS({
        */
       simulateConversationStream(agentId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/simulate-conversation/stream`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/simulate-conversation/stream`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73852,9 +73852,9 @@ var require_Client32 = __commonJS({
        */
       outboundCall(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/sip-trunk/outbound-call"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/sip-trunk/outbound-call"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -73996,9 +73996,9 @@ var require_Client33 = __commonJS({
        */
       computeRagIndex(documentationId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/rag-index`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/rag-index`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74054,8 +74054,8 @@ var require_Client34 = __commonJS({
         this._options = _options;
       }
       get document() {
-        var _a;
-        return (_a = this._document) !== null && _a !== void 0 ? _a : this._document = new Client_1.Document(this._options);
+        var _a2;
+        return (_a2 = this._document) !== null && _a2 !== void 0 ? _a2 : this._document = new Client_1.Document(this._options);
       }
     };
     exports.KnowledgeBase = KnowledgeBase;
@@ -74148,16 +74148,16 @@ var require_Client35 = __commonJS({
         this._options = _options;
       }
       get agents() {
-        var _a;
-        return (_a = this._agents) !== null && _a !== void 0 ? _a : this._agents = new Client_1.Agents(this._options);
+        var _a2;
+        return (_a2 = this._agents) !== null && _a2 !== void 0 ? _a2 : this._agents = new Client_1.Agents(this._options);
       }
       get sipTrunk() {
-        var _a;
-        return (_a = this._sipTrunk) !== null && _a !== void 0 ? _a : this._sipTrunk = new Client_2.SipTrunk(this._options);
+        var _a2;
+        return (_a2 = this._sipTrunk) !== null && _a2 !== void 0 ? _a2 : this._sipTrunk = new Client_2.SipTrunk(this._options);
       }
       get knowledgeBase() {
-        var _a;
-        return (_a = this._knowledgeBase) !== null && _a !== void 0 ? _a : this._knowledgeBase = new Client_3.KnowledgeBase(this._options);
+        var _a2;
+        return (_a2 = this._knowledgeBase) !== null && _a2 !== void 0 ? _a2 : this._knowledgeBase = new Client_3.KnowledgeBase(this._options);
       }
       /**
        * Get a signed url to start a conversation with an agent with an agent that requires authorization
@@ -74174,12 +74174,12 @@ var require_Client35 = __commonJS({
        */
       getSignedUrl(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const { agent_id: agentId } = request;
           const _queryParams = {};
           _queryParams["agent_id"] = agentId;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/conversation/get-signed-url"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/conversation/get-signed-url"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74235,9 +74235,9 @@ var require_Client35 = __commonJS({
        */
       twilioOutboundCall(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/twilio/outbound-call"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/twilio/outbound-call"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74291,9 +74291,9 @@ var require_Client35 = __commonJS({
        */
       createAgent(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/agents/create"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/agents/create"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74345,9 +74345,9 @@ var require_Client35 = __commonJS({
        */
       getAgent(agentId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74398,9 +74398,9 @@ var require_Client35 = __commonJS({
        */
       deleteAgent(agentId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74452,9 +74452,9 @@ var require_Client35 = __commonJS({
        */
       updateAgent(agentId_1) {
         return __awaiter(this, arguments, void 0, function* (agentId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}`),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74507,14 +74507,14 @@ var require_Client35 = __commonJS({
        */
       getAgentWidget(agentId_1) {
         return __awaiter(this, arguments, void 0, function* (agentId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { conversation_signature: conversationSignature } = request;
           const _queryParams = {};
           if (conversationSignature != null) {
             _queryParams["conversation_signature"] = conversationSignature;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/widget`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/widget`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74566,9 +74566,9 @@ var require_Client35 = __commonJS({
        */
       getAgentLink(agentId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/link`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/link`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74622,12 +74622,12 @@ var require_Client35 = __commonJS({
        */
       postAgentAvatar(agentId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("avatar_file", request.avatar_file);
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/avatar`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/agents/${encodeURIComponent(agentId)}/avatar`),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -74679,7 +74679,7 @@ var require_Client35 = __commonJS({
        */
       getAgents() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { cursor, page_size: pageSize, search } = request;
           const _queryParams = {};
           if (cursor != null) {
@@ -74692,7 +74692,7 @@ var require_Client35 = __commonJS({
             _queryParams["search"] = search;
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/agents"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/agents"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74744,7 +74744,7 @@ var require_Client35 = __commonJS({
        */
       getConversations() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { cursor, agent_id: agentId, call_successful: callSuccessful, call_start_before_unix: callStartBeforeUnix, call_start_after_unix: callStartAfterUnix, page_size: pageSize } = request;
           const _queryParams = {};
           if (cursor != null) {
@@ -74766,7 +74766,7 @@ var require_Client35 = __commonJS({
             _queryParams["page_size"] = pageSize.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/conversations"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/conversations"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74818,9 +74818,9 @@ var require_Client35 = __commonJS({
        */
       getConversation(conversationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74871,9 +74871,9 @@ var require_Client35 = __commonJS({
        */
       deleteConversation(conversationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74917,9 +74917,9 @@ var require_Client35 = __commonJS({
        */
       getConversationAudio(conversationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}/audio`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}/audio`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -74974,9 +74974,9 @@ var require_Client35 = __commonJS({
        */
       postConversationFeedback(conversationId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}/feedback`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/conversations/${encodeURIComponent(conversationId)}/feedback`),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75034,9 +75034,9 @@ var require_Client35 = __commonJS({
        */
       createPhoneNumber(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/phone-numbers/create"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/phone-numbers/create"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75088,9 +75088,9 @@ var require_Client35 = __commonJS({
        */
       getPhoneNumber(phoneNumberId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75141,9 +75141,9 @@ var require_Client35 = __commonJS({
        */
       deletePhoneNumber(phoneNumberId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75195,9 +75195,9 @@ var require_Client35 = __commonJS({
        */
       updatePhoneNumber(phoneNumberId_1) {
         return __awaiter(this, arguments, void 0, function* (phoneNumberId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/phone-numbers/${encodeURIComponent(phoneNumberId)}`),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75248,9 +75248,9 @@ var require_Client35 = __commonJS({
        */
       getPhoneNumbers(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/phone-numbers/"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/phone-numbers/"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75301,7 +75301,7 @@ var require_Client35 = __commonJS({
        */
       getKnowledgeBaseList() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { cursor, page_size: pageSize, search, show_only_owned_documents: showOnlyOwnedDocuments, types: types3, use_typesense: useTypesense } = request;
           const _queryParams = {};
           if (cursor != null) {
@@ -75327,7 +75327,7 @@ var require_Client35 = __commonJS({
             _queryParams["use_typesense"] = useTypesense.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75379,7 +75379,7 @@ var require_Client35 = __commonJS({
        */
       addToKnowledgeBase(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           if (request.name != null) {
             _request.append("name", request.name);
@@ -75392,7 +75392,7 @@ var require_Client35 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -75446,9 +75446,9 @@ var require_Client35 = __commonJS({
        */
       createKnowledgeBaseUrlDocument(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/url"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/url"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75502,7 +75502,7 @@ var require_Client35 = __commonJS({
        */
       createKnowledgeBaseFileDocument(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _request = yield core.newFormData();
           yield _request.appendFile("file", request.file);
           if (request.name != null) {
@@ -75510,7 +75510,7 @@ var require_Client35 = __commonJS({
           }
           const _maybeEncodedRequest = yield _request.getRequest();
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/file"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/file"),
             method: "POST",
             headers: Object.assign(Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, _maybeEncodedRequest.headers), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             requestType: "file",
@@ -75564,9 +75564,9 @@ var require_Client35 = __commonJS({
        */
       createKnowledgeBaseTextDocument(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/text"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/knowledge-base/text"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75618,9 +75618,9 @@ var require_Client35 = __commonJS({
        */
       getKnowledgeBaseDocumentById(documentationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75671,9 +75671,9 @@ var require_Client35 = __commonJS({
        */
       deleteKnowledgeBaseDocument(documentationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75727,9 +75727,9 @@ var require_Client35 = __commonJS({
        */
       updateKnowledgeBaseDocument(documentationId, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}`),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75782,7 +75782,7 @@ var require_Client35 = __commonJS({
        */
       getDependentAgents(documentationId_1) {
         return __awaiter(this, arguments, void 0, function* (documentationId, request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const { cursor, page_size: pageSize } = request;
           const _queryParams = {};
           if (cursor != null) {
@@ -75792,7 +75792,7 @@ var require_Client35 = __commonJS({
             _queryParams["page_size"] = pageSize.toString();
           }
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/dependent-agents`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/dependent-agents`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75844,9 +75844,9 @@ var require_Client35 = __commonJS({
        */
       getKnowledgeBaseDocumentContent(documentationId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/content`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/content`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75898,9 +75898,9 @@ var require_Client35 = __commonJS({
        */
       getKnowledgeBaseDocumentPartById(documentationId, chunkId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/chunk/${encodeURIComponent(chunkId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/knowledge-base/${encodeURIComponent(documentationId)}/chunk/${encodeURIComponent(chunkId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -75950,9 +75950,9 @@ var require_Client35 = __commonJS({
        */
       getSettings(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76003,9 +76003,9 @@ var require_Client35 = __commonJS({
        */
       updateSettings() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings"),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76056,9 +76056,9 @@ var require_Client35 = __commonJS({
        */
       getDashboardSettings(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings/dashboard"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings/dashboard"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76109,9 +76109,9 @@ var require_Client35 = __commonJS({
        */
       updateDashboardSettings() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings/dashboard"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/settings/dashboard"),
             method: "PATCH",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76162,9 +76162,9 @@ var require_Client35 = __commonJS({
        */
       getSecrets(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/secrets"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/secrets"),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76218,9 +76218,9 @@ var require_Client35 = __commonJS({
        */
       createSecret(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/secrets"),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, "v1/convai/secrets"),
             method: "POST",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76272,9 +76272,9 @@ var require_Client35 = __commonJS({
        */
       deleteSecret(secretId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/secrets/${encodeURIComponent(secretId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/secrets/${encodeURIComponent(secretId)}`),
             method: "DELETE",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76325,9 +76325,9 @@ var require_Client35 = __commonJS({
        */
       getBatchCall(batchId, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-          var _a, _b;
+          var _a2, _b;
           const _response = yield core.fetcher({
-            url: (0, url_join_1.default)((_a = yield core.Supplier.get(this._options.baseUrl)) !== null && _a !== void 0 ? _a : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/batch-calling/${encodeURIComponent(batchId)}`),
+            url: (0, url_join_1.default)((_a2 = yield core.Supplier.get(this._options.baseUrl)) !== null && _a2 !== void 0 ? _a2 : ((_b = yield core.Supplier.get(this._options.environment)) !== null && _b !== void 0 ? _b : environments.ElevenLabsEnvironment.Production).base, `v1/convai/batch-calling/${encodeURIComponent(batchId)}`),
             method: "GET",
             headers: Object.assign({ "xi-api-key": (yield core.Supplier.get(this._options.apiKey)) != null ? yield core.Supplier.get(this._options.apiKey) : void 0, "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "elevenlabs", "X-Fern-SDK-Version": "v1.59.0", "User-Agent": "elevenlabs/v1.59.0", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version }, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
             contentType: "application/json",
@@ -76400,80 +76400,80 @@ var require_Client36 = __commonJS({
         this._options = _options;
       }
       get history() {
-        var _a;
-        return (_a = this._history) !== null && _a !== void 0 ? _a : this._history = new Client_1.History(this._options);
+        var _a2;
+        return (_a2 = this._history) !== null && _a2 !== void 0 ? _a2 : this._history = new Client_1.History(this._options);
       }
       get textToSoundEffects() {
-        var _a;
-        return (_a = this._textToSoundEffects) !== null && _a !== void 0 ? _a : this._textToSoundEffects = new Client_2.TextToSoundEffects(this._options);
+        var _a2;
+        return (_a2 = this._textToSoundEffects) !== null && _a2 !== void 0 ? _a2 : this._textToSoundEffects = new Client_2.TextToSoundEffects(this._options);
       }
       get audioIsolation() {
-        var _a;
-        return (_a = this._audioIsolation) !== null && _a !== void 0 ? _a : this._audioIsolation = new Client_3.AudioIsolation(this._options);
+        var _a2;
+        return (_a2 = this._audioIsolation) !== null && _a2 !== void 0 ? _a2 : this._audioIsolation = new Client_3.AudioIsolation(this._options);
       }
       get samples() {
-        var _a;
-        return (_a = this._samples) !== null && _a !== void 0 ? _a : this._samples = new Client_4.Samples(this._options);
+        var _a2;
+        return (_a2 = this._samples) !== null && _a2 !== void 0 ? _a2 : this._samples = new Client_4.Samples(this._options);
       }
       get textToSpeech() {
-        var _a;
-        return (_a = this._textToSpeech) !== null && _a !== void 0 ? _a : this._textToSpeech = new Client_5.TextToSpeech(this._options);
+        var _a2;
+        return (_a2 = this._textToSpeech) !== null && _a2 !== void 0 ? _a2 : this._textToSpeech = new Client_5.TextToSpeech(this._options);
       }
       get speechToSpeech() {
-        var _a;
-        return (_a = this._speechToSpeech) !== null && _a !== void 0 ? _a : this._speechToSpeech = new Client_6.SpeechToSpeech(this._options);
+        var _a2;
+        return (_a2 = this._speechToSpeech) !== null && _a2 !== void 0 ? _a2 : this._speechToSpeech = new Client_6.SpeechToSpeech(this._options);
       }
       get textToVoice() {
-        var _a;
-        return (_a = this._textToVoice) !== null && _a !== void 0 ? _a : this._textToVoice = new Client_7.TextToVoice(this._options);
+        var _a2;
+        return (_a2 = this._textToVoice) !== null && _a2 !== void 0 ? _a2 : this._textToVoice = new Client_7.TextToVoice(this._options);
       }
       get user() {
-        var _a;
-        return (_a = this._user) !== null && _a !== void 0 ? _a : this._user = new Client_8.User(this._options);
+        var _a2;
+        return (_a2 = this._user) !== null && _a2 !== void 0 ? _a2 : this._user = new Client_8.User(this._options);
       }
       get voices() {
-        var _a;
-        return (_a = this._voices) !== null && _a !== void 0 ? _a : this._voices = new Client_9.Voices(this._options);
+        var _a2;
+        return (_a2 = this._voices) !== null && _a2 !== void 0 ? _a2 : this._voices = new Client_9.Voices(this._options);
       }
       get studio() {
-        var _a;
-        return (_a = this._studio) !== null && _a !== void 0 ? _a : this._studio = new Client_10.Studio(this._options);
+        var _a2;
+        return (_a2 = this._studio) !== null && _a2 !== void 0 ? _a2 : this._studio = new Client_10.Studio(this._options);
       }
       get dubbing() {
-        var _a;
-        return (_a = this._dubbing) !== null && _a !== void 0 ? _a : this._dubbing = new Client_11.Dubbing(this._options);
+        var _a2;
+        return (_a2 = this._dubbing) !== null && _a2 !== void 0 ? _a2 : this._dubbing = new Client_11.Dubbing(this._options);
       }
       get models() {
-        var _a;
-        return (_a = this._models) !== null && _a !== void 0 ? _a : this._models = new Client_12.Models(this._options);
+        var _a2;
+        return (_a2 = this._models) !== null && _a2 !== void 0 ? _a2 : this._models = new Client_12.Models(this._options);
       }
       get audioNative() {
-        var _a;
-        return (_a = this._audioNative) !== null && _a !== void 0 ? _a : this._audioNative = new Client_13.AudioNative(this._options);
+        var _a2;
+        return (_a2 = this._audioNative) !== null && _a2 !== void 0 ? _a2 : this._audioNative = new Client_13.AudioNative(this._options);
       }
       get usage() {
-        var _a;
-        return (_a = this._usage) !== null && _a !== void 0 ? _a : this._usage = new Client_14.Usage(this._options);
+        var _a2;
+        return (_a2 = this._usage) !== null && _a2 !== void 0 ? _a2 : this._usage = new Client_14.Usage(this._options);
       }
       get pronunciationDictionary() {
-        var _a;
-        return (_a = this._pronunciationDictionary) !== null && _a !== void 0 ? _a : this._pronunciationDictionary = new Client_15.PronunciationDictionary(this._options);
+        var _a2;
+        return (_a2 = this._pronunciationDictionary) !== null && _a2 !== void 0 ? _a2 : this._pronunciationDictionary = new Client_15.PronunciationDictionary(this._options);
       }
       get workspace() {
-        var _a;
-        return (_a = this._workspace) !== null && _a !== void 0 ? _a : this._workspace = new Client_16.Workspace(this._options);
+        var _a2;
+        return (_a2 = this._workspace) !== null && _a2 !== void 0 ? _a2 : this._workspace = new Client_16.Workspace(this._options);
       }
       get speechToText() {
-        var _a;
-        return (_a = this._speechToText) !== null && _a !== void 0 ? _a : this._speechToText = new Client_17.SpeechToText(this._options);
+        var _a2;
+        return (_a2 = this._speechToText) !== null && _a2 !== void 0 ? _a2 : this._speechToText = new Client_17.SpeechToText(this._options);
       }
       get forcedAlignment() {
-        var _a;
-        return (_a = this._forcedAlignment) !== null && _a !== void 0 ? _a : this._forcedAlignment = new Client_18.ForcedAlignment(this._options);
+        var _a2;
+        return (_a2 = this._forcedAlignment) !== null && _a2 !== void 0 ? _a2 : this._forcedAlignment = new Client_18.ForcedAlignment(this._options);
       }
       get conversationalAi() {
-        var _a;
-        return (_a = this._conversationalAi) !== null && _a !== void 0 ? _a : this._conversationalAi = new Client_19.ConversationalAi(this._options);
+        var _a2;
+        return (_a2 = this._conversationalAi) !== null && _a2 !== void 0 ? _a2 : this._conversationalAi = new Client_19.ConversationalAi(this._options);
       }
     };
     exports.ElevenLabsClient = ElevenLabsClient2;
@@ -76554,8 +76554,8 @@ var require_ElevenLabsClient = __commonJS({
     var errors = __importStar(require_errors());
     var ElevenLabsClient2 = class extends Client_1.ElevenLabsClient {
       constructor(options = {}) {
-        var _a;
-        const apiKey = (_a = options.apiKey) !== null && _a !== void 0 ? _a : process.env["ELEVENLABS_API_KEY"];
+        var _a2;
+        const apiKey = (_a2 = options.apiKey) !== null && _a2 !== void 0 ? _a2 : process.env["ELEVENLABS_API_KEY"];
         if (apiKey == null) {
           throw new errors.ElevenLabsError({
             message: "Please pass in your ElevenLabs API Key or export ELEVENLABS_API_KEY in your environment."
@@ -76588,8 +76588,8 @@ var require_ElevenLabsClient = __commonJS({
        */
       generate(request_1) {
         return __awaiter(this, arguments, void 0, function* (request, requestOptions = {}) {
-          var _a, _b;
-          const voiceIdOrName = (_a = request.voice) !== null && _a !== void 0 ? _a : "Sarah";
+          var _a2, _b;
+          const voiceIdOrName = (_a2 = request.voice) !== null && _a2 !== void 0 ? _a2 : "Sarah";
           const voiceId = isVoiceId(voiceIdOrName) ? voiceIdOrName : (_b = (yield this.voices.getAll({
             show_legacy: true
           })).voices.filter((voice) => voice.name === voiceIdOrName)[0]) === null || _b === void 0 ? void 0 : _b.voice_id;
@@ -76623,7 +76623,7 @@ var require_command_exists = __commonJS({
     var exec = __require("child_process").exec;
     var execSync = __require("child_process").execSync;
     var fs = __require("fs");
-    var path = __require("path");
+    var path2 = __require("path");
     var access = fs.access;
     var accessSync = fs.accessSync;
     var constants = fs.constants || fs;
@@ -76727,8 +76727,8 @@ var require_command_exists = __commonJS({
       cleanInput = function(s) {
         var isPathName = /[\\]/.test(s);
         if (isPathName) {
-          var dirname = '"' + path.dirname(s) + '"';
-          var basename = '"' + path.basename(s) + '"';
+          var dirname = '"' + path2.dirname(s) + '"';
+          var basename = '"' + path2.basename(s) + '"';
           return dirname + ":" + basename;
         }
         return '"' + s + '"';
@@ -76777,7 +76777,7 @@ var require_windows = __commonJS({
     module.exports = isexe;
     isexe.sync = sync;
     var fs = __require("fs");
-    function checkPathExt(path, options) {
+    function checkPathExt(path2, options) {
       var pathext = options.pathExt !== void 0 ? options.pathExt : process.env.PATHEXT;
       if (!pathext) {
         return true;
@@ -76788,25 +76788,25 @@ var require_windows = __commonJS({
       }
       for (var i = 0; i < pathext.length; i++) {
         var p = pathext[i].toLowerCase();
-        if (p && path.substr(-p.length).toLowerCase() === p) {
+        if (p && path2.substr(-p.length).toLowerCase() === p) {
           return true;
         }
       }
       return false;
     }
-    function checkStat(stat, path, options) {
+    function checkStat(stat, path2, options) {
       if (!stat.isSymbolicLink() && !stat.isFile()) {
         return false;
       }
-      return checkPathExt(path, options);
+      return checkPathExt(path2, options);
     }
-    function isexe(path, options, cb) {
-      fs.stat(path, function(er, stat) {
-        cb(er, er ? false : checkStat(stat, path, options));
+    function isexe(path2, options, cb) {
+      fs.stat(path2, function(er, stat) {
+        cb(er, er ? false : checkStat(stat, path2, options));
       });
     }
-    function sync(path, options) {
-      return checkStat(fs.statSync(path), path, options);
+    function sync(path2, options) {
+      return checkStat(fs.statSync(path2), path2, options);
     }
   }
 });
@@ -76817,13 +76817,13 @@ var require_mode = __commonJS({
     module.exports = isexe;
     isexe.sync = sync;
     var fs = __require("fs");
-    function isexe(path, options, cb) {
-      fs.stat(path, function(er, stat) {
+    function isexe(path2, options, cb) {
+      fs.stat(path2, function(er, stat) {
         cb(er, er ? false : checkStat(stat, options));
       });
     }
-    function sync(path, options) {
-      return checkStat(fs.statSync(path), options);
+    function sync(path2, options) {
+      return checkStat(fs.statSync(path2), options);
     }
     function checkStat(stat, options) {
       return stat.isFile() && checkMode(stat, options);
@@ -76856,7 +76856,7 @@ var require_isexe = __commonJS({
     }
     module.exports = isexe;
     isexe.sync = sync;
-    function isexe(path, options, cb) {
+    function isexe(path2, options, cb) {
       if (typeof options === "function") {
         cb = options;
         options = {};
@@ -76866,7 +76866,7 @@ var require_isexe = __commonJS({
           throw new TypeError("callback not provided");
         }
         return new Promise(function(resolve, reject) {
-          isexe(path, options || {}, function(er, is2) {
+          isexe(path2, options || {}, function(er, is2) {
             if (er) {
               reject(er);
             } else {
@@ -76875,7 +76875,7 @@ var require_isexe = __commonJS({
           });
         });
       }
-      core(path, options || {}, function(er, is2) {
+      core(path2, options || {}, function(er, is2) {
         if (er) {
           if (er.code === "EACCES" || options && options.ignoreErrors) {
             er = null;
@@ -76885,9 +76885,9 @@ var require_isexe = __commonJS({
         cb(er, is2);
       });
     }
-    function sync(path, options) {
+    function sync(path2, options) {
       try {
-        return core.sync(path, options || {});
+        return core.sync(path2, options || {});
       } catch (er) {
         if (options && options.ignoreErrors || er.code === "EACCES") {
           return false;
@@ -76903,7 +76903,7 @@ var require_isexe = __commonJS({
 var require_which = __commonJS({
   "../../node_modules/.pnpm/which@2.0.2/node_modules/which/which.js"(exports, module) {
     var isWindows = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
-    var path = __require("path");
+    var path2 = __require("path");
     var COLON = isWindows ? ";" : ":";
     var isexe = require_isexe();
     var getNotFoundError = (cmd) => Object.assign(new Error(`not found: ${cmd}`), { code: "ENOENT" });
@@ -76941,7 +76941,7 @@ var require_which = __commonJS({
           return opt.all && found.length ? resolve(found) : reject(getNotFoundError(cmd));
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-        const pCmd = path.join(pathPart, cmd);
+        const pCmd = path2.join(pathPart, cmd);
         const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
         resolve(subStep(p, i, 0));
       });
@@ -76968,7 +76968,7 @@ var require_which = __commonJS({
       for (let i = 0; i < pathEnv.length; i++) {
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-        const pCmd = path.join(pathPart, cmd);
+        const pCmd = path2.join(pathPart, cmd);
         const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
         for (let j = 0; j < pathExt.length; j++) {
           const cur = p + pathExt[j];
@@ -77016,7 +77016,7 @@ var require_path_key = __commonJS({
 var require_resolveCommand = __commonJS({
   "../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/resolveCommand.js"(exports, module) {
     "use strict";
-    var path = __require("path");
+    var path2 = __require("path");
     var which = require_which();
     var getPathKey = require_path_key();
     function resolveCommandAttempt(parsed, withoutPathExt) {
@@ -77034,7 +77034,7 @@ var require_resolveCommand = __commonJS({
       try {
         resolved = which.sync(parsed.command, {
           path: env[getPathKey({ env })],
-          pathExt: withoutPathExt ? path.delimiter : void 0
+          pathExt: withoutPathExt ? path2.delimiter : void 0
         });
       } catch (e2) {
       } finally {
@@ -77043,7 +77043,7 @@ var require_resolveCommand = __commonJS({
         }
       }
       if (resolved) {
-        resolved = path.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
+        resolved = path2.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
       }
       return resolved;
     }
@@ -77097,8 +77097,8 @@ var require_shebang_command = __commonJS({
       if (!match) {
         return null;
       }
-      const [path, argument] = match[0].replace(/#! ?/, "").split(" ");
-      const binary = path.split("/").pop();
+      const [path2, argument] = match[0].replace(/#! ?/, "").split(" ");
+      const binary = path2.split("/").pop();
       if (binary === "env") {
         return argument;
       }
@@ -77133,7 +77133,7 @@ var require_readShebang = __commonJS({
 var require_parse2 = __commonJS({
   "../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/parse.js"(exports, module) {
     "use strict";
-    var path = __require("path");
+    var path2 = __require("path");
     var resolveCommand = require_resolveCommand();
     var escape2 = require_escape();
     var readShebang = require_readShebang();
@@ -77158,7 +77158,7 @@ var require_parse2 = __commonJS({
       const needsShell = !isExecutableRegExp.test(commandFile);
       if (parsed.options.forceShell || needsShell) {
         const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
-        parsed.command = path.normalize(parsed.command);
+        parsed.command = path2.normalize(parsed.command);
         parsed.command = escape2.command(parsed.command);
         parsed.args = parsed.args.map((arg) => escape2.argument(arg, needsDoubleEscapeMetaChars));
         const shellCommand = [parsed.command].concat(parsed.args).join(" ");
@@ -77290,7 +77290,7 @@ var require_strip_final_newline = __commonJS({
 var require_npm_run_path = __commonJS({
   "../../node_modules/.pnpm/npm-run-path@4.0.1/node_modules/npm-run-path/index.js"(exports, module) {
     "use strict";
-    var path = __require("path");
+    var path2 = __require("path");
     var pathKey = require_path_key();
     var npmRunPath = (options) => {
       options = {
@@ -77300,16 +77300,16 @@ var require_npm_run_path = __commonJS({
         ...options
       };
       let previous;
-      let cwdPath = path.resolve(options.cwd);
+      let cwdPath = path2.resolve(options.cwd);
       const result = [];
       while (previous !== cwdPath) {
-        result.push(path.join(cwdPath, "node_modules/.bin"));
+        result.push(path2.join(cwdPath, "node_modules/.bin"));
         previous = cwdPath;
-        cwdPath = path.resolve(cwdPath, "..");
+        cwdPath = path2.resolve(cwdPath, "..");
       }
-      const execPathDir = path.resolve(options.cwd, options.execPath, "..");
+      const execPathDir = path2.resolve(options.cwd, options.execPath, "..");
       result.push(execPathDir);
-      return result.concat(options.path).join(path.delimiter);
+      return result.concat(options.path).join(path2.delimiter);
     };
     module.exports = npmRunPath;
     module.exports.default = npmRunPath;
@@ -77319,9 +77319,9 @@ var require_npm_run_path = __commonJS({
         ...options
       };
       const env = { ...options.env };
-      const path2 = pathKey({ env });
-      options.path = env[path2];
-      env[path2] = module.exports(options);
+      const path3 = pathKey({ env });
+      options.path = env[path3];
+      env[path3] = module.exports(options);
       return env;
     };
   }
@@ -78503,7 +78503,7 @@ var require_command = __commonJS({
 var require_execa = __commonJS({
   "../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/index.js"(exports, module) {
     "use strict";
-    var path = __require("path");
+    var path2 = __require("path");
     var childProcess = __require("child_process");
     var crossSpawn = require_cross_spawn();
     var stripFinalNewline = require_strip_final_newline();
@@ -78545,7 +78545,7 @@ var require_execa = __commonJS({
       };
       options.env = getEnv(options);
       options.stdio = normalizeStdio(options);
-      if (process.platform === "win32" && path.basename(file, ".exe") === "cmd") {
+      if (process.platform === "win32" && path2.basename(file, ".exe") === "cmd") {
         args.unshift("/q");
       }
       return { file, args, options, parsed };
@@ -78787,7 +78787,7 @@ var require_play = __commonJS({
     var execa_1 = __importDefault(require_execa());
     function play(audio) {
       return __awaiter(this, void 0, void 0, function* () {
-        var _a, audio_1, audio_1_1;
+        var _a2, audio_1, audio_1_1;
         var _b, e_1, _c, _d;
         var _e, _f;
         if (!(0, command_exists_1.default)("ffplay")) {
@@ -78799,9 +78799,9 @@ var require_play = __commonJS({
         }
         const ffmpeg = (0, execa_1.default)("ffplay", ["-autoexit", "-", "-nodisp"]);
         try {
-          for (_a = true, audio_1 = __asyncValues(audio); audio_1_1 = yield audio_1.next(), _b = audio_1_1.done, !_b; _a = true) {
+          for (_a2 = true, audio_1 = __asyncValues(audio); audio_1_1 = yield audio_1.next(), _b = audio_1_1.done, !_b; _a2 = true) {
             _d = audio_1_1.value;
-            _a = false;
+            _a2 = false;
             const data = _d;
             (_e = ffmpeg.stdin) === null || _e === void 0 ? void 0 : _e.write(data);
           }
@@ -78809,7 +78809,7 @@ var require_play = __commonJS({
           e_1 = { error: e_1_1 };
         } finally {
           try {
-            if (!_a && !_b && (_c = audio_1.return)) yield _c.call(audio_1);
+            if (!_a2 && !_b && (_c = audio_1.return)) yield _c.call(audio_1);
           } finally {
             if (e_1) throw e_1.error;
           }
@@ -78882,7 +78882,7 @@ var require_stream4 = __commonJS({
     var execa_1 = __importDefault(require_execa());
     function stream(audio) {
       return __awaiter(this, void 0, void 0, function* () {
-        var _a, audio_1, audio_1_1;
+        var _a2, audio_1, audio_1_1;
         var _b, e_1, _c, _d;
         var _e, _f;
         if (runtime_1.RUNTIME.type !== "node") {
@@ -78899,9 +78899,9 @@ var require_stream4 = __commonJS({
         }
         const mpv = (0, execa_1.default)("mpv", ["--no-cache", "--no-terminal", "--", "fd://0"]);
         try {
-          for (_a = true, audio_1 = __asyncValues(audio); audio_1_1 = yield audio_1.next(), _b = audio_1_1.done, !_b; _a = true) {
+          for (_a2 = true, audio_1 = __asyncValues(audio); audio_1_1 = yield audio_1.next(), _b = audio_1_1.done, !_b; _a2 = true) {
             _d = audio_1_1.value;
-            _a = false;
+            _a2 = false;
             const data = _d;
             (_e = mpv.stdin) === null || _e === void 0 ? void 0 : _e.write(data);
           }
@@ -78909,7 +78909,7 @@ var require_stream4 = __commonJS({
           e_1 = { error: e_1_1 };
         } finally {
           try {
-            if (!_a && !_b && (_c = audio_1.return)) yield _c.call(audio_1);
+            if (!_a2 && !_b && (_c = audio_1.return)) yield _c.call(audio_1);
           } finally {
             if (e_1) throw e_1.error;
           }
@@ -79375,8 +79375,8 @@ function getErrorMap() {
 
 // ../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/helpers/parseUtil.js
 var makeIssue = (params) => {
-  const { data, path, errorMaps, issueData } = params;
-  const fullPath = [...path, ...issueData.path || []];
+  const { data, path: path2, errorMaps, issueData } = params;
+  const fullPath = [...path2, ...issueData.path || []];
   const fullIssue = {
     ...issueData,
     path: fullPath
@@ -79491,11 +79491,11 @@ var errorUtil;
 
 // ../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js
 var ParseInputLazyPath = class {
-  constructor(parent, value, path, key) {
+  constructor(parent, value, path2, key) {
     this._cachedPath = [];
     this.parent = parent;
     this.data = value;
-    this._path = path;
+    this._path = path2;
     this._key = key;
   }
   get path() {
@@ -82992,8 +82992,8 @@ var health_default = router;
 var USER_AGENT;
 if (typeof navigator === "undefined" || !navigator.userAgent?.startsWith?.("Mozilla/5.0 ")) {
   const NAME = "oauth4webapi";
-  const VERSION = "v3.8.5";
-  USER_AGENT = `${NAME}/${VERSION}`;
+  const VERSION2 = "v3.8.5";
+  USER_AGENT = `${NAME}/${VERSION2}`;
 }
 function looseInstanceOf(input, expected) {
   if (input == null) {
@@ -84023,8 +84023,8 @@ var headers;
 var USER_AGENT2;
 if (typeof navigator === "undefined" || !navigator.userAgent?.startsWith?.("Mozilla/5.0 ")) {
   const NAME = "openid-client";
-  const VERSION = "v6.8.2";
-  USER_AGENT2 = `${NAME}/${VERSION}`;
+  const VERSION2 = "v6.8.2";
+  USER_AGENT2 = `${NAME}/${VERSION2}`;
   headers = { "user-agent": USER_AGENT2 };
 }
 var int = (config) => {
@@ -85870,7 +85870,7 @@ var SelectionProxyHandler = class _SelectionProxyHandler {
 function mapResultRow(columns, row, joinsNotNullableMap) {
   const nullifyMap = {};
   const result = columns.reduce(
-    (result2, { path, field }, columnIndex) => {
+    (result2, { path: path2, field }, columnIndex) => {
       let decoder3;
       if (is(field, Column)) {
         decoder3 = field;
@@ -85880,8 +85880,8 @@ function mapResultRow(columns, row, joinsNotNullableMap) {
         decoder3 = field.sql.decoder;
       }
       let node = result2;
-      for (const [pathChunkIndex, pathChunk] of path.entries()) {
-        if (pathChunkIndex < path.length - 1) {
+      for (const [pathChunkIndex, pathChunk] of path2.entries()) {
+        if (pathChunkIndex < path2.length - 1) {
           if (!(pathChunk in node)) {
             node[pathChunk] = {};
           }
@@ -85889,8 +85889,8 @@ function mapResultRow(columns, row, joinsNotNullableMap) {
         } else {
           const rawValue = row[columnIndex];
           const value = node[pathChunk] = rawValue === null ? null : decoder3.mapFromDriverValue(rawValue);
-          if (joinsNotNullableMap && is(field, Column) && path.length === 2) {
-            const objectName = path[0];
+          if (joinsNotNullableMap && is(field, Column) && path2.length === 2) {
+            const objectName = path2[0];
             if (!(objectName in nullifyMap)) {
               nullifyMap[objectName] = value === null ? getTableName(field.table) : false;
             } else if (typeof nullifyMap[objectName] === "string" && nullifyMap[objectName] !== getTableName(field.table)) {
@@ -91720,6 +91720,4859 @@ var shifts_default = router3;
 var import_express5 = __toESM(require_express2(), 1);
 var import_elevenlabs = __toESM(require_elevenlabs(), 1);
 
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/tslib.mjs
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+  if (kind === "m")
+    throw new TypeError("Private method is not writable");
+  if (kind === "a" && !f)
+    throw new TypeError("Private accessor was defined without a setter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+    throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+function __classPrivateFieldGet(receiver, state, kind, f) {
+  if (kind === "a" && !f)
+    throw new TypeError("Private accessor was defined without a getter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+    throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/uuid.mjs
+var uuid4 = function() {
+  const { crypto: crypto3 } = globalThis;
+  if (crypto3?.randomUUID) {
+    uuid4 = crypto3.randomUUID.bind(crypto3);
+    return crypto3.randomUUID();
+  }
+  const u8 = new Uint8Array(1);
+  const randomByte = crypto3 ? () => crypto3.getRandomValues(u8)[0] : () => Math.random() * 255 & 255;
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (+c ^ randomByte() & 15 >> +c / 4).toString(16));
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/errors.mjs
+function isAbortError(err) {
+  return typeof err === "object" && err !== null && // Spec-compliant fetch implementations
+  ("name" in err && err.name === "AbortError" || // Expo fetch
+  "message" in err && String(err.message).includes("FetchRequestCanceledException"));
+}
+var castToError = (err) => {
+  if (err instanceof Error)
+    return err;
+  if (typeof err === "object" && err !== null) {
+    try {
+      if (Object.prototype.toString.call(err) === "[object Error]") {
+        const error = new Error(err.message, err.cause ? { cause: err.cause } : {});
+        if (err.stack)
+          error.stack = err.stack;
+        if (err.cause && !error.cause)
+          error.cause = err.cause;
+        if (err.name)
+          error.name = err.name;
+        return error;
+      }
+    } catch {
+    }
+    try {
+      return new Error(JSON.stringify(err));
+    } catch {
+    }
+  }
+  return new Error(err);
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/core/error.mjs
+var AnthropicError = class extends Error {
+};
+var APIError = class _APIError extends AnthropicError {
+  constructor(status, error, message, headers2, type) {
+    super(`${_APIError.makeMessage(status, error, message)}`);
+    this.status = status;
+    this.headers = headers2;
+    this.requestID = headers2?.get("request-id");
+    this.error = error;
+    this.type = type ?? null;
+  }
+  static makeMessage(status, error, message) {
+    const msg = error?.message ? typeof error.message === "string" ? error.message : JSON.stringify(error.message) : error ? JSON.stringify(error) : message;
+    if (status && msg) {
+      return `${status} ${msg}`;
+    }
+    if (status) {
+      return `${status} status code (no body)`;
+    }
+    if (msg) {
+      return msg;
+    }
+    return "(no status code or body)";
+  }
+  static generate(status, errorResponse, message, headers2) {
+    if (!status || !headers2) {
+      return new APIConnectionError({ message, cause: castToError(errorResponse) });
+    }
+    const error = errorResponse;
+    const type = error?.["error"]?.["type"];
+    if (status === 400) {
+      return new BadRequestError(status, error, message, headers2, type);
+    }
+    if (status === 401) {
+      return new AuthenticationError(status, error, message, headers2, type);
+    }
+    if (status === 403) {
+      return new PermissionDeniedError(status, error, message, headers2, type);
+    }
+    if (status === 404) {
+      return new NotFoundError(status, error, message, headers2, type);
+    }
+    if (status === 409) {
+      return new ConflictError(status, error, message, headers2, type);
+    }
+    if (status === 422) {
+      return new UnprocessableEntityError(status, error, message, headers2, type);
+    }
+    if (status === 429) {
+      return new RateLimitError(status, error, message, headers2, type);
+    }
+    if (status >= 500) {
+      return new InternalServerError(status, error, message, headers2, type);
+    }
+    return new _APIError(status, error, message, headers2, type);
+  }
+};
+var APIUserAbortError = class extends APIError {
+  constructor({ message } = {}) {
+    super(void 0, void 0, message || "Request was aborted.", void 0);
+  }
+};
+var APIConnectionError = class extends APIError {
+  constructor({ message, cause }) {
+    super(void 0, void 0, message || "Connection error.", void 0);
+    if (cause)
+      this.cause = cause;
+  }
+};
+var APIConnectionTimeoutError = class extends APIConnectionError {
+  constructor({ message } = {}) {
+    super({ message: message ?? "Request timed out." });
+  }
+};
+var BadRequestError = class extends APIError {
+};
+var AuthenticationError = class extends APIError {
+};
+var PermissionDeniedError = class extends APIError {
+};
+var NotFoundError = class extends APIError {
+};
+var ConflictError = class extends APIError {
+};
+var UnprocessableEntityError = class extends APIError {
+};
+var RateLimitError = class extends APIError {
+};
+var InternalServerError = class extends APIError {
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/values.mjs
+var startsWithSchemeRegexp = /^[a-z][a-z0-9+.-]*:/i;
+var isAbsoluteURL = (url) => {
+  return startsWithSchemeRegexp.test(url);
+};
+var isArray = (val) => (isArray = Array.isArray, isArray(val));
+var isReadonlyArray = isArray;
+function maybeObj(x) {
+  if (typeof x !== "object") {
+    return {};
+  }
+  return x ?? {};
+}
+function isEmptyObj(obj) {
+  if (!obj)
+    return true;
+  for (const _k in obj)
+    return false;
+  return true;
+}
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+var validatePositiveInteger = (name, n) => {
+  if (typeof n !== "number" || !Number.isInteger(n)) {
+    throw new AnthropicError(`${name} must be an integer`);
+  }
+  if (n < 0) {
+    throw new AnthropicError(`${name} must be a positive integer`);
+  }
+  return n;
+};
+var safeJSON = (text2) => {
+  try {
+    return JSON.parse(text2);
+  } catch (err) {
+    return void 0;
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/sleep.mjs
+var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/version.mjs
+var VERSION = "0.82.0";
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/detect-platform.mjs
+var isRunningInBrowser = () => {
+  return (
+    // @ts-ignore
+    typeof window !== "undefined" && // @ts-ignore
+    typeof window.document !== "undefined" && // @ts-ignore
+    typeof navigator !== "undefined"
+  );
+};
+function getDetectedPlatform() {
+  if (typeof Deno !== "undefined" && Deno.build != null) {
+    return "deno";
+  }
+  if (typeof EdgeRuntime !== "undefined") {
+    return "edge";
+  }
+  if (Object.prototype.toString.call(typeof globalThis.process !== "undefined" ? globalThis.process : 0) === "[object process]") {
+    return "node";
+  }
+  return "unknown";
+}
+var getPlatformProperties = () => {
+  const detectedPlatform = getDetectedPlatform();
+  if (detectedPlatform === "deno") {
+    return {
+      "X-Stainless-Lang": "js",
+      "X-Stainless-Package-Version": VERSION,
+      "X-Stainless-OS": normalizePlatform(Deno.build.os),
+      "X-Stainless-Arch": normalizeArch(Deno.build.arch),
+      "X-Stainless-Runtime": "deno",
+      "X-Stainless-Runtime-Version": typeof Deno.version === "string" ? Deno.version : Deno.version?.deno ?? "unknown"
+    };
+  }
+  if (typeof EdgeRuntime !== "undefined") {
+    return {
+      "X-Stainless-Lang": "js",
+      "X-Stainless-Package-Version": VERSION,
+      "X-Stainless-OS": "Unknown",
+      "X-Stainless-Arch": `other:${EdgeRuntime}`,
+      "X-Stainless-Runtime": "edge",
+      "X-Stainless-Runtime-Version": globalThis.process.version
+    };
+  }
+  if (detectedPlatform === "node") {
+    return {
+      "X-Stainless-Lang": "js",
+      "X-Stainless-Package-Version": VERSION,
+      "X-Stainless-OS": normalizePlatform(globalThis.process.platform ?? "unknown"),
+      "X-Stainless-Arch": normalizeArch(globalThis.process.arch ?? "unknown"),
+      "X-Stainless-Runtime": "node",
+      "X-Stainless-Runtime-Version": globalThis.process.version ?? "unknown"
+    };
+  }
+  const browserInfo = getBrowserInfo();
+  if (browserInfo) {
+    return {
+      "X-Stainless-Lang": "js",
+      "X-Stainless-Package-Version": VERSION,
+      "X-Stainless-OS": "Unknown",
+      "X-Stainless-Arch": "unknown",
+      "X-Stainless-Runtime": `browser:${browserInfo.browser}`,
+      "X-Stainless-Runtime-Version": browserInfo.version
+    };
+  }
+  return {
+    "X-Stainless-Lang": "js",
+    "X-Stainless-Package-Version": VERSION,
+    "X-Stainless-OS": "Unknown",
+    "X-Stainless-Arch": "unknown",
+    "X-Stainless-Runtime": "unknown",
+    "X-Stainless-Runtime-Version": "unknown"
+  };
+};
+function getBrowserInfo() {
+  if (typeof navigator === "undefined" || !navigator) {
+    return null;
+  }
+  const browserPatterns = [
+    { key: "edge", pattern: /Edge(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
+    { key: "ie", pattern: /MSIE(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
+    { key: "ie", pattern: /Trident(?:.*rv\:(\d+)\.(\d+)(?:\.(\d+))?)?/ },
+    { key: "chrome", pattern: /Chrome(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
+    { key: "firefox", pattern: /Firefox(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
+    { key: "safari", pattern: /(?:Version\W+(\d+)\.(\d+)(?:\.(\d+))?)?(?:\W+Mobile\S*)?\W+Safari/ }
+  ];
+  for (const { key, pattern } of browserPatterns) {
+    const match = pattern.exec(navigator.userAgent);
+    if (match) {
+      const major = match[1] || 0;
+      const minor = match[2] || 0;
+      const patch = match[3] || 0;
+      return { browser: key, version: `${major}.${minor}.${patch}` };
+    }
+  }
+  return null;
+}
+var normalizeArch = (arch) => {
+  if (arch === "x32")
+    return "x32";
+  if (arch === "x86_64" || arch === "x64")
+    return "x64";
+  if (arch === "arm")
+    return "arm";
+  if (arch === "aarch64" || arch === "arm64")
+    return "arm64";
+  if (arch)
+    return `other:${arch}`;
+  return "unknown";
+};
+var normalizePlatform = (platform) => {
+  platform = platform.toLowerCase();
+  if (platform.includes("ios"))
+    return "iOS";
+  if (platform === "android")
+    return "Android";
+  if (platform === "darwin")
+    return "MacOS";
+  if (platform === "win32")
+    return "Windows";
+  if (platform === "freebsd")
+    return "FreeBSD";
+  if (platform === "openbsd")
+    return "OpenBSD";
+  if (platform === "linux")
+    return "Linux";
+  if (platform)
+    return `Other:${platform}`;
+  return "Unknown";
+};
+var _platformHeaders;
+var getPlatformHeaders = () => {
+  return _platformHeaders ?? (_platformHeaders = getPlatformProperties());
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/shims.mjs
+function getDefaultFetch() {
+  if (typeof fetch !== "undefined") {
+    return fetch;
+  }
+  throw new Error("`fetch` is not defined as a global; Either pass `fetch` to the client, `new Anthropic({ fetch })` or polyfill the global, `globalThis.fetch = fetch`");
+}
+function makeReadableStream(...args) {
+  const ReadableStream2 = globalThis.ReadableStream;
+  if (typeof ReadableStream2 === "undefined") {
+    throw new Error("`ReadableStream` is not defined as a global; You will need to polyfill it, `globalThis.ReadableStream = ReadableStream`");
+  }
+  return new ReadableStream2(...args);
+}
+function ReadableStreamFrom(iterable) {
+  let iter = Symbol.asyncIterator in iterable ? iterable[Symbol.asyncIterator]() : iterable[Symbol.iterator]();
+  return makeReadableStream({
+    start() {
+    },
+    async pull(controller) {
+      const { done, value } = await iter.next();
+      if (done) {
+        controller.close();
+      } else {
+        controller.enqueue(value);
+      }
+    },
+    async cancel() {
+      await iter.return?.();
+    }
+  });
+}
+function ReadableStreamToAsyncIterable(stream) {
+  if (stream[Symbol.asyncIterator])
+    return stream;
+  const reader = stream.getReader();
+  return {
+    async next() {
+      try {
+        const result = await reader.read();
+        if (result?.done)
+          reader.releaseLock();
+        return result;
+      } catch (e2) {
+        reader.releaseLock();
+        throw e2;
+      }
+    },
+    async return() {
+      const cancelPromise = reader.cancel();
+      reader.releaseLock();
+      await cancelPromise;
+      return { done: true, value: void 0 };
+    },
+    [Symbol.asyncIterator]() {
+      return this;
+    }
+  };
+}
+async function CancelReadableStream(stream) {
+  if (stream === null || typeof stream !== "object")
+    return;
+  if (stream[Symbol.asyncIterator]) {
+    await stream[Symbol.asyncIterator]().return?.();
+    return;
+  }
+  const reader = stream.getReader();
+  const cancelPromise = reader.cancel();
+  reader.releaseLock();
+  await cancelPromise;
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/request-options.mjs
+var FallbackEncoder = ({ headers: headers2, body }) => {
+  return {
+    bodyHeaders: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(body)
+  };
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/query.mjs
+function stringifyQuery(query) {
+  return Object.entries(query).filter(([_, value]) => typeof value !== "undefined").map(([key, value]) => {
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    }
+    if (value === null) {
+      return `${encodeURIComponent(key)}=`;
+    }
+    throw new AnthropicError(`Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`);
+  }).join("&");
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/bytes.mjs
+function concatBytes(buffers) {
+  let length = 0;
+  for (const buffer of buffers) {
+    length += buffer.length;
+  }
+  const output = new Uint8Array(length);
+  let index2 = 0;
+  for (const buffer of buffers) {
+    output.set(buffer, index2);
+    index2 += buffer.length;
+  }
+  return output;
+}
+var encodeUTF8_;
+function encodeUTF8(str) {
+  let encoder2;
+  return (encodeUTF8_ ?? (encoder2 = new globalThis.TextEncoder(), encodeUTF8_ = encoder2.encode.bind(encoder2)))(str);
+}
+var decodeUTF8_;
+function decodeUTF8(bytes) {
+  let decoder3;
+  return (decodeUTF8_ ?? (decoder3 = new globalThis.TextDecoder(), decodeUTF8_ = decoder3.decode.bind(decoder3)))(bytes);
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/decoders/line.mjs
+var _LineDecoder_buffer;
+var _LineDecoder_carriageReturnIndex;
+var LineDecoder = class {
+  constructor() {
+    _LineDecoder_buffer.set(this, void 0);
+    _LineDecoder_carriageReturnIndex.set(this, void 0);
+    __classPrivateFieldSet(this, _LineDecoder_buffer, new Uint8Array(), "f");
+    __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
+  }
+  decode(chunk) {
+    if (chunk == null) {
+      return [];
+    }
+    const binaryChunk = chunk instanceof ArrayBuffer ? new Uint8Array(chunk) : typeof chunk === "string" ? encodeUTF8(chunk) : chunk;
+    __classPrivateFieldSet(this, _LineDecoder_buffer, concatBytes([__classPrivateFieldGet(this, _LineDecoder_buffer, "f"), binaryChunk]), "f");
+    const lines = [];
+    let patternIndex;
+    while ((patternIndex = findNewlineIndex(__classPrivateFieldGet(this, _LineDecoder_buffer, "f"), __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f"))) != null) {
+      if (patternIndex.carriage && __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") == null) {
+        __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, patternIndex.index, "f");
+        continue;
+      }
+      if (__classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") != null && (patternIndex.index !== __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") + 1 || patternIndex.carriage)) {
+        lines.push(decodeUTF8(__classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(0, __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") - 1)));
+        __classPrivateFieldSet(this, _LineDecoder_buffer, __classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(__classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f")), "f");
+        __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
+        continue;
+      }
+      const endIndex = __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") !== null ? patternIndex.preceding - 1 : patternIndex.preceding;
+      const line2 = decodeUTF8(__classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(0, endIndex));
+      lines.push(line2);
+      __classPrivateFieldSet(this, _LineDecoder_buffer, __classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(patternIndex.index), "f");
+      __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
+    }
+    return lines;
+  }
+  flush() {
+    if (!__classPrivateFieldGet(this, _LineDecoder_buffer, "f").length) {
+      return [];
+    }
+    return this.decode("\n");
+  }
+};
+_LineDecoder_buffer = /* @__PURE__ */ new WeakMap(), _LineDecoder_carriageReturnIndex = /* @__PURE__ */ new WeakMap();
+LineDecoder.NEWLINE_CHARS = /* @__PURE__ */ new Set(["\n", "\r"]);
+LineDecoder.NEWLINE_REGEXP = /\r\n|[\n\r]/g;
+function findNewlineIndex(buffer, startIndex) {
+  const newline = 10;
+  const carriage = 13;
+  for (let i = startIndex ?? 0; i < buffer.length; i++) {
+    if (buffer[i] === newline) {
+      return { preceding: i, index: i + 1, carriage: false };
+    }
+    if (buffer[i] === carriage) {
+      return { preceding: i, index: i + 1, carriage: true };
+    }
+  }
+  return null;
+}
+function findDoubleNewlineIndex(buffer) {
+  const newline = 10;
+  const carriage = 13;
+  for (let i = 0; i < buffer.length - 1; i++) {
+    if (buffer[i] === newline && buffer[i + 1] === newline) {
+      return i + 2;
+    }
+    if (buffer[i] === carriage && buffer[i + 1] === carriage) {
+      return i + 2;
+    }
+    if (buffer[i] === carriage && buffer[i + 1] === newline && i + 3 < buffer.length && buffer[i + 2] === carriage && buffer[i + 3] === newline) {
+      return i + 4;
+    }
+  }
+  return -1;
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/log.mjs
+var levelNumbers = {
+  off: 0,
+  error: 200,
+  warn: 300,
+  info: 400,
+  debug: 500
+};
+var parseLogLevel = (maybeLevel, sourceName, client) => {
+  if (!maybeLevel) {
+    return void 0;
+  }
+  if (hasOwn(levelNumbers, maybeLevel)) {
+    return maybeLevel;
+  }
+  loggerFor(client).warn(`${sourceName} was set to ${JSON.stringify(maybeLevel)}, expected one of ${JSON.stringify(Object.keys(levelNumbers))}`);
+  return void 0;
+};
+function noop() {
+}
+function makeLogFn(fnLevel, logger3, logLevel) {
+  if (!logger3 || levelNumbers[fnLevel] > levelNumbers[logLevel]) {
+    return noop;
+  } else {
+    return logger3[fnLevel].bind(logger3);
+  }
+}
+var noopLogger = {
+  error: noop,
+  warn: noop,
+  info: noop,
+  debug: noop
+};
+var cachedLoggers = /* @__PURE__ */ new WeakMap();
+function loggerFor(client) {
+  const logger3 = client.logger;
+  const logLevel = client.logLevel ?? "off";
+  if (!logger3) {
+    return noopLogger;
+  }
+  const cachedLogger = cachedLoggers.get(logger3);
+  if (cachedLogger && cachedLogger[0] === logLevel) {
+    return cachedLogger[1];
+  }
+  const levelLogger = {
+    error: makeLogFn("error", logger3, logLevel),
+    warn: makeLogFn("warn", logger3, logLevel),
+    info: makeLogFn("info", logger3, logLevel),
+    debug: makeLogFn("debug", logger3, logLevel)
+  };
+  cachedLoggers.set(logger3, [logLevel, levelLogger]);
+  return levelLogger;
+}
+var formatRequestDetails = (details) => {
+  if (details.options) {
+    details.options = { ...details.options };
+    delete details.options["headers"];
+  }
+  if (details.headers) {
+    details.headers = Object.fromEntries((details.headers instanceof Headers ? [...details.headers] : Object.entries(details.headers)).map(([name, value]) => [
+      name,
+      name.toLowerCase() === "x-api-key" || name.toLowerCase() === "authorization" || name.toLowerCase() === "cookie" || name.toLowerCase() === "set-cookie" ? "***" : value
+    ]));
+  }
+  if ("retryOfRequestLogID" in details) {
+    if (details.retryOfRequestLogID) {
+      details.retryOf = details.retryOfRequestLogID;
+    }
+    delete details.retryOfRequestLogID;
+  }
+  return details;
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/core/streaming.mjs
+var _Stream_client;
+var Stream = class _Stream {
+  constructor(iterator, controller, client) {
+    this.iterator = iterator;
+    _Stream_client.set(this, void 0);
+    this.controller = controller;
+    __classPrivateFieldSet(this, _Stream_client, client, "f");
+  }
+  static fromSSEResponse(response, controller, client) {
+    let consumed = false;
+    const logger3 = client ? loggerFor(client) : console;
+    async function* iterator() {
+      if (consumed) {
+        throw new AnthropicError("Cannot iterate over a consumed stream, use `.tee()` to split the stream.");
+      }
+      consumed = true;
+      let done = false;
+      try {
+        for await (const sse of _iterSSEMessages(response, controller)) {
+          if (sse.event === "completion") {
+            try {
+              yield JSON.parse(sse.data);
+            } catch (e2) {
+              logger3.error(`Could not parse message into JSON:`, sse.data);
+              logger3.error(`From chunk:`, sse.raw);
+              throw e2;
+            }
+          }
+          if (sse.event === "message_start" || sse.event === "message_delta" || sse.event === "message_stop" || sse.event === "content_block_start" || sse.event === "content_block_delta" || sse.event === "content_block_stop") {
+            try {
+              yield JSON.parse(sse.data);
+            } catch (e2) {
+              logger3.error(`Could not parse message into JSON:`, sse.data);
+              logger3.error(`From chunk:`, sse.raw);
+              throw e2;
+            }
+          }
+          if (sse.event === "ping") {
+            continue;
+          }
+          if (sse.event === "error") {
+            const body = safeJSON(sse.data) ?? sse.data;
+            const type = body?.error?.type;
+            throw new APIError(void 0, body, void 0, response.headers, type);
+          }
+        }
+        done = true;
+      } catch (e2) {
+        if (isAbortError(e2))
+          return;
+        throw e2;
+      } finally {
+        if (!done)
+          controller.abort();
+      }
+    }
+    return new _Stream(iterator, controller, client);
+  }
+  /**
+   * Generates a Stream from a newline-separated ReadableStream
+   * where each item is a JSON value.
+   */
+  static fromReadableStream(readableStream, controller, client) {
+    let consumed = false;
+    async function* iterLines() {
+      const lineDecoder = new LineDecoder();
+      const iter = ReadableStreamToAsyncIterable(readableStream);
+      for await (const chunk of iter) {
+        for (const line2 of lineDecoder.decode(chunk)) {
+          yield line2;
+        }
+      }
+      for (const line2 of lineDecoder.flush()) {
+        yield line2;
+      }
+    }
+    async function* iterator() {
+      if (consumed) {
+        throw new AnthropicError("Cannot iterate over a consumed stream, use `.tee()` to split the stream.");
+      }
+      consumed = true;
+      let done = false;
+      try {
+        for await (const line2 of iterLines()) {
+          if (done)
+            continue;
+          if (line2)
+            yield JSON.parse(line2);
+        }
+        done = true;
+      } catch (e2) {
+        if (isAbortError(e2))
+          return;
+        throw e2;
+      } finally {
+        if (!done)
+          controller.abort();
+      }
+    }
+    return new _Stream(iterator, controller, client);
+  }
+  [(_Stream_client = /* @__PURE__ */ new WeakMap(), Symbol.asyncIterator)]() {
+    return this.iterator();
+  }
+  /**
+   * Splits the stream into two streams which can be
+   * independently read from at different speeds.
+   */
+  tee() {
+    const left = [];
+    const right = [];
+    const iterator = this.iterator();
+    const teeIterator = (queue) => {
+      return {
+        next: () => {
+          if (queue.length === 0) {
+            const result = iterator.next();
+            left.push(result);
+            right.push(result);
+          }
+          return queue.shift();
+        }
+      };
+    };
+    return [
+      new _Stream(() => teeIterator(left), this.controller, __classPrivateFieldGet(this, _Stream_client, "f")),
+      new _Stream(() => teeIterator(right), this.controller, __classPrivateFieldGet(this, _Stream_client, "f"))
+    ];
+  }
+  /**
+   * Converts this stream to a newline-separated ReadableStream of
+   * JSON stringified values in the stream
+   * which can be turned back into a Stream with `Stream.fromReadableStream()`.
+   */
+  toReadableStream() {
+    const self2 = this;
+    let iter;
+    return makeReadableStream({
+      async start() {
+        iter = self2[Symbol.asyncIterator]();
+      },
+      async pull(ctrl) {
+        try {
+          const { value, done } = await iter.next();
+          if (done)
+            return ctrl.close();
+          const bytes = encodeUTF8(JSON.stringify(value) + "\n");
+          ctrl.enqueue(bytes);
+        } catch (err) {
+          ctrl.error(err);
+        }
+      },
+      async cancel() {
+        await iter.return?.();
+      }
+    });
+  }
+};
+async function* _iterSSEMessages(response, controller) {
+  if (!response.body) {
+    controller.abort();
+    if (typeof globalThis.navigator !== "undefined" && globalThis.navigator.product === "ReactNative") {
+      throw new AnthropicError(`The default react-native fetch implementation does not support streaming. Please use expo/fetch: https://docs.expo.dev/versions/latest/sdk/expo/#expofetch-api`);
+    }
+    throw new AnthropicError(`Attempted to iterate over a response with no body`);
+  }
+  const sseDecoder = new SSEDecoder();
+  const lineDecoder = new LineDecoder();
+  const iter = ReadableStreamToAsyncIterable(response.body);
+  for await (const sseChunk of iterSSEChunks(iter)) {
+    for (const line2 of lineDecoder.decode(sseChunk)) {
+      const sse = sseDecoder.decode(line2);
+      if (sse)
+        yield sse;
+    }
+  }
+  for (const line2 of lineDecoder.flush()) {
+    const sse = sseDecoder.decode(line2);
+    if (sse)
+      yield sse;
+  }
+}
+async function* iterSSEChunks(iterator) {
+  let data = new Uint8Array();
+  for await (const chunk of iterator) {
+    if (chunk == null) {
+      continue;
+    }
+    const binaryChunk = chunk instanceof ArrayBuffer ? new Uint8Array(chunk) : typeof chunk === "string" ? encodeUTF8(chunk) : chunk;
+    let newData = new Uint8Array(data.length + binaryChunk.length);
+    newData.set(data);
+    newData.set(binaryChunk, data.length);
+    data = newData;
+    let patternIndex;
+    while ((patternIndex = findDoubleNewlineIndex(data)) !== -1) {
+      yield data.slice(0, patternIndex);
+      data = data.slice(patternIndex);
+    }
+  }
+  if (data.length > 0) {
+    yield data;
+  }
+}
+var SSEDecoder = class {
+  constructor() {
+    this.event = null;
+    this.data = [];
+    this.chunks = [];
+  }
+  decode(line2) {
+    if (line2.endsWith("\r")) {
+      line2 = line2.substring(0, line2.length - 1);
+    }
+    if (!line2) {
+      if (!this.event && !this.data.length)
+        return null;
+      const sse = {
+        event: this.event,
+        data: this.data.join("\n"),
+        raw: this.chunks
+      };
+      this.event = null;
+      this.data = [];
+      this.chunks = [];
+      return sse;
+    }
+    this.chunks.push(line2);
+    if (line2.startsWith(":")) {
+      return null;
+    }
+    let [fieldname, _, value] = partition(line2, ":");
+    if (value.startsWith(" ")) {
+      value = value.substring(1);
+    }
+    if (fieldname === "event") {
+      this.event = value;
+    } else if (fieldname === "data") {
+      this.data.push(value);
+    }
+    return null;
+  }
+};
+function partition(str, delimiter) {
+  const index2 = str.indexOf(delimiter);
+  if (index2 !== -1) {
+    return [str.substring(0, index2), delimiter, str.substring(index2 + delimiter.length)];
+  }
+  return [str, "", ""];
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/parse.mjs
+async function defaultParseResponse(client, props2) {
+  const { response, requestLogID, retryOfRequestLogID, startTime } = props2;
+  const body = await (async () => {
+    if (props2.options.stream) {
+      loggerFor(client).debug("response", response.status, response.url, response.headers, response.body);
+      if (props2.options.__streamClass) {
+        return props2.options.__streamClass.fromSSEResponse(response, props2.controller);
+      }
+      return Stream.fromSSEResponse(response, props2.controller);
+    }
+    if (response.status === 204) {
+      return null;
+    }
+    if (props2.options.__binaryResponse) {
+      return response;
+    }
+    const contentType = response.headers.get("content-type");
+    const mediaType = contentType?.split(";")[0]?.trim();
+    const isJSON = mediaType?.includes("application/json") || mediaType?.endsWith("+json");
+    if (isJSON) {
+      const contentLength = response.headers.get("content-length");
+      if (contentLength === "0") {
+        return void 0;
+      }
+      const json2 = await response.json();
+      return addRequestID(json2, response);
+    }
+    const text2 = await response.text();
+    return text2;
+  })();
+  loggerFor(client).debug(`[${requestLogID}] response parsed`, formatRequestDetails({
+    retryOfRequestLogID,
+    url: response.url,
+    status: response.status,
+    body,
+    durationMs: Date.now() - startTime
+  }));
+  return body;
+}
+function addRequestID(value, response) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+  return Object.defineProperty(value, "_request_id", {
+    value: response.headers.get("request-id"),
+    enumerable: false
+  });
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/core/api-promise.mjs
+var _APIPromise_client;
+var APIPromise = class _APIPromise extends Promise {
+  constructor(client, responsePromise, parseResponse = defaultParseResponse) {
+    super((resolve) => {
+      resolve(null);
+    });
+    this.responsePromise = responsePromise;
+    this.parseResponse = parseResponse;
+    _APIPromise_client.set(this, void 0);
+    __classPrivateFieldSet(this, _APIPromise_client, client, "f");
+  }
+  _thenUnwrap(transform) {
+    return new _APIPromise(__classPrivateFieldGet(this, _APIPromise_client, "f"), this.responsePromise, async (client, props2) => addRequestID(transform(await this.parseResponse(client, props2), props2), props2.response));
+  }
+  /**
+   * Gets the raw `Response` instance instead of parsing the response
+   * data.
+   *
+   * If you want to parse the response body but still get the `Response`
+   * instance, you can use {@link withResponse()}.
+   *
+   * 👋 Getting the wrong TypeScript type for `Response`?
+   * Try setting `"moduleResolution": "NodeNext"` or add `"lib": ["DOM"]`
+   * to your `tsconfig.json`.
+   */
+  asResponse() {
+    return this.responsePromise.then((p) => p.response);
+  }
+  /**
+   * Gets the parsed response data, the raw `Response` instance and the ID of the request,
+   * returned via the `request-id` header which is useful for debugging requests and resporting
+   * issues to Anthropic.
+   *
+   * If you just want to get the raw `Response` instance without parsing it,
+   * you can use {@link asResponse()}.
+   *
+   * 👋 Getting the wrong TypeScript type for `Response`?
+   * Try setting `"moduleResolution": "NodeNext"` or add `"lib": ["DOM"]`
+   * to your `tsconfig.json`.
+   */
+  async withResponse() {
+    const [data, response] = await Promise.all([this.parse(), this.asResponse()]);
+    return { data, response, request_id: response.headers.get("request-id") };
+  }
+  parse() {
+    if (!this.parsedPromise) {
+      this.parsedPromise = this.responsePromise.then((data) => this.parseResponse(__classPrivateFieldGet(this, _APIPromise_client, "f"), data));
+    }
+    return this.parsedPromise;
+  }
+  then(onfulfilled, onrejected) {
+    return this.parse().then(onfulfilled, onrejected);
+  }
+  catch(onrejected) {
+    return this.parse().catch(onrejected);
+  }
+  finally(onfinally) {
+    return this.parse().finally(onfinally);
+  }
+};
+_APIPromise_client = /* @__PURE__ */ new WeakMap();
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/core/pagination.mjs
+var _AbstractPage_client;
+var AbstractPage = class {
+  constructor(client, response, body, options) {
+    _AbstractPage_client.set(this, void 0);
+    __classPrivateFieldSet(this, _AbstractPage_client, client, "f");
+    this.options = options;
+    this.response = response;
+    this.body = body;
+  }
+  hasNextPage() {
+    const items = this.getPaginatedItems();
+    if (!items.length)
+      return false;
+    return this.nextPageRequestOptions() != null;
+  }
+  async getNextPage() {
+    const nextOptions = this.nextPageRequestOptions();
+    if (!nextOptions) {
+      throw new AnthropicError("No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.");
+    }
+    return await __classPrivateFieldGet(this, _AbstractPage_client, "f").requestAPIList(this.constructor, nextOptions);
+  }
+  async *iterPages() {
+    let page = this;
+    yield page;
+    while (page.hasNextPage()) {
+      page = await page.getNextPage();
+      yield page;
+    }
+  }
+  async *[(_AbstractPage_client = /* @__PURE__ */ new WeakMap(), Symbol.asyncIterator)]() {
+    for await (const page of this.iterPages()) {
+      for (const item of page.getPaginatedItems()) {
+        yield item;
+      }
+    }
+  }
+};
+var PagePromise = class extends APIPromise {
+  constructor(client, request, Page2) {
+    super(client, request, async (client2, props2) => new Page2(client2, props2.response, await defaultParseResponse(client2, props2), props2.options));
+  }
+  /**
+   * Allow auto-paginating iteration on an unawaited list call, eg:
+   *
+   *    for await (const item of client.items.list()) {
+   *      console.log(item)
+   *    }
+   */
+  async *[Symbol.asyncIterator]() {
+    const page = await this;
+    for await (const item of page) {
+      yield item;
+    }
+  }
+};
+var Page = class extends AbstractPage {
+  constructor(client, response, body, options) {
+    super(client, response, body, options);
+    this.data = body.data || [];
+    this.has_more = body.has_more || false;
+    this.first_id = body.first_id || null;
+    this.last_id = body.last_id || null;
+  }
+  getPaginatedItems() {
+    return this.data ?? [];
+  }
+  hasNextPage() {
+    if (this.has_more === false) {
+      return false;
+    }
+    return super.hasNextPage();
+  }
+  nextPageRequestOptions() {
+    if (this.options.query?.["before_id"]) {
+      const first_id = this.first_id;
+      if (!first_id) {
+        return null;
+      }
+      return {
+        ...this.options,
+        query: {
+          ...maybeObj(this.options.query),
+          before_id: first_id
+        }
+      };
+    }
+    const cursor = this.last_id;
+    if (!cursor) {
+      return null;
+    }
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        after_id: cursor
+      }
+    };
+  }
+};
+var PageCursor = class extends AbstractPage {
+  constructor(client, response, body, options) {
+    super(client, response, body, options);
+    this.data = body.data || [];
+    this.has_more = body.has_more || false;
+    this.next_page = body.next_page || null;
+  }
+  getPaginatedItems() {
+    return this.data ?? [];
+  }
+  hasNextPage() {
+    if (this.has_more === false) {
+      return false;
+    }
+    return super.hasNextPage();
+  }
+  nextPageRequestOptions() {
+    const cursor = this.next_page;
+    if (!cursor) {
+      return null;
+    }
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: cursor
+      }
+    };
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/uploads.mjs
+var checkFileSupport = () => {
+  if (typeof File === "undefined") {
+    const { process: process2 } = globalThis;
+    const isOldNode = typeof process2?.versions?.node === "string" && parseInt(process2.versions.node.split(".")) < 20;
+    throw new Error("`File` is not defined as a global, which is required for file uploads." + (isOldNode ? " Update to Node 20 LTS or newer, or set `globalThis.File` to `import('node:buffer').File`." : ""));
+  }
+};
+function makeFile(fileBits, fileName, options) {
+  checkFileSupport();
+  return new File(fileBits, fileName ?? "unknown_file", options);
+}
+function getName(value, stripPath) {
+  const val = typeof value === "object" && value !== null && ("name" in value && value.name && String(value.name) || "url" in value && value.url && String(value.url) || "filename" in value && value.filename && String(value.filename) || "path" in value && value.path && String(value.path)) || "";
+  return stripPath ? val.split(/[\\/]/).pop() || void 0 : val;
+}
+var isAsyncIterable = (value) => value != null && typeof value === "object" && typeof value[Symbol.asyncIterator] === "function";
+var multipartFormRequestOptions = async (opts, fetch2, stripFilenames = true) => {
+  return { ...opts, body: await createForm(opts.body, fetch2, stripFilenames) };
+};
+var supportsFormDataMap = /* @__PURE__ */ new WeakMap();
+function supportsFormData(fetchObject) {
+  const fetch2 = typeof fetchObject === "function" ? fetchObject : fetchObject.fetch;
+  const cached = supportsFormDataMap.get(fetch2);
+  if (cached)
+    return cached;
+  const promise = (async () => {
+    try {
+      const FetchResponse = "Response" in fetch2 ? fetch2.Response : (await fetch2("data:,")).constructor;
+      const data = new FormData();
+      if (data.toString() === await new FetchResponse(data).text()) {
+        return false;
+      }
+      return true;
+    } catch {
+      return true;
+    }
+  })();
+  supportsFormDataMap.set(fetch2, promise);
+  return promise;
+}
+var createForm = async (body, fetch2, stripFilenames = true) => {
+  if (!await supportsFormData(fetch2)) {
+    throw new TypeError("The provided fetch function does not support file uploads with the current global FormData class.");
+  }
+  const form = new FormData();
+  await Promise.all(Object.entries(body || {}).map(([key, value]) => addFormValue(form, key, value, stripFilenames)));
+  return form;
+};
+var isNamedBlob = (value) => value instanceof Blob && "name" in value;
+var addFormValue = async (form, key, value, stripFilenames) => {
+  if (value === void 0)
+    return;
+  if (value == null) {
+    throw new TypeError(`Received null for "${key}"; to pass null in FormData, you must use the string 'null'`);
+  }
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    form.append(key, String(value));
+  } else if (value instanceof Response) {
+    let options = {};
+    const contentType = value.headers.get("Content-Type");
+    if (contentType) {
+      options = { type: contentType };
+    }
+    form.append(key, makeFile([await value.blob()], getName(value, stripFilenames), options));
+  } else if (isAsyncIterable(value)) {
+    form.append(key, makeFile([await new Response(ReadableStreamFrom(value)).blob()], getName(value, stripFilenames)));
+  } else if (isNamedBlob(value)) {
+    form.append(key, makeFile([value], getName(value, stripFilenames), { type: value.type }));
+  } else if (Array.isArray(value)) {
+    await Promise.all(value.map((entry) => addFormValue(form, key + "[]", entry, stripFilenames)));
+  } else if (typeof value === "object") {
+    await Promise.all(Object.entries(value).map(([name, prop]) => addFormValue(form, `${key}[${name}]`, prop, stripFilenames)));
+  } else {
+    throw new TypeError(`Invalid value given to form, expected a string, number, boolean, object, Array, File or Blob but got ${value} instead`);
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/to-file.mjs
+var isBlobLike = (value) => value != null && typeof value === "object" && typeof value.size === "number" && typeof value.type === "string" && typeof value.text === "function" && typeof value.slice === "function" && typeof value.arrayBuffer === "function";
+var isFileLike = (value) => value != null && typeof value === "object" && typeof value.name === "string" && typeof value.lastModified === "number" && isBlobLike(value);
+var isResponseLike = (value) => value != null && typeof value === "object" && typeof value.url === "string" && typeof value.blob === "function";
+async function toFile(value, name, options) {
+  checkFileSupport();
+  value = await value;
+  name || (name = getName(value, true));
+  if (isFileLike(value)) {
+    if (value instanceof File && name == null && options == null) {
+      return value;
+    }
+    return makeFile([await value.arrayBuffer()], name ?? value.name, {
+      type: value.type,
+      lastModified: value.lastModified,
+      ...options
+    });
+  }
+  if (isResponseLike(value)) {
+    const blob = await value.blob();
+    name || (name = new URL(value.url).pathname.split(/[\\/]/).pop());
+    return makeFile(await getBytes(blob), name, options);
+  }
+  const parts = await getBytes(value);
+  if (!options?.type) {
+    const type = parts.find((part) => typeof part === "object" && "type" in part && part.type);
+    if (typeof type === "string") {
+      options = { ...options, type };
+    }
+  }
+  return makeFile(parts, name, options);
+}
+async function getBytes(value) {
+  let parts = [];
+  if (typeof value === "string" || ArrayBuffer.isView(value) || // includes Uint8Array, Buffer, etc.
+  value instanceof ArrayBuffer) {
+    parts.push(value);
+  } else if (isBlobLike(value)) {
+    parts.push(value instanceof Blob ? value : await value.arrayBuffer());
+  } else if (isAsyncIterable(value)) {
+    for await (const chunk of value) {
+      parts.push(...await getBytes(chunk));
+    }
+  } else {
+    const constructor = value?.constructor?.name;
+    throw new Error(`Unexpected data type: ${typeof value}${constructor ? `; constructor: ${constructor}` : ""}${propsForError(value)}`);
+  }
+  return parts;
+}
+function propsForError(value) {
+  if (typeof value !== "object" || value === null)
+    return "";
+  const props2 = Object.getOwnPropertyNames(value);
+  return `; props: [${props2.map((p) => `"${p}"`).join(", ")}]`;
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/core/resource.mjs
+var APIResource = class {
+  constructor(client) {
+    this._client = client;
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/headers.mjs
+var brand_privateNullableHeaders = /* @__PURE__ */ Symbol.for("brand.privateNullableHeaders");
+function* iterateHeaders(headers2) {
+  if (!headers2)
+    return;
+  if (brand_privateNullableHeaders in headers2) {
+    const { values, nulls } = headers2;
+    yield* values.entries();
+    for (const name of nulls) {
+      yield [name, null];
+    }
+    return;
+  }
+  let shouldClear = false;
+  let iter;
+  if (headers2 instanceof Headers) {
+    iter = headers2.entries();
+  } else if (isReadonlyArray(headers2)) {
+    iter = headers2;
+  } else {
+    shouldClear = true;
+    iter = Object.entries(headers2 ?? {});
+  }
+  for (let row of iter) {
+    const name = row[0];
+    if (typeof name !== "string")
+      throw new TypeError("expected header name to be a string");
+    const values = isReadonlyArray(row[1]) ? row[1] : [row[1]];
+    let didClear = false;
+    for (const value of values) {
+      if (value === void 0)
+        continue;
+      if (shouldClear && !didClear) {
+        didClear = true;
+        yield [name, null];
+      }
+      yield [name, value];
+    }
+  }
+}
+var buildHeaders = (newHeaders) => {
+  const targetHeaders = new Headers();
+  const nullHeaders = /* @__PURE__ */ new Set();
+  for (const headers2 of newHeaders) {
+    const seenHeaders = /* @__PURE__ */ new Set();
+    for (const [name, value] of iterateHeaders(headers2)) {
+      const lowerName = name.toLowerCase();
+      if (!seenHeaders.has(lowerName)) {
+        targetHeaders.delete(name);
+        seenHeaders.add(lowerName);
+      }
+      if (value === null) {
+        targetHeaders.delete(name);
+        nullHeaders.add(lowerName);
+      } else {
+        targetHeaders.append(name, value);
+        nullHeaders.delete(lowerName);
+      }
+    }
+  }
+  return { [brand_privateNullableHeaders]: true, values: targetHeaders, nulls: nullHeaders };
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/stainless-helper-header.mjs
+var SDK_HELPER_SYMBOL = /* @__PURE__ */ Symbol("anthropic.sdk.stainlessHelper");
+function wasCreatedByStainlessHelper(value) {
+  return typeof value === "object" && value !== null && SDK_HELPER_SYMBOL in value;
+}
+function collectStainlessHelpers(tools, messages) {
+  const helpers = /* @__PURE__ */ new Set();
+  if (tools) {
+    for (const tool of tools) {
+      if (wasCreatedByStainlessHelper(tool)) {
+        helpers.add(tool[SDK_HELPER_SYMBOL]);
+      }
+    }
+  }
+  if (messages) {
+    for (const message of messages) {
+      if (wasCreatedByStainlessHelper(message)) {
+        helpers.add(message[SDK_HELPER_SYMBOL]);
+      }
+      if (Array.isArray(message.content)) {
+        for (const block of message.content) {
+          if (wasCreatedByStainlessHelper(block)) {
+            helpers.add(block[SDK_HELPER_SYMBOL]);
+          }
+        }
+      }
+    }
+  }
+  return Array.from(helpers);
+}
+function stainlessHelperHeader(tools, messages) {
+  const helpers = collectStainlessHelpers(tools, messages);
+  if (helpers.length === 0)
+    return {};
+  return { "x-stainless-helper": helpers.join(", ") };
+}
+function stainlessHelperHeaderFromFile(file) {
+  if (wasCreatedByStainlessHelper(file)) {
+    return { "x-stainless-helper": file[SDK_HELPER_SYMBOL] };
+  }
+  return {};
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/path.mjs
+function encodeURIPath(str) {
+  return str.replace(/[^A-Za-z0-9\-._~!$&'()*+,;=:@]+/g, encodeURIComponent);
+}
+var EMPTY = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.create(null));
+var createPathTagFunction = (pathEncoder = encodeURIPath) => function path2(statics, ...params) {
+  if (statics.length === 1)
+    return statics[0];
+  let postPath = false;
+  const invalidSegments = [];
+  const path3 = statics.reduce((previousValue, currentValue, index2) => {
+    if (/[?#]/.test(currentValue)) {
+      postPath = true;
+    }
+    const value = params[index2];
+    let encoded = (postPath ? encodeURIComponent : pathEncoder)("" + value);
+    if (index2 !== params.length && (value == null || typeof value === "object" && // handle values from other realms
+    value.toString === Object.getPrototypeOf(Object.getPrototypeOf(value.hasOwnProperty ?? EMPTY) ?? EMPTY)?.toString)) {
+      encoded = value + "";
+      invalidSegments.push({
+        start: previousValue.length + currentValue.length,
+        length: encoded.length,
+        error: `Value of type ${Object.prototype.toString.call(value).slice(8, -1)} is not a valid path parameter`
+      });
+    }
+    return previousValue + currentValue + (index2 === params.length ? "" : encoded);
+  }, "");
+  const pathOnly = path3.split(/[?#]/, 1)[0];
+  const invalidSegmentPattern = /(?<=^|\/)(?:\.|%2e){1,2}(?=\/|$)/gi;
+  let match;
+  while ((match = invalidSegmentPattern.exec(pathOnly)) !== null) {
+    invalidSegments.push({
+      start: match.index,
+      length: match[0].length,
+      error: `Value "${match[0]}" can't be safely passed as a path parameter`
+    });
+  }
+  invalidSegments.sort((a, b) => a.start - b.start);
+  if (invalidSegments.length > 0) {
+    let lastEnd = 0;
+    const underline = invalidSegments.reduce((acc, segment) => {
+      const spaces = " ".repeat(segment.start - lastEnd);
+      const arrows = "^".repeat(segment.length);
+      lastEnd = segment.start + segment.length;
+      return acc + spaces + arrows;
+    }, "");
+    throw new AnthropicError(`Path parameters result in path with invalid segments:
+${invalidSegments.map((e2) => e2.error).join("\n")}
+${path3}
+${underline}`);
+  }
+  return path3;
+};
+var path = /* @__PURE__ */ createPathTagFunction(encodeURIPath);
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/files.mjs
+var Files = class extends APIResource {
+  /**
+   * List Files
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const fileMetadata of client.beta.files.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList("/v1/files", Page, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "files-api-2025-04-14"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Delete File
+   *
+   * @example
+   * ```ts
+   * const deletedFile = await client.beta.files.delete(
+   *   'file_id',
+   * );
+   * ```
+   */
+  delete(fileID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.delete(path`/v1/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "files-api-2025-04-14"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Download File
+   *
+   * @example
+   * ```ts
+   * const response = await client.beta.files.download(
+   *   'file_id',
+   * );
+   *
+   * const content = await response.blob();
+   * console.log(content);
+   * ```
+   */
+  download(fileID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/files/${fileID}/content`, {
+      ...options,
+      headers: buildHeaders([
+        {
+          "anthropic-beta": [...betas ?? [], "files-api-2025-04-14"].toString(),
+          Accept: "application/binary"
+        },
+        options?.headers
+      ]),
+      __binaryResponse: true
+    });
+  }
+  /**
+   * Get File Metadata
+   *
+   * @example
+   * ```ts
+   * const fileMetadata =
+   *   await client.beta.files.retrieveMetadata('file_id');
+   * ```
+   */
+  retrieveMetadata(fileID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/files/${fileID}`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "files-api-2025-04-14"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Upload File
+   *
+   * @example
+   * ```ts
+   * const fileMetadata = await client.beta.files.upload({
+   *   file: fs.createReadStream('path/to/file'),
+   * });
+   * ```
+   */
+  upload(params, options) {
+    const { betas, ...body } = params;
+    return this._client.post("/v1/files", multipartFormRequestOptions({
+      body,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "files-api-2025-04-14"].toString() },
+        stainlessHelperHeaderFromFile(body.file),
+        options?.headers
+      ])
+    }, this._client));
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/models.mjs
+var Models = class extends APIResource {
+  /**
+   * Get a specific model.
+   *
+   * The Models API response can be used to determine information about a specific
+   * model or resolve a model alias to a model ID.
+   *
+   * @example
+   * ```ts
+   * const betaModelInfo = await client.beta.models.retrieve(
+   *   'model_id',
+   * );
+   * ```
+   */
+  retrieve(modelID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/models/${modelID}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * List available models.
+   *
+   * The Models API response can be used to determine which models are available for
+   * use in the API. More recently released models are listed first.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const betaModelInfo of client.beta.models.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList("/v1/models?beta=true", Page, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        options?.headers
+      ])
+    });
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/constants.mjs
+var MODEL_NONSTREAMING_TOKENS = {
+  "claude-opus-4-20250514": 8192,
+  "claude-opus-4-0": 8192,
+  "claude-4-opus-20250514": 8192,
+  "anthropic.claude-opus-4-20250514-v1:0": 8192,
+  "claude-opus-4@20250514": 8192,
+  "claude-opus-4-1-20250805": 8192,
+  "anthropic.claude-opus-4-1-20250805-v1:0": 8192,
+  "claude-opus-4-1@20250805": 8192
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/beta-parser.mjs
+function getOutputFormat(params) {
+  return params?.output_format ?? params?.output_config?.format;
+}
+function maybeParseBetaMessage(message, params, opts) {
+  const outputFormat = getOutputFormat(params);
+  if (!params || !("parse" in (outputFormat ?? {}))) {
+    return {
+      ...message,
+      content: message.content.map((block) => {
+        if (block.type === "text") {
+          const parsedBlock = Object.defineProperty({ ...block }, "parsed_output", {
+            value: null,
+            enumerable: false
+          });
+          return Object.defineProperty(parsedBlock, "parsed", {
+            get() {
+              opts.logger.warn("The `parsed` property on `text` blocks is deprecated, please use `parsed_output` instead.");
+              return null;
+            },
+            enumerable: false
+          });
+        }
+        return block;
+      }),
+      parsed_output: null
+    };
+  }
+  return parseBetaMessage(message, params, opts);
+}
+function parseBetaMessage(message, params, opts) {
+  let firstParsedOutput = null;
+  const content = message.content.map((block) => {
+    if (block.type === "text") {
+      const parsedOutput = parseBetaOutputFormat(params, block.text);
+      if (firstParsedOutput === null) {
+        firstParsedOutput = parsedOutput;
+      }
+      const parsedBlock = Object.defineProperty({ ...block }, "parsed_output", {
+        value: parsedOutput,
+        enumerable: false
+      });
+      return Object.defineProperty(parsedBlock, "parsed", {
+        get() {
+          opts.logger.warn("The `parsed` property on `text` blocks is deprecated, please use `parsed_output` instead.");
+          return parsedOutput;
+        },
+        enumerable: false
+      });
+    }
+    return block;
+  });
+  return {
+    ...message,
+    content,
+    parsed_output: firstParsedOutput
+  };
+}
+function parseBetaOutputFormat(params, content) {
+  const outputFormat = getOutputFormat(params);
+  if (outputFormat?.type !== "json_schema") {
+    return null;
+  }
+  try {
+    if ("parse" in outputFormat) {
+      return outputFormat.parse(content);
+    }
+    return JSON.parse(content);
+  } catch (error) {
+    throw new AnthropicError(`Failed to parse structured output: ${error}`);
+  }
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/_vendor/partial-json-parser/parser.mjs
+var tokenize = (input) => {
+  let current = 0;
+  let tokens = [];
+  while (current < input.length) {
+    let char2 = input[current];
+    if (char2 === "\\") {
+      current++;
+      continue;
+    }
+    if (char2 === "{") {
+      tokens.push({
+        type: "brace",
+        value: "{"
+      });
+      current++;
+      continue;
+    }
+    if (char2 === "}") {
+      tokens.push({
+        type: "brace",
+        value: "}"
+      });
+      current++;
+      continue;
+    }
+    if (char2 === "[") {
+      tokens.push({
+        type: "paren",
+        value: "["
+      });
+      current++;
+      continue;
+    }
+    if (char2 === "]") {
+      tokens.push({
+        type: "paren",
+        value: "]"
+      });
+      current++;
+      continue;
+    }
+    if (char2 === ":") {
+      tokens.push({
+        type: "separator",
+        value: ":"
+      });
+      current++;
+      continue;
+    }
+    if (char2 === ",") {
+      tokens.push({
+        type: "delimiter",
+        value: ","
+      });
+      current++;
+      continue;
+    }
+    if (char2 === '"') {
+      let value = "";
+      let danglingQuote = false;
+      char2 = input[++current];
+      while (char2 !== '"') {
+        if (current === input.length) {
+          danglingQuote = true;
+          break;
+        }
+        if (char2 === "\\") {
+          current++;
+          if (current === input.length) {
+            danglingQuote = true;
+            break;
+          }
+          value += char2 + input[current];
+          char2 = input[++current];
+        } else {
+          value += char2;
+          char2 = input[++current];
+        }
+      }
+      char2 = input[++current];
+      if (!danglingQuote) {
+        tokens.push({
+          type: "string",
+          value
+        });
+      }
+      continue;
+    }
+    let WHITESPACE = /\s/;
+    if (char2 && WHITESPACE.test(char2)) {
+      current++;
+      continue;
+    }
+    let NUMBERS = /[0-9]/;
+    if (char2 && NUMBERS.test(char2) || char2 === "-" || char2 === ".") {
+      let value = "";
+      if (char2 === "-") {
+        value += char2;
+        char2 = input[++current];
+      }
+      while (char2 && NUMBERS.test(char2) || char2 === ".") {
+        value += char2;
+        char2 = input[++current];
+      }
+      tokens.push({
+        type: "number",
+        value
+      });
+      continue;
+    }
+    let LETTERS = /[a-z]/i;
+    if (char2 && LETTERS.test(char2)) {
+      let value = "";
+      while (char2 && LETTERS.test(char2)) {
+        if (current === input.length) {
+          break;
+        }
+        value += char2;
+        char2 = input[++current];
+      }
+      if (value == "true" || value == "false" || value === "null") {
+        tokens.push({
+          type: "name",
+          value
+        });
+      } else {
+        current++;
+        continue;
+      }
+      continue;
+    }
+    current++;
+  }
+  return tokens;
+};
+var strip = (tokens) => {
+  if (tokens.length === 0) {
+    return tokens;
+  }
+  let lastToken = tokens[tokens.length - 1];
+  switch (lastToken.type) {
+    case "separator":
+      tokens = tokens.slice(0, tokens.length - 1);
+      return strip(tokens);
+      break;
+    case "number":
+      let lastCharacterOfLastToken = lastToken.value[lastToken.value.length - 1];
+      if (lastCharacterOfLastToken === "." || lastCharacterOfLastToken === "-") {
+        tokens = tokens.slice(0, tokens.length - 1);
+        return strip(tokens);
+      }
+    case "string":
+      let tokenBeforeTheLastToken = tokens[tokens.length - 2];
+      if (tokenBeforeTheLastToken?.type === "delimiter") {
+        tokens = tokens.slice(0, tokens.length - 1);
+        return strip(tokens);
+      } else if (tokenBeforeTheLastToken?.type === "brace" && tokenBeforeTheLastToken.value === "{") {
+        tokens = tokens.slice(0, tokens.length - 1);
+        return strip(tokens);
+      }
+      break;
+    case "delimiter":
+      tokens = tokens.slice(0, tokens.length - 1);
+      return strip(tokens);
+      break;
+  }
+  return tokens;
+};
+var unstrip = (tokens) => {
+  let tail = [];
+  tokens.map((token) => {
+    if (token.type === "brace") {
+      if (token.value === "{") {
+        tail.push("}");
+      } else {
+        tail.splice(tail.lastIndexOf("}"), 1);
+      }
+    }
+    if (token.type === "paren") {
+      if (token.value === "[") {
+        tail.push("]");
+      } else {
+        tail.splice(tail.lastIndexOf("]"), 1);
+      }
+    }
+  });
+  if (tail.length > 0) {
+    tail.reverse().map((item) => {
+      if (item === "}") {
+        tokens.push({
+          type: "brace",
+          value: "}"
+        });
+      } else if (item === "]") {
+        tokens.push({
+          type: "paren",
+          value: "]"
+        });
+      }
+    });
+  }
+  return tokens;
+};
+var generate = (tokens) => {
+  let output = "";
+  tokens.map((token) => {
+    switch (token.type) {
+      case "string":
+        output += '"' + token.value + '"';
+        break;
+      default:
+        output += token.value;
+        break;
+    }
+  });
+  return output;
+};
+var partialParse = (input) => JSON.parse(generate(unstrip(strip(tokenize(input)))));
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/BetaMessageStream.mjs
+var _BetaMessageStream_instances;
+var _BetaMessageStream_currentMessageSnapshot;
+var _BetaMessageStream_params;
+var _BetaMessageStream_connectedPromise;
+var _BetaMessageStream_resolveConnectedPromise;
+var _BetaMessageStream_rejectConnectedPromise;
+var _BetaMessageStream_endPromise;
+var _BetaMessageStream_resolveEndPromise;
+var _BetaMessageStream_rejectEndPromise;
+var _BetaMessageStream_listeners;
+var _BetaMessageStream_ended;
+var _BetaMessageStream_errored;
+var _BetaMessageStream_aborted;
+var _BetaMessageStream_catchingPromiseCreated;
+var _BetaMessageStream_response;
+var _BetaMessageStream_request_id;
+var _BetaMessageStream_logger;
+var _BetaMessageStream_getFinalMessage;
+var _BetaMessageStream_getFinalText;
+var _BetaMessageStream_handleError;
+var _BetaMessageStream_beginRequest;
+var _BetaMessageStream_addStreamEvent;
+var _BetaMessageStream_endRequest;
+var _BetaMessageStream_accumulateMessage;
+var JSON_BUF_PROPERTY = "__json_buf";
+function tracksToolInput(content) {
+  return content.type === "tool_use" || content.type === "server_tool_use" || content.type === "mcp_tool_use";
+}
+var BetaMessageStream = class _BetaMessageStream {
+  constructor(params, opts) {
+    _BetaMessageStream_instances.add(this);
+    this.messages = [];
+    this.receivedMessages = [];
+    _BetaMessageStream_currentMessageSnapshot.set(this, void 0);
+    _BetaMessageStream_params.set(this, null);
+    this.controller = new AbortController();
+    _BetaMessageStream_connectedPromise.set(this, void 0);
+    _BetaMessageStream_resolveConnectedPromise.set(this, () => {
+    });
+    _BetaMessageStream_rejectConnectedPromise.set(this, () => {
+    });
+    _BetaMessageStream_endPromise.set(this, void 0);
+    _BetaMessageStream_resolveEndPromise.set(this, () => {
+    });
+    _BetaMessageStream_rejectEndPromise.set(this, () => {
+    });
+    _BetaMessageStream_listeners.set(this, {});
+    _BetaMessageStream_ended.set(this, false);
+    _BetaMessageStream_errored.set(this, false);
+    _BetaMessageStream_aborted.set(this, false);
+    _BetaMessageStream_catchingPromiseCreated.set(this, false);
+    _BetaMessageStream_response.set(this, void 0);
+    _BetaMessageStream_request_id.set(this, void 0);
+    _BetaMessageStream_logger.set(this, void 0);
+    _BetaMessageStream_handleError.set(this, (error) => {
+      __classPrivateFieldSet(this, _BetaMessageStream_errored, true, "f");
+      if (isAbortError(error)) {
+        error = new APIUserAbortError();
+      }
+      if (error instanceof APIUserAbortError) {
+        __classPrivateFieldSet(this, _BetaMessageStream_aborted, true, "f");
+        return this._emit("abort", error);
+      }
+      if (error instanceof AnthropicError) {
+        return this._emit("error", error);
+      }
+      if (error instanceof Error) {
+        const anthropicError = new AnthropicError(error.message);
+        anthropicError.cause = error;
+        return this._emit("error", anthropicError);
+      }
+      return this._emit("error", new AnthropicError(String(error)));
+    });
+    __classPrivateFieldSet(this, _BetaMessageStream_connectedPromise, new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _BetaMessageStream_resolveConnectedPromise, resolve, "f");
+      __classPrivateFieldSet(this, _BetaMessageStream_rejectConnectedPromise, reject, "f");
+    }), "f");
+    __classPrivateFieldSet(this, _BetaMessageStream_endPromise, new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _BetaMessageStream_resolveEndPromise, resolve, "f");
+      __classPrivateFieldSet(this, _BetaMessageStream_rejectEndPromise, reject, "f");
+    }), "f");
+    __classPrivateFieldGet(this, _BetaMessageStream_connectedPromise, "f").catch(() => {
+    });
+    __classPrivateFieldGet(this, _BetaMessageStream_endPromise, "f").catch(() => {
+    });
+    __classPrivateFieldSet(this, _BetaMessageStream_params, params, "f");
+    __classPrivateFieldSet(this, _BetaMessageStream_logger, opts?.logger ?? console, "f");
+  }
+  get response() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_response, "f");
+  }
+  get request_id() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_request_id, "f");
+  }
+  /**
+   * Returns the `MessageStream` data, the raw `Response` instance and the ID of the request,
+   * returned vie the `request-id` header which is useful for debugging requests and resporting
+   * issues to Anthropic.
+   *
+   * This is the same as the `APIPromise.withResponse()` method.
+   *
+   * This method will raise an error if you created the stream using `MessageStream.fromReadableStream`
+   * as no `Response` is available.
+   */
+  async withResponse() {
+    __classPrivateFieldSet(this, _BetaMessageStream_catchingPromiseCreated, true, "f");
+    const response = await __classPrivateFieldGet(this, _BetaMessageStream_connectedPromise, "f");
+    if (!response) {
+      throw new Error("Could not resolve a `Response` object");
+    }
+    return {
+      data: this,
+      response,
+      request_id: response.headers.get("request-id")
+    };
+  }
+  /**
+   * Intended for use on the frontend, consuming a stream produced with
+   * `.toReadableStream()` on the backend.
+   *
+   * Note that messages sent to the model do not appear in `.on('message')`
+   * in this context.
+   */
+  static fromReadableStream(stream) {
+    const runner = new _BetaMessageStream(null);
+    runner._run(() => runner._fromReadableStream(stream));
+    return runner;
+  }
+  static createMessage(messages, params, options, { logger: logger3 } = {}) {
+    const runner = new _BetaMessageStream(params, { logger: logger3 });
+    for (const message of params.messages) {
+      runner._addMessageParam(message);
+    }
+    __classPrivateFieldSet(runner, _BetaMessageStream_params, { ...params, stream: true }, "f");
+    runner._run(() => runner._createMessage(messages, { ...params, stream: true }, { ...options, headers: { ...options?.headers, "X-Stainless-Helper-Method": "stream" } }));
+    return runner;
+  }
+  _run(executor) {
+    executor().then(() => {
+      this._emitFinal();
+      this._emit("end");
+    }, __classPrivateFieldGet(this, _BetaMessageStream_handleError, "f"));
+  }
+  _addMessageParam(message) {
+    this.messages.push(message);
+  }
+  _addMessage(message, emit = true) {
+    this.receivedMessages.push(message);
+    if (emit) {
+      this._emit("message", message);
+    }
+  }
+  async _createMessage(messages, params, options) {
+    const signal3 = options?.signal;
+    let abortHandler;
+    if (signal3) {
+      if (signal3.aborted)
+        this.controller.abort();
+      abortHandler = this.controller.abort.bind(this.controller);
+      signal3.addEventListener("abort", abortHandler);
+    }
+    try {
+      __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_beginRequest).call(this);
+      const { response, data: stream } = await messages.create({ ...params, stream: true }, { ...options, signal: this.controller.signal }).withResponse();
+      this._connected(response);
+      for await (const event of stream) {
+        __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_addStreamEvent).call(this, event);
+      }
+      if (stream.controller.signal?.aborted) {
+        throw new APIUserAbortError();
+      }
+      __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_endRequest).call(this);
+    } finally {
+      if (signal3 && abortHandler) {
+        signal3.removeEventListener("abort", abortHandler);
+      }
+    }
+  }
+  _connected(response) {
+    if (this.ended)
+      return;
+    __classPrivateFieldSet(this, _BetaMessageStream_response, response, "f");
+    __classPrivateFieldSet(this, _BetaMessageStream_request_id, response?.headers.get("request-id"), "f");
+    __classPrivateFieldGet(this, _BetaMessageStream_resolveConnectedPromise, "f").call(this, response);
+    this._emit("connect");
+  }
+  get ended() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_ended, "f");
+  }
+  get errored() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_errored, "f");
+  }
+  get aborted() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_aborted, "f");
+  }
+  abort() {
+    this.controller.abort();
+  }
+  /**
+   * Adds the listener function to the end of the listeners array for the event.
+   * No checks are made to see if the listener has already been added. Multiple calls passing
+   * the same combination of event and listener will result in the listener being added, and
+   * called, multiple times.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  on(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event] || (__classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event] = []);
+    listeners.push({ listener });
+    return this;
+  }
+  /**
+   * Removes the specified listener from the listener array for the event.
+   * off() will remove, at most, one instance of a listener from the listener array. If any single
+   * listener has been added multiple times to the listener array for the specified event, then
+   * off() must be called multiple times to remove each instance.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  off(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event];
+    if (!listeners)
+      return this;
+    const index2 = listeners.findIndex((l) => l.listener === listener);
+    if (index2 >= 0)
+      listeners.splice(index2, 1);
+    return this;
+  }
+  /**
+   * Adds a one-time listener function for the event. The next time the event is triggered,
+   * this listener is removed and then invoked.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  once(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event] || (__classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event] = []);
+    listeners.push({ listener, once: true });
+    return this;
+  }
+  /**
+   * This is similar to `.once()`, but returns a Promise that resolves the next time
+   * the event is triggered, instead of calling a listener callback.
+   * @returns a Promise that resolves the next time given event is triggered,
+   * or rejects if an error is emitted.  (If you request the 'error' event,
+   * returns a promise that resolves with the error).
+   *
+   * Example:
+   *
+   *   const message = await stream.emitted('message') // rejects if the stream errors
+   */
+  emitted(event) {
+    return new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _BetaMessageStream_catchingPromiseCreated, true, "f");
+      if (event !== "error")
+        this.once("error", reject);
+      this.once(event, resolve);
+    });
+  }
+  async done() {
+    __classPrivateFieldSet(this, _BetaMessageStream_catchingPromiseCreated, true, "f");
+    await __classPrivateFieldGet(this, _BetaMessageStream_endPromise, "f");
+  }
+  get currentMessage() {
+    return __classPrivateFieldGet(this, _BetaMessageStream_currentMessageSnapshot, "f");
+  }
+  /**
+   * @returns a promise that resolves with the the final assistant Message response,
+   * or rejects if an error occurred or the stream ended prematurely without producing a Message.
+   * If structured outputs were used, this will be a ParsedMessage with a `parsed` field.
+   */
+  async finalMessage() {
+    await this.done();
+    return __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_getFinalMessage).call(this);
+  }
+  /**
+   * @returns a promise that resolves with the the final assistant Message's text response, concatenated
+   * together if there are more than one text blocks.
+   * Rejects if an error occurred or the stream ended prematurely without producing a Message.
+   */
+  async finalText() {
+    await this.done();
+    return __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_getFinalText).call(this);
+  }
+  _emit(event, ...args) {
+    if (__classPrivateFieldGet(this, _BetaMessageStream_ended, "f"))
+      return;
+    if (event === "end") {
+      __classPrivateFieldSet(this, _BetaMessageStream_ended, true, "f");
+      __classPrivateFieldGet(this, _BetaMessageStream_resolveEndPromise, "f").call(this);
+    }
+    const listeners = __classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event];
+    if (listeners) {
+      __classPrivateFieldGet(this, _BetaMessageStream_listeners, "f")[event] = listeners.filter((l) => !l.once);
+      listeners.forEach(({ listener }) => listener(...args));
+    }
+    if (event === "abort") {
+      const error = args[0];
+      if (!__classPrivateFieldGet(this, _BetaMessageStream_catchingPromiseCreated, "f") && !listeners?.length) {
+        Promise.reject(error);
+      }
+      __classPrivateFieldGet(this, _BetaMessageStream_rejectConnectedPromise, "f").call(this, error);
+      __classPrivateFieldGet(this, _BetaMessageStream_rejectEndPromise, "f").call(this, error);
+      this._emit("end");
+      return;
+    }
+    if (event === "error") {
+      const error = args[0];
+      if (!__classPrivateFieldGet(this, _BetaMessageStream_catchingPromiseCreated, "f") && !listeners?.length) {
+        Promise.reject(error);
+      }
+      __classPrivateFieldGet(this, _BetaMessageStream_rejectConnectedPromise, "f").call(this, error);
+      __classPrivateFieldGet(this, _BetaMessageStream_rejectEndPromise, "f").call(this, error);
+      this._emit("end");
+    }
+  }
+  _emitFinal() {
+    const finalMessage = this.receivedMessages.at(-1);
+    if (finalMessage) {
+      this._emit("finalMessage", __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_getFinalMessage).call(this));
+    }
+  }
+  async _fromReadableStream(readableStream, options) {
+    const signal3 = options?.signal;
+    let abortHandler;
+    if (signal3) {
+      if (signal3.aborted)
+        this.controller.abort();
+      abortHandler = this.controller.abort.bind(this.controller);
+      signal3.addEventListener("abort", abortHandler);
+    }
+    try {
+      __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_beginRequest).call(this);
+      this._connected(null);
+      const stream = Stream.fromReadableStream(readableStream, this.controller);
+      for await (const event of stream) {
+        __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_addStreamEvent).call(this, event);
+      }
+      if (stream.controller.signal?.aborted) {
+        throw new APIUserAbortError();
+      }
+      __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_endRequest).call(this);
+    } finally {
+      if (signal3 && abortHandler) {
+        signal3.removeEventListener("abort", abortHandler);
+      }
+    }
+  }
+  [(_BetaMessageStream_currentMessageSnapshot = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_params = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_connectedPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_resolveConnectedPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_rejectConnectedPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_endPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_resolveEndPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_rejectEndPromise = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_listeners = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_ended = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_errored = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_aborted = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_catchingPromiseCreated = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_response = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_request_id = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_logger = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_handleError = /* @__PURE__ */ new WeakMap(), _BetaMessageStream_instances = /* @__PURE__ */ new WeakSet(), _BetaMessageStream_getFinalMessage = function _BetaMessageStream_getFinalMessage2() {
+    if (this.receivedMessages.length === 0) {
+      throw new AnthropicError("stream ended without producing a Message with role=assistant");
+    }
+    return this.receivedMessages.at(-1);
+  }, _BetaMessageStream_getFinalText = function _BetaMessageStream_getFinalText2() {
+    if (this.receivedMessages.length === 0) {
+      throw new AnthropicError("stream ended without producing a Message with role=assistant");
+    }
+    const textBlocks = this.receivedMessages.at(-1).content.filter((block) => block.type === "text").map((block) => block.text);
+    if (textBlocks.length === 0) {
+      throw new AnthropicError("stream ended without producing a content block with type=text");
+    }
+    return textBlocks.join(" ");
+  }, _BetaMessageStream_beginRequest = function _BetaMessageStream_beginRequest2() {
+    if (this.ended)
+      return;
+    __classPrivateFieldSet(this, _BetaMessageStream_currentMessageSnapshot, void 0, "f");
+  }, _BetaMessageStream_addStreamEvent = function _BetaMessageStream_addStreamEvent2(event) {
+    if (this.ended)
+      return;
+    const messageSnapshot = __classPrivateFieldGet(this, _BetaMessageStream_instances, "m", _BetaMessageStream_accumulateMessage).call(this, event);
+    this._emit("streamEvent", event, messageSnapshot);
+    switch (event.type) {
+      case "content_block_delta": {
+        const content = messageSnapshot.content.at(-1);
+        switch (event.delta.type) {
+          case "text_delta": {
+            if (content.type === "text") {
+              this._emit("text", event.delta.text, content.text || "");
+            }
+            break;
+          }
+          case "citations_delta": {
+            if (content.type === "text") {
+              this._emit("citation", event.delta.citation, content.citations ?? []);
+            }
+            break;
+          }
+          case "input_json_delta": {
+            if (tracksToolInput(content) && content.input) {
+              this._emit("inputJson", event.delta.partial_json, content.input);
+            }
+            break;
+          }
+          case "thinking_delta": {
+            if (content.type === "thinking") {
+              this._emit("thinking", event.delta.thinking, content.thinking);
+            }
+            break;
+          }
+          case "signature_delta": {
+            if (content.type === "thinking") {
+              this._emit("signature", content.signature);
+            }
+            break;
+          }
+          case "compaction_delta": {
+            if (content.type === "compaction" && content.content) {
+              this._emit("compaction", content.content);
+            }
+            break;
+          }
+          default:
+            checkNever(event.delta);
+        }
+        break;
+      }
+      case "message_stop": {
+        this._addMessageParam(messageSnapshot);
+        this._addMessage(maybeParseBetaMessage(messageSnapshot, __classPrivateFieldGet(this, _BetaMessageStream_params, "f"), { logger: __classPrivateFieldGet(this, _BetaMessageStream_logger, "f") }), true);
+        break;
+      }
+      case "content_block_stop": {
+        this._emit("contentBlock", messageSnapshot.content.at(-1));
+        break;
+      }
+      case "message_start": {
+        __classPrivateFieldSet(this, _BetaMessageStream_currentMessageSnapshot, messageSnapshot, "f");
+        break;
+      }
+      case "content_block_start":
+      case "message_delta":
+        break;
+    }
+  }, _BetaMessageStream_endRequest = function _BetaMessageStream_endRequest2() {
+    if (this.ended) {
+      throw new AnthropicError(`stream has ended, this shouldn't happen`);
+    }
+    const snapshot = __classPrivateFieldGet(this, _BetaMessageStream_currentMessageSnapshot, "f");
+    if (!snapshot) {
+      throw new AnthropicError(`request ended without sending any chunks`);
+    }
+    __classPrivateFieldSet(this, _BetaMessageStream_currentMessageSnapshot, void 0, "f");
+    return maybeParseBetaMessage(snapshot, __classPrivateFieldGet(this, _BetaMessageStream_params, "f"), { logger: __classPrivateFieldGet(this, _BetaMessageStream_logger, "f") });
+  }, _BetaMessageStream_accumulateMessage = function _BetaMessageStream_accumulateMessage2(event) {
+    let snapshot = __classPrivateFieldGet(this, _BetaMessageStream_currentMessageSnapshot, "f");
+    if (event.type === "message_start") {
+      if (snapshot) {
+        throw new AnthropicError(`Unexpected event order, got ${event.type} before receiving "message_stop"`);
+      }
+      return event.message;
+    }
+    if (!snapshot) {
+      throw new AnthropicError(`Unexpected event order, got ${event.type} before "message_start"`);
+    }
+    switch (event.type) {
+      case "message_stop":
+        return snapshot;
+      case "message_delta":
+        snapshot.container = event.delta.container;
+        snapshot.stop_reason = event.delta.stop_reason;
+        snapshot.stop_sequence = event.delta.stop_sequence;
+        snapshot.usage.output_tokens = event.usage.output_tokens;
+        snapshot.context_management = event.context_management;
+        if (event.usage.input_tokens != null) {
+          snapshot.usage.input_tokens = event.usage.input_tokens;
+        }
+        if (event.usage.cache_creation_input_tokens != null) {
+          snapshot.usage.cache_creation_input_tokens = event.usage.cache_creation_input_tokens;
+        }
+        if (event.usage.cache_read_input_tokens != null) {
+          snapshot.usage.cache_read_input_tokens = event.usage.cache_read_input_tokens;
+        }
+        if (event.usage.server_tool_use != null) {
+          snapshot.usage.server_tool_use = event.usage.server_tool_use;
+        }
+        if (event.usage.iterations != null) {
+          snapshot.usage.iterations = event.usage.iterations;
+        }
+        return snapshot;
+      case "content_block_start":
+        snapshot.content.push(event.content_block);
+        return snapshot;
+      case "content_block_delta": {
+        const snapshotContent = snapshot.content.at(event.index);
+        switch (event.delta.type) {
+          case "text_delta": {
+            if (snapshotContent?.type === "text") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                text: (snapshotContent.text || "") + event.delta.text
+              };
+            }
+            break;
+          }
+          case "citations_delta": {
+            if (snapshotContent?.type === "text") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                citations: [...snapshotContent.citations ?? [], event.delta.citation]
+              };
+            }
+            break;
+          }
+          case "input_json_delta": {
+            if (snapshotContent && tracksToolInput(snapshotContent)) {
+              let jsonBuf = snapshotContent[JSON_BUF_PROPERTY] || "";
+              jsonBuf += event.delta.partial_json;
+              const newContent = { ...snapshotContent };
+              Object.defineProperty(newContent, JSON_BUF_PROPERTY, {
+                value: jsonBuf,
+                enumerable: false,
+                writable: true
+              });
+              if (jsonBuf) {
+                try {
+                  newContent.input = partialParse(jsonBuf);
+                } catch (err) {
+                  const error = new AnthropicError(`Unable to parse tool parameter JSON from model. Please retry your request or adjust your prompt. Error: ${err}. JSON: ${jsonBuf}`);
+                  __classPrivateFieldGet(this, _BetaMessageStream_handleError, "f").call(this, error);
+                }
+              }
+              snapshot.content[event.index] = newContent;
+            }
+            break;
+          }
+          case "thinking_delta": {
+            if (snapshotContent?.type === "thinking") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                thinking: snapshotContent.thinking + event.delta.thinking
+              };
+            }
+            break;
+          }
+          case "signature_delta": {
+            if (snapshotContent?.type === "thinking") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                signature: event.delta.signature
+              };
+            }
+            break;
+          }
+          case "compaction_delta": {
+            if (snapshotContent?.type === "compaction") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                content: (snapshotContent.content || "") + event.delta.content
+              };
+            }
+            break;
+          }
+          default:
+            checkNever(event.delta);
+        }
+        return snapshot;
+      }
+      case "content_block_stop":
+        return snapshot;
+    }
+  }, Symbol.asyncIterator)]() {
+    const pushQueue = [];
+    const readQueue = [];
+    let done = false;
+    this.on("streamEvent", (event) => {
+      const reader = readQueue.shift();
+      if (reader) {
+        reader.resolve(event);
+      } else {
+        pushQueue.push(event);
+      }
+    });
+    this.on("end", () => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.resolve(void 0);
+      }
+      readQueue.length = 0;
+    });
+    this.on("abort", (err) => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.reject(err);
+      }
+      readQueue.length = 0;
+    });
+    this.on("error", (err) => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.reject(err);
+      }
+      readQueue.length = 0;
+    });
+    return {
+      next: async () => {
+        if (!pushQueue.length) {
+          if (done) {
+            return { value: void 0, done: true };
+          }
+          return new Promise((resolve, reject) => readQueue.push({ resolve, reject })).then((chunk2) => chunk2 ? { value: chunk2, done: false } : { value: void 0, done: true });
+        }
+        const chunk = pushQueue.shift();
+        return { value: chunk, done: false };
+      },
+      return: async () => {
+        this.abort();
+        return { value: void 0, done: true };
+      }
+    };
+  }
+  toReadableStream() {
+    const stream = new Stream(this[Symbol.asyncIterator].bind(this), this.controller);
+    return stream.toReadableStream();
+  }
+};
+function checkNever(x) {
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/tools/ToolError.mjs
+var ToolError = class extends Error {
+  constructor(content) {
+    const message = typeof content === "string" ? content : content.map((block) => {
+      if (block.type === "text")
+        return block.text;
+      return `[${block.type}]`;
+    }).join(" ");
+    super(message);
+    this.name = "ToolError";
+    this.content = content;
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/tools/CompactionControl.mjs
+var DEFAULT_TOKEN_THRESHOLD = 1e5;
+var DEFAULT_SUMMARY_PROMPT = `You have been working on the task described above but have not yet completed it. Write a continuation summary that will allow you (or another instance of yourself) to resume work efficiently in a future context window where the conversation history will be replaced with this summary. Your summary should be structured, concise, and actionable. Include:
+1. Task Overview
+The user's core request and success criteria
+Any clarifications or constraints they specified
+2. Current State
+What has been completed so far
+Files created, modified, or analyzed (with paths if relevant)
+Key outputs or artifacts produced
+3. Important Discoveries
+Technical constraints or requirements uncovered
+Decisions made and their rationale
+Errors encountered and how they were resolved
+What approaches were tried that didn't work (and why)
+4. Next Steps
+Specific actions needed to complete the task
+Any blockers or open questions to resolve
+Priority order if multiple steps remain
+5. Context to Preserve
+User preferences or style requirements
+Domain-specific details that aren't obvious
+Any promises made to the user
+Be concise but complete\u2014err on the side of including information that would prevent duplicate work or repeated mistakes. Write in a way that enables immediate resumption of the task.
+Wrap your summary in <summary></summary> tags.`;
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/tools/BetaToolRunner.mjs
+var _BetaToolRunner_instances;
+var _BetaToolRunner_consumed;
+var _BetaToolRunner_mutated;
+var _BetaToolRunner_state;
+var _BetaToolRunner_options;
+var _BetaToolRunner_message;
+var _BetaToolRunner_toolResponse;
+var _BetaToolRunner_completion;
+var _BetaToolRunner_iterationCount;
+var _BetaToolRunner_checkAndCompact;
+var _BetaToolRunner_generateToolResponse;
+function promiseWithResolvers() {
+  let resolve;
+  let reject;
+  const promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+}
+var BetaToolRunner = class {
+  constructor(client, params, options) {
+    _BetaToolRunner_instances.add(this);
+    this.client = client;
+    _BetaToolRunner_consumed.set(this, false);
+    _BetaToolRunner_mutated.set(this, false);
+    _BetaToolRunner_state.set(this, void 0);
+    _BetaToolRunner_options.set(this, void 0);
+    _BetaToolRunner_message.set(this, void 0);
+    _BetaToolRunner_toolResponse.set(this, void 0);
+    _BetaToolRunner_completion.set(this, void 0);
+    _BetaToolRunner_iterationCount.set(this, 0);
+    __classPrivateFieldSet(this, _BetaToolRunner_state, {
+      params: {
+        // You can't clone the entire params since there are functions as handlers.
+        // You also don't really need to clone params.messages, but it probably will prevent a foot gun
+        // somewhere.
+        ...params,
+        messages: structuredClone(params.messages)
+      }
+    }, "f");
+    const helpers = collectStainlessHelpers(params.tools, params.messages);
+    const helperValue = ["BetaToolRunner", ...helpers].join(", ");
+    __classPrivateFieldSet(this, _BetaToolRunner_options, {
+      ...options,
+      headers: buildHeaders([{ "x-stainless-helper": helperValue }, options?.headers])
+    }, "f");
+    __classPrivateFieldSet(this, _BetaToolRunner_completion, promiseWithResolvers(), "f");
+  }
+  async *[(_BetaToolRunner_consumed = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_mutated = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_state = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_options = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_message = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_toolResponse = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_completion = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_iterationCount = /* @__PURE__ */ new WeakMap(), _BetaToolRunner_instances = /* @__PURE__ */ new WeakSet(), _BetaToolRunner_checkAndCompact = async function _BetaToolRunner_checkAndCompact2() {
+    const compactionControl = __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.compactionControl;
+    if (!compactionControl || !compactionControl.enabled) {
+      return false;
+    }
+    let tokensUsed = 0;
+    if (__classPrivateFieldGet(this, _BetaToolRunner_message, "f") !== void 0) {
+      try {
+        const message = await __classPrivateFieldGet(this, _BetaToolRunner_message, "f");
+        const totalInputTokens = message.usage.input_tokens + (message.usage.cache_creation_input_tokens ?? 0) + (message.usage.cache_read_input_tokens ?? 0);
+        tokensUsed = totalInputTokens + message.usage.output_tokens;
+      } catch {
+        return false;
+      }
+    }
+    const threshold = compactionControl.contextTokenThreshold ?? DEFAULT_TOKEN_THRESHOLD;
+    if (tokensUsed < threshold) {
+      return false;
+    }
+    const model = compactionControl.model ?? __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.model;
+    const summaryPrompt = compactionControl.summaryPrompt ?? DEFAULT_SUMMARY_PROMPT;
+    const messages = __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.messages;
+    if (messages[messages.length - 1].role === "assistant") {
+      const lastMessage = messages[messages.length - 1];
+      if (Array.isArray(lastMessage.content)) {
+        const nonToolBlocks = lastMessage.content.filter((block) => block.type !== "tool_use");
+        if (nonToolBlocks.length === 0) {
+          messages.pop();
+        } else {
+          lastMessage.content = nonToolBlocks;
+        }
+      }
+    }
+    const response = await this.client.beta.messages.create({
+      model,
+      messages: [
+        ...messages,
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: summaryPrompt
+            }
+          ]
+        }
+      ],
+      max_tokens: __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.max_tokens
+    }, {
+      headers: { "x-stainless-helper": "compaction" }
+    });
+    if (response.content[0]?.type !== "text") {
+      throw new AnthropicError("Expected text response for compaction");
+    }
+    __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.messages = [
+      {
+        role: "user",
+        content: response.content
+      }
+    ];
+    return true;
+  }, Symbol.asyncIterator)]() {
+    var _a2;
+    if (__classPrivateFieldGet(this, _BetaToolRunner_consumed, "f")) {
+      throw new AnthropicError("Cannot iterate over a consumed stream");
+    }
+    __classPrivateFieldSet(this, _BetaToolRunner_consumed, true, "f");
+    __classPrivateFieldSet(this, _BetaToolRunner_mutated, true, "f");
+    __classPrivateFieldSet(this, _BetaToolRunner_toolResponse, void 0, "f");
+    try {
+      while (true) {
+        let stream;
+        try {
+          if (__classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.max_iterations && __classPrivateFieldGet(this, _BetaToolRunner_iterationCount, "f") >= __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.max_iterations) {
+            break;
+          }
+          __classPrivateFieldSet(this, _BetaToolRunner_mutated, false, "f");
+          __classPrivateFieldSet(this, _BetaToolRunner_toolResponse, void 0, "f");
+          __classPrivateFieldSet(this, _BetaToolRunner_iterationCount, (_a2 = __classPrivateFieldGet(this, _BetaToolRunner_iterationCount, "f"), _a2++, _a2), "f");
+          __classPrivateFieldSet(this, _BetaToolRunner_message, void 0, "f");
+          const { max_iterations, compactionControl, ...params } = __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params;
+          if (params.stream) {
+            stream = this.client.beta.messages.stream({ ...params }, __classPrivateFieldGet(this, _BetaToolRunner_options, "f"));
+            __classPrivateFieldSet(this, _BetaToolRunner_message, stream.finalMessage(), "f");
+            __classPrivateFieldGet(this, _BetaToolRunner_message, "f").catch(() => {
+            });
+            yield stream;
+          } else {
+            __classPrivateFieldSet(this, _BetaToolRunner_message, this.client.beta.messages.create({ ...params, stream: false }, __classPrivateFieldGet(this, _BetaToolRunner_options, "f")), "f");
+            yield __classPrivateFieldGet(this, _BetaToolRunner_message, "f");
+          }
+          const isCompacted = await __classPrivateFieldGet(this, _BetaToolRunner_instances, "m", _BetaToolRunner_checkAndCompact).call(this);
+          if (!isCompacted) {
+            if (!__classPrivateFieldGet(this, _BetaToolRunner_mutated, "f")) {
+              const { role, content } = await __classPrivateFieldGet(this, _BetaToolRunner_message, "f");
+              __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.messages.push({ role, content });
+            }
+            const toolMessage = await __classPrivateFieldGet(this, _BetaToolRunner_instances, "m", _BetaToolRunner_generateToolResponse).call(this, __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.messages.at(-1));
+            if (toolMessage) {
+              __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params.messages.push(toolMessage);
+            } else if (!__classPrivateFieldGet(this, _BetaToolRunner_mutated, "f")) {
+              break;
+            }
+          }
+        } finally {
+          if (stream) {
+            stream.abort();
+          }
+        }
+      }
+      if (!__classPrivateFieldGet(this, _BetaToolRunner_message, "f")) {
+        throw new AnthropicError("ToolRunner concluded without a message from the server");
+      }
+      __classPrivateFieldGet(this, _BetaToolRunner_completion, "f").resolve(await __classPrivateFieldGet(this, _BetaToolRunner_message, "f"));
+    } catch (error) {
+      __classPrivateFieldSet(this, _BetaToolRunner_consumed, false, "f");
+      __classPrivateFieldGet(this, _BetaToolRunner_completion, "f").promise.catch(() => {
+      });
+      __classPrivateFieldGet(this, _BetaToolRunner_completion, "f").reject(error);
+      __classPrivateFieldSet(this, _BetaToolRunner_completion, promiseWithResolvers(), "f");
+      throw error;
+    }
+  }
+  setMessagesParams(paramsOrMutator) {
+    if (typeof paramsOrMutator === "function") {
+      __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params = paramsOrMutator(__classPrivateFieldGet(this, _BetaToolRunner_state, "f").params);
+    } else {
+      __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params = paramsOrMutator;
+    }
+    __classPrivateFieldSet(this, _BetaToolRunner_mutated, true, "f");
+    __classPrivateFieldSet(this, _BetaToolRunner_toolResponse, void 0, "f");
+  }
+  /**
+   * Get the tool response for the last message from the assistant.
+   * Avoids redundant tool executions by caching results.
+   *
+   * @returns A promise that resolves to a BetaMessageParam containing tool results, or null if no tools need to be executed
+   *
+   * @example
+   * const toolResponse = await runner.generateToolResponse();
+   * if (toolResponse) {
+   *   console.log('Tool results:', toolResponse.content);
+   * }
+   */
+  async generateToolResponse() {
+    const message = await __classPrivateFieldGet(this, _BetaToolRunner_message, "f") ?? this.params.messages.at(-1);
+    if (!message) {
+      return null;
+    }
+    return __classPrivateFieldGet(this, _BetaToolRunner_instances, "m", _BetaToolRunner_generateToolResponse).call(this, message);
+  }
+  /**
+   * Wait for the async iterator to complete. This works even if the async iterator hasn't yet started, and
+   * will wait for an instance to start and go to completion.
+   *
+   * @returns A promise that resolves to the final BetaMessage when the iterator completes
+   *
+   * @example
+   * // Start consuming the iterator
+   * for await (const message of runner) {
+   *   console.log('Message:', message.content);
+   * }
+   *
+   * // Meanwhile, wait for completion from another part of the code
+   * const finalMessage = await runner.done();
+   * console.log('Final response:', finalMessage.content);
+   */
+  done() {
+    return __classPrivateFieldGet(this, _BetaToolRunner_completion, "f").promise;
+  }
+  /**
+   * Returns a promise indicating that the stream is done. Unlike .done(), this will eagerly read the stream:
+   * * If the iterator has not been consumed, consume the entire iterator and return the final message from the
+   * assistant.
+   * * If the iterator has been consumed, waits for it to complete and returns the final message.
+   *
+   * @returns A promise that resolves to the final BetaMessage from the conversation
+   * @throws {AnthropicError} If no messages were processed during the conversation
+   *
+   * @example
+   * const finalMessage = await runner.runUntilDone();
+   * console.log('Final response:', finalMessage.content);
+   */
+  async runUntilDone() {
+    if (!__classPrivateFieldGet(this, _BetaToolRunner_consumed, "f")) {
+      for await (const _ of this) {
+      }
+    }
+    return this.done();
+  }
+  /**
+   * Get the current parameters being used by the ToolRunner.
+   *
+   * @returns A readonly view of the current ToolRunnerParams
+   *
+   * @example
+   * const currentParams = runner.params;
+   * console.log('Current model:', currentParams.model);
+   * console.log('Message count:', currentParams.messages.length);
+   */
+  get params() {
+    return __classPrivateFieldGet(this, _BetaToolRunner_state, "f").params;
+  }
+  /**
+   * Add one or more messages to the conversation history.
+   *
+   * @param messages - One or more BetaMessageParam objects to add to the conversation
+   *
+   * @example
+   * runner.pushMessages(
+   *   { role: 'user', content: 'Also, what about the weather in NYC?' }
+   * );
+   *
+   * @example
+   * // Adding multiple messages
+   * runner.pushMessages(
+   *   { role: 'user', content: 'What about NYC?' },
+   *   { role: 'user', content: 'And Boston?' }
+   * );
+   */
+  pushMessages(...messages) {
+    this.setMessagesParams((params) => ({
+      ...params,
+      messages: [...params.messages, ...messages]
+    }));
+  }
+  /**
+   * Makes the ToolRunner directly awaitable, equivalent to calling .runUntilDone()
+   * This allows using `await runner` instead of `await runner.runUntilDone()`
+   */
+  then(onfulfilled, onrejected) {
+    return this.runUntilDone().then(onfulfilled, onrejected);
+  }
+};
+_BetaToolRunner_generateToolResponse = async function _BetaToolRunner_generateToolResponse2(lastMessage) {
+  if (__classPrivateFieldGet(this, _BetaToolRunner_toolResponse, "f") !== void 0) {
+    return __classPrivateFieldGet(this, _BetaToolRunner_toolResponse, "f");
+  }
+  __classPrivateFieldSet(this, _BetaToolRunner_toolResponse, generateToolResponse(__classPrivateFieldGet(this, _BetaToolRunner_state, "f").params, lastMessage), "f");
+  return __classPrivateFieldGet(this, _BetaToolRunner_toolResponse, "f");
+};
+async function generateToolResponse(params, lastMessage = params.messages.at(-1)) {
+  if (!lastMessage || lastMessage.role !== "assistant" || !lastMessage.content || typeof lastMessage.content === "string") {
+    return null;
+  }
+  const toolUseBlocks = lastMessage.content.filter((content) => content.type === "tool_use");
+  if (toolUseBlocks.length === 0) {
+    return null;
+  }
+  const toolResults = await Promise.all(toolUseBlocks.map(async (toolUse) => {
+    const tool = params.tools.find((t) => ("name" in t ? t.name : t.mcp_server_name) === toolUse.name);
+    if (!tool || !("run" in tool)) {
+      return {
+        type: "tool_result",
+        tool_use_id: toolUse.id,
+        content: `Error: Tool '${toolUse.name}' not found`,
+        is_error: true
+      };
+    }
+    try {
+      let input = toolUse.input;
+      if ("parse" in tool && tool.parse) {
+        input = tool.parse(input);
+      }
+      const result = await tool.run(input);
+      return {
+        type: "tool_result",
+        tool_use_id: toolUse.id,
+        content: result
+      };
+    } catch (error) {
+      return {
+        type: "tool_result",
+        tool_use_id: toolUse.id,
+        content: error instanceof ToolError ? error.content : `Error: ${error instanceof Error ? error.message : String(error)}`,
+        is_error: true
+      };
+    }
+  }));
+  return {
+    role: "user",
+    content: toolResults
+  };
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/decoders/jsonl.mjs
+var JSONLDecoder = class _JSONLDecoder {
+  constructor(iterator, controller) {
+    this.iterator = iterator;
+    this.controller = controller;
+  }
+  async *decoder() {
+    const lineDecoder = new LineDecoder();
+    for await (const chunk of this.iterator) {
+      for (const line2 of lineDecoder.decode(chunk)) {
+        yield JSON.parse(line2);
+      }
+    }
+    for (const line2 of lineDecoder.flush()) {
+      yield JSON.parse(line2);
+    }
+  }
+  [Symbol.asyncIterator]() {
+    return this.decoder();
+  }
+  static fromResponse(response, controller) {
+    if (!response.body) {
+      controller.abort();
+      if (typeof globalThis.navigator !== "undefined" && globalThis.navigator.product === "ReactNative") {
+        throw new AnthropicError(`The default react-native fetch implementation does not support streaming. Please use expo/fetch: https://docs.expo.dev/versions/latest/sdk/expo/#expofetch-api`);
+      }
+      throw new AnthropicError(`Attempted to iterate over a response with no body`);
+    }
+    return new _JSONLDecoder(ReadableStreamToAsyncIterable(response.body), controller);
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/messages/batches.mjs
+var Batches = class extends APIResource {
+  /**
+   * Send a batch of Message creation requests.
+   *
+   * The Message Batches API can be used to process multiple Messages API requests at
+   * once. Once a Message Batch is created, it begins processing immediately. Batches
+   * can take up to 24 hours to complete.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const betaMessageBatch =
+   *   await client.beta.messages.batches.create({
+   *     requests: [
+   *       {
+   *         custom_id: 'my-custom-id-1',
+   *         params: {
+   *           max_tokens: 1024,
+   *           messages: [
+   *             { content: 'Hello, world', role: 'user' },
+   *           ],
+   *           model: 'claude-opus-4-6',
+   *         },
+   *       },
+   *     ],
+   *   });
+   * ```
+   */
+  create(params, options) {
+    const { betas, ...body } = params;
+    return this._client.post("/v1/messages/batches?beta=true", {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * This endpoint is idempotent and can be used to poll for Message Batch
+   * completion. To access the results of a Message Batch, make a request to the
+   * `results_url` field in the response.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const betaMessageBatch =
+   *   await client.beta.messages.batches.retrieve(
+   *     'message_batch_id',
+   *   );
+   * ```
+   */
+  retrieve(messageBatchID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/messages/batches/${messageBatchID}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * List all Message Batches within a Workspace. Most recently created batches are
+   * returned first.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const betaMessageBatch of client.beta.messages.batches.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList("/v1/messages/batches?beta=true", Page, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Delete a Message Batch.
+   *
+   * Message Batches can only be deleted once they've finished processing. If you'd
+   * like to delete an in-progress batch, you must first cancel it.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const betaDeletedMessageBatch =
+   *   await client.beta.messages.batches.delete(
+   *     'message_batch_id',
+   *   );
+   * ```
+   */
+  delete(messageBatchID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.delete(path`/v1/messages/batches/${messageBatchID}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Batches may be canceled any time before processing ends. Once cancellation is
+   * initiated, the batch enters a `canceling` state, at which time the system may
+   * complete any in-progress, non-interruptible requests before finalizing
+   * cancellation.
+   *
+   * The number of canceled requests is specified in `request_counts`. To determine
+   * which requests were canceled, check the individual results within the batch.
+   * Note that cancellation may not result in any canceled requests if they were
+   * non-interruptible.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const betaMessageBatch =
+   *   await client.beta.messages.batches.cancel(
+   *     'message_batch_id',
+   *   );
+   * ```
+   */
+  cancel(messageBatchID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.post(path`/v1/messages/batches/${messageBatchID}/cancel?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Streams the results of a Message Batch as a `.jsonl` file.
+   *
+   * Each line in the file is a JSON object containing the result of a single request
+   * in the Message Batch. Results are not guaranteed to be in the same order as
+   * requests. Use the `custom_id` field to match results to requests.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const betaMessageBatchIndividualResponse =
+   *   await client.beta.messages.batches.results(
+   *     'message_batch_id',
+   *   );
+   * ```
+   */
+  async results(messageBatchID, params = {}, options) {
+    const batch = await this.retrieve(messageBatchID);
+    if (!batch.results_url) {
+      throw new AnthropicError(`No batch \`results_url\`; Has it finished processing? ${batch.processing_status} - ${batch.id}`);
+    }
+    const { betas } = params ?? {};
+    return this._client.get(batch.results_url, {
+      ...options,
+      headers: buildHeaders([
+        {
+          "anthropic-beta": [...betas ?? [], "message-batches-2024-09-24"].toString(),
+          Accept: "application/binary"
+        },
+        options?.headers
+      ]),
+      stream: true,
+      __binaryResponse: true
+    })._thenUnwrap((_, props2) => JSONLDecoder.fromResponse(props2.response, props2.controller));
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/messages/messages.mjs
+var DEPRECATED_MODELS = {
+  "claude-1.3": "November 6th, 2024",
+  "claude-1.3-100k": "November 6th, 2024",
+  "claude-instant-1.1": "November 6th, 2024",
+  "claude-instant-1.1-100k": "November 6th, 2024",
+  "claude-instant-1.2": "November 6th, 2024",
+  "claude-3-sonnet-20240229": "July 21st, 2025",
+  "claude-3-opus-20240229": "January 5th, 2026",
+  "claude-2.1": "July 21st, 2025",
+  "claude-2.0": "July 21st, 2025",
+  "claude-3-7-sonnet-latest": "February 19th, 2026",
+  "claude-3-7-sonnet-20250219": "February 19th, 2026"
+};
+var MODELS_TO_WARN_WITH_THINKING_ENABLED = ["claude-opus-4-6"];
+var Messages = class extends APIResource {
+  constructor() {
+    super(...arguments);
+    this.batches = new Batches(this._client);
+  }
+  create(params, options) {
+    const modifiedParams = transformOutputFormat(params);
+    const { betas, ...body } = modifiedParams;
+    if (body.model in DEPRECATED_MODELS) {
+      console.warn(`The model '${body.model}' is deprecated and will reach end-of-life on ${DEPRECATED_MODELS[body.model]}
+Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.`);
+    }
+    if (body.model in MODELS_TO_WARN_WITH_THINKING_ENABLED && body.thinking && body.thinking.type === "enabled") {
+      console.warn(`Using Claude with ${body.model} and 'thinking.type=enabled' is deprecated. Use 'thinking.type=adaptive' instead which results in better model performance in our testing: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking`);
+    }
+    let timeout = this._client._options.timeout;
+    if (!body.stream && timeout == null) {
+      const maxNonstreamingTokens = MODEL_NONSTREAMING_TOKENS[body.model] ?? void 0;
+      timeout = this._client.calculateNonstreamingTimeout(body.max_tokens, maxNonstreamingTokens);
+    }
+    const helperHeader = stainlessHelperHeader(body.tools, body.messages);
+    return this._client.post("/v1/messages?beta=true", {
+      body,
+      timeout: timeout ?? 6e5,
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        helperHeader,
+        options?.headers
+      ]),
+      stream: modifiedParams.stream ?? false
+    });
+  }
+  /**
+   * Send a structured list of input messages with text and/or image content, along with an expected `output_format` and
+   * the response will be automatically parsed and available in the `parsed_output` property of the message.
+   *
+   * @example
+   * ```ts
+   * const message = await client.beta.messages.parse({
+   *   model: 'claude-3-5-sonnet-20241022',
+   *   max_tokens: 1024,
+   *   messages: [{ role: 'user', content: 'What is 2+2?' }],
+   *   output_format: zodOutputFormat(z.object({ answer: z.number() }), 'math'),
+   * });
+   *
+   * console.log(message.parsed_output?.answer); // 4
+   * ```
+   */
+  parse(params, options) {
+    options = {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...params.betas ?? [], "structured-outputs-2025-12-15"].toString() },
+        options?.headers
+      ])
+    };
+    return this.create(params, options).then((message) => parseBetaMessage(message, params, { logger: this._client.logger ?? console }));
+  }
+  /**
+   * Create a Message stream
+   */
+  stream(body, options) {
+    return BetaMessageStream.createMessage(this, body, options);
+  }
+  /**
+   * Count the number of tokens in a Message.
+   *
+   * The Token Count API can be used to count the number of tokens in a Message,
+   * including tools, images, and documents, without creating it.
+   *
+   * Learn more about token counting in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/token-counting)
+   *
+   * @example
+   * ```ts
+   * const betaMessageTokensCount =
+   *   await client.beta.messages.countTokens({
+   *     messages: [{ content: 'string', role: 'user' }],
+   *     model: 'claude-opus-4-6',
+   *   });
+   * ```
+   */
+  countTokens(params, options) {
+    const modifiedParams = transformOutputFormat(params);
+    const { betas, ...body } = modifiedParams;
+    return this._client.post("/v1/messages/count_tokens?beta=true", {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "token-counting-2024-11-01"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  toolRunner(body, options) {
+    return new BetaToolRunner(this._client, body, options);
+  }
+};
+function transformOutputFormat(params) {
+  if (!params.output_format) {
+    return params;
+  }
+  if (params.output_config?.format) {
+    throw new AnthropicError("Both output_format and output_config.format were provided. Please use only output_config.format (output_format is deprecated).");
+  }
+  const { output_format, ...rest } = params;
+  return {
+    ...rest,
+    output_config: {
+      ...params.output_config,
+      format: output_format
+    }
+  };
+}
+Messages.Batches = Batches;
+Messages.BetaToolRunner = BetaToolRunner;
+Messages.ToolError = ToolError;
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/skills/versions.mjs
+var Versions = class extends APIResource {
+  /**
+   * Create Skill Version
+   *
+   * @example
+   * ```ts
+   * const version = await client.beta.skills.versions.create(
+   *   'skill_id',
+   * );
+   * ```
+   */
+  create(skillID, params = {}, options) {
+    const { betas, ...body } = params ?? {};
+    return this._client.post(path`/v1/skills/${skillID}/versions?beta=true`, multipartFormRequestOptions({
+      body,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    }, this._client));
+  }
+  /**
+   * Get Skill Version
+   *
+   * @example
+   * ```ts
+   * const version = await client.beta.skills.versions.retrieve(
+   *   'version',
+   *   { skill_id: 'skill_id' },
+   * );
+   * ```
+   */
+  retrieve(version2, params, options) {
+    const { skill_id, betas } = params;
+    return this._client.get(path`/v1/skills/${skill_id}/versions/${version2}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * List Skill Versions
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const versionListResponse of client.beta.skills.versions.list(
+   *   'skill_id',
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(skillID, params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList(path`/v1/skills/${skillID}/versions?beta=true`, PageCursor, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Delete Skill Version
+   *
+   * @example
+   * ```ts
+   * const version = await client.beta.skills.versions.delete(
+   *   'version',
+   *   { skill_id: 'skill_id' },
+   * );
+   * ```
+   */
+  delete(version2, params, options) {
+    const { skill_id, betas } = params;
+    return this._client.delete(path`/v1/skills/${skill_id}/versions/${version2}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/skills/skills.mjs
+var Skills = class extends APIResource {
+  constructor() {
+    super(...arguments);
+    this.versions = new Versions(this._client);
+  }
+  /**
+   * Create Skill
+   *
+   * @example
+   * ```ts
+   * const skill = await client.beta.skills.create();
+   * ```
+   */
+  create(params = {}, options) {
+    const { betas, ...body } = params ?? {};
+    return this._client.post("/v1/skills?beta=true", multipartFormRequestOptions({
+      body,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    }, this._client, false));
+  }
+  /**
+   * Get Skill
+   *
+   * @example
+   * ```ts
+   * const skill = await client.beta.skills.retrieve('skill_id');
+   * ```
+   */
+  retrieve(skillID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/skills/${skillID}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * List Skills
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const skillListResponse of client.beta.skills.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList("/v1/skills?beta=true", PageCursor, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * Delete Skill
+   *
+   * @example
+   * ```ts
+   * const skill = await client.beta.skills.delete('skill_id');
+   * ```
+   */
+  delete(skillID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.delete(path`/v1/skills/${skillID}?beta=true`, {
+      ...options,
+      headers: buildHeaders([
+        { "anthropic-beta": [...betas ?? [], "skills-2025-10-02"].toString() },
+        options?.headers
+      ])
+    });
+  }
+};
+Skills.Versions = Versions;
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/beta/beta.mjs
+var Beta = class extends APIResource {
+  constructor() {
+    super(...arguments);
+    this.models = new Models(this._client);
+    this.messages = new Messages(this._client);
+    this.files = new Files(this._client);
+    this.skills = new Skills(this._client);
+  }
+};
+Beta.Models = Models;
+Beta.Messages = Messages;
+Beta.Files = Files;
+Beta.Skills = Skills;
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/completions.mjs
+var Completions = class extends APIResource {
+  create(params, options) {
+    const { betas, ...body } = params;
+    return this._client.post("/v1/complete", {
+      body,
+      timeout: this._client._options.timeout ?? 6e5,
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        options?.headers
+      ]),
+      stream: params.stream ?? false
+    });
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/parser.mjs
+function getOutputFormat2(params) {
+  return params?.output_config?.format;
+}
+function maybeParseMessage(message, params, opts) {
+  const outputFormat = getOutputFormat2(params);
+  if (!params || !("parse" in (outputFormat ?? {}))) {
+    return {
+      ...message,
+      content: message.content.map((block) => {
+        if (block.type === "text") {
+          const parsedBlock = Object.defineProperty({ ...block }, "parsed_output", {
+            value: null,
+            enumerable: false
+          });
+          return parsedBlock;
+        }
+        return block;
+      }),
+      parsed_output: null
+    };
+  }
+  return parseMessage(message, params, opts);
+}
+function parseMessage(message, params, opts) {
+  let firstParsedOutput = null;
+  const content = message.content.map((block) => {
+    if (block.type === "text") {
+      const parsedOutput = parseOutputFormat(params, block.text);
+      if (firstParsedOutput === null) {
+        firstParsedOutput = parsedOutput;
+      }
+      const parsedBlock = Object.defineProperty({ ...block }, "parsed_output", {
+        value: parsedOutput,
+        enumerable: false
+      });
+      return parsedBlock;
+    }
+    return block;
+  });
+  return {
+    ...message,
+    content,
+    parsed_output: firstParsedOutput
+  };
+}
+function parseOutputFormat(params, content) {
+  const outputFormat = getOutputFormat2(params);
+  if (outputFormat?.type !== "json_schema") {
+    return null;
+  }
+  try {
+    if ("parse" in outputFormat) {
+      return outputFormat.parse(content);
+    }
+    return JSON.parse(content);
+  } catch (error) {
+    throw new AnthropicError(`Failed to parse structured output: ${error}`);
+  }
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/lib/MessageStream.mjs
+var _MessageStream_instances;
+var _MessageStream_currentMessageSnapshot;
+var _MessageStream_params;
+var _MessageStream_connectedPromise;
+var _MessageStream_resolveConnectedPromise;
+var _MessageStream_rejectConnectedPromise;
+var _MessageStream_endPromise;
+var _MessageStream_resolveEndPromise;
+var _MessageStream_rejectEndPromise;
+var _MessageStream_listeners;
+var _MessageStream_ended;
+var _MessageStream_errored;
+var _MessageStream_aborted;
+var _MessageStream_catchingPromiseCreated;
+var _MessageStream_response;
+var _MessageStream_request_id;
+var _MessageStream_logger;
+var _MessageStream_getFinalMessage;
+var _MessageStream_getFinalText;
+var _MessageStream_handleError;
+var _MessageStream_beginRequest;
+var _MessageStream_addStreamEvent;
+var _MessageStream_endRequest;
+var _MessageStream_accumulateMessage;
+var JSON_BUF_PROPERTY2 = "__json_buf";
+function tracksToolInput2(content) {
+  return content.type === "tool_use" || content.type === "server_tool_use";
+}
+var MessageStream = class _MessageStream {
+  constructor(params, opts) {
+    _MessageStream_instances.add(this);
+    this.messages = [];
+    this.receivedMessages = [];
+    _MessageStream_currentMessageSnapshot.set(this, void 0);
+    _MessageStream_params.set(this, null);
+    this.controller = new AbortController();
+    _MessageStream_connectedPromise.set(this, void 0);
+    _MessageStream_resolveConnectedPromise.set(this, () => {
+    });
+    _MessageStream_rejectConnectedPromise.set(this, () => {
+    });
+    _MessageStream_endPromise.set(this, void 0);
+    _MessageStream_resolveEndPromise.set(this, () => {
+    });
+    _MessageStream_rejectEndPromise.set(this, () => {
+    });
+    _MessageStream_listeners.set(this, {});
+    _MessageStream_ended.set(this, false);
+    _MessageStream_errored.set(this, false);
+    _MessageStream_aborted.set(this, false);
+    _MessageStream_catchingPromiseCreated.set(this, false);
+    _MessageStream_response.set(this, void 0);
+    _MessageStream_request_id.set(this, void 0);
+    _MessageStream_logger.set(this, void 0);
+    _MessageStream_handleError.set(this, (error) => {
+      __classPrivateFieldSet(this, _MessageStream_errored, true, "f");
+      if (isAbortError(error)) {
+        error = new APIUserAbortError();
+      }
+      if (error instanceof APIUserAbortError) {
+        __classPrivateFieldSet(this, _MessageStream_aborted, true, "f");
+        return this._emit("abort", error);
+      }
+      if (error instanceof AnthropicError) {
+        return this._emit("error", error);
+      }
+      if (error instanceof Error) {
+        const anthropicError = new AnthropicError(error.message);
+        anthropicError.cause = error;
+        return this._emit("error", anthropicError);
+      }
+      return this._emit("error", new AnthropicError(String(error)));
+    });
+    __classPrivateFieldSet(this, _MessageStream_connectedPromise, new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _MessageStream_resolveConnectedPromise, resolve, "f");
+      __classPrivateFieldSet(this, _MessageStream_rejectConnectedPromise, reject, "f");
+    }), "f");
+    __classPrivateFieldSet(this, _MessageStream_endPromise, new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _MessageStream_resolveEndPromise, resolve, "f");
+      __classPrivateFieldSet(this, _MessageStream_rejectEndPromise, reject, "f");
+    }), "f");
+    __classPrivateFieldGet(this, _MessageStream_connectedPromise, "f").catch(() => {
+    });
+    __classPrivateFieldGet(this, _MessageStream_endPromise, "f").catch(() => {
+    });
+    __classPrivateFieldSet(this, _MessageStream_params, params, "f");
+    __classPrivateFieldSet(this, _MessageStream_logger, opts?.logger ?? console, "f");
+  }
+  get response() {
+    return __classPrivateFieldGet(this, _MessageStream_response, "f");
+  }
+  get request_id() {
+    return __classPrivateFieldGet(this, _MessageStream_request_id, "f");
+  }
+  /**
+   * Returns the `MessageStream` data, the raw `Response` instance and the ID of the request,
+   * returned vie the `request-id` header which is useful for debugging requests and resporting
+   * issues to Anthropic.
+   *
+   * This is the same as the `APIPromise.withResponse()` method.
+   *
+   * This method will raise an error if you created the stream using `MessageStream.fromReadableStream`
+   * as no `Response` is available.
+   */
+  async withResponse() {
+    __classPrivateFieldSet(this, _MessageStream_catchingPromiseCreated, true, "f");
+    const response = await __classPrivateFieldGet(this, _MessageStream_connectedPromise, "f");
+    if (!response) {
+      throw new Error("Could not resolve a `Response` object");
+    }
+    return {
+      data: this,
+      response,
+      request_id: response.headers.get("request-id")
+    };
+  }
+  /**
+   * Intended for use on the frontend, consuming a stream produced with
+   * `.toReadableStream()` on the backend.
+   *
+   * Note that messages sent to the model do not appear in `.on('message')`
+   * in this context.
+   */
+  static fromReadableStream(stream) {
+    const runner = new _MessageStream(null);
+    runner._run(() => runner._fromReadableStream(stream));
+    return runner;
+  }
+  static createMessage(messages, params, options, { logger: logger3 } = {}) {
+    const runner = new _MessageStream(params, { logger: logger3 });
+    for (const message of params.messages) {
+      runner._addMessageParam(message);
+    }
+    __classPrivateFieldSet(runner, _MessageStream_params, { ...params, stream: true }, "f");
+    runner._run(() => runner._createMessage(messages, { ...params, stream: true }, { ...options, headers: { ...options?.headers, "X-Stainless-Helper-Method": "stream" } }));
+    return runner;
+  }
+  _run(executor) {
+    executor().then(() => {
+      this._emitFinal();
+      this._emit("end");
+    }, __classPrivateFieldGet(this, _MessageStream_handleError, "f"));
+  }
+  _addMessageParam(message) {
+    this.messages.push(message);
+  }
+  _addMessage(message, emit = true) {
+    this.receivedMessages.push(message);
+    if (emit) {
+      this._emit("message", message);
+    }
+  }
+  async _createMessage(messages, params, options) {
+    const signal3 = options?.signal;
+    let abortHandler;
+    if (signal3) {
+      if (signal3.aborted)
+        this.controller.abort();
+      abortHandler = this.controller.abort.bind(this.controller);
+      signal3.addEventListener("abort", abortHandler);
+    }
+    try {
+      __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_beginRequest).call(this);
+      const { response, data: stream } = await messages.create({ ...params, stream: true }, { ...options, signal: this.controller.signal }).withResponse();
+      this._connected(response);
+      for await (const event of stream) {
+        __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_addStreamEvent).call(this, event);
+      }
+      if (stream.controller.signal?.aborted) {
+        throw new APIUserAbortError();
+      }
+      __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_endRequest).call(this);
+    } finally {
+      if (signal3 && abortHandler) {
+        signal3.removeEventListener("abort", abortHandler);
+      }
+    }
+  }
+  _connected(response) {
+    if (this.ended)
+      return;
+    __classPrivateFieldSet(this, _MessageStream_response, response, "f");
+    __classPrivateFieldSet(this, _MessageStream_request_id, response?.headers.get("request-id"), "f");
+    __classPrivateFieldGet(this, _MessageStream_resolveConnectedPromise, "f").call(this, response);
+    this._emit("connect");
+  }
+  get ended() {
+    return __classPrivateFieldGet(this, _MessageStream_ended, "f");
+  }
+  get errored() {
+    return __classPrivateFieldGet(this, _MessageStream_errored, "f");
+  }
+  get aborted() {
+    return __classPrivateFieldGet(this, _MessageStream_aborted, "f");
+  }
+  abort() {
+    this.controller.abort();
+  }
+  /**
+   * Adds the listener function to the end of the listeners array for the event.
+   * No checks are made to see if the listener has already been added. Multiple calls passing
+   * the same combination of event and listener will result in the listener being added, and
+   * called, multiple times.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  on(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _MessageStream_listeners, "f")[event] || (__classPrivateFieldGet(this, _MessageStream_listeners, "f")[event] = []);
+    listeners.push({ listener });
+    return this;
+  }
+  /**
+   * Removes the specified listener from the listener array for the event.
+   * off() will remove, at most, one instance of a listener from the listener array. If any single
+   * listener has been added multiple times to the listener array for the specified event, then
+   * off() must be called multiple times to remove each instance.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  off(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _MessageStream_listeners, "f")[event];
+    if (!listeners)
+      return this;
+    const index2 = listeners.findIndex((l) => l.listener === listener);
+    if (index2 >= 0)
+      listeners.splice(index2, 1);
+    return this;
+  }
+  /**
+   * Adds a one-time listener function for the event. The next time the event is triggered,
+   * this listener is removed and then invoked.
+   * @returns this MessageStream, so that calls can be chained
+   */
+  once(event, listener) {
+    const listeners = __classPrivateFieldGet(this, _MessageStream_listeners, "f")[event] || (__classPrivateFieldGet(this, _MessageStream_listeners, "f")[event] = []);
+    listeners.push({ listener, once: true });
+    return this;
+  }
+  /**
+   * This is similar to `.once()`, but returns a Promise that resolves the next time
+   * the event is triggered, instead of calling a listener callback.
+   * @returns a Promise that resolves the next time given event is triggered,
+   * or rejects if an error is emitted.  (If you request the 'error' event,
+   * returns a promise that resolves with the error).
+   *
+   * Example:
+   *
+   *   const message = await stream.emitted('message') // rejects if the stream errors
+   */
+  emitted(event) {
+    return new Promise((resolve, reject) => {
+      __classPrivateFieldSet(this, _MessageStream_catchingPromiseCreated, true, "f");
+      if (event !== "error")
+        this.once("error", reject);
+      this.once(event, resolve);
+    });
+  }
+  async done() {
+    __classPrivateFieldSet(this, _MessageStream_catchingPromiseCreated, true, "f");
+    await __classPrivateFieldGet(this, _MessageStream_endPromise, "f");
+  }
+  get currentMessage() {
+    return __classPrivateFieldGet(this, _MessageStream_currentMessageSnapshot, "f");
+  }
+  /**
+   * @returns a promise that resolves with the the final assistant Message response,
+   * or rejects if an error occurred or the stream ended prematurely without producing a Message.
+   * If structured outputs were used, this will be a ParsedMessage with a `parsed_output` field.
+   */
+  async finalMessage() {
+    await this.done();
+    return __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_getFinalMessage).call(this);
+  }
+  /**
+   * @returns a promise that resolves with the the final assistant Message's text response, concatenated
+   * together if there are more than one text blocks.
+   * Rejects if an error occurred or the stream ended prematurely without producing a Message.
+   */
+  async finalText() {
+    await this.done();
+    return __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_getFinalText).call(this);
+  }
+  _emit(event, ...args) {
+    if (__classPrivateFieldGet(this, _MessageStream_ended, "f"))
+      return;
+    if (event === "end") {
+      __classPrivateFieldSet(this, _MessageStream_ended, true, "f");
+      __classPrivateFieldGet(this, _MessageStream_resolveEndPromise, "f").call(this);
+    }
+    const listeners = __classPrivateFieldGet(this, _MessageStream_listeners, "f")[event];
+    if (listeners) {
+      __classPrivateFieldGet(this, _MessageStream_listeners, "f")[event] = listeners.filter((l) => !l.once);
+      listeners.forEach(({ listener }) => listener(...args));
+    }
+    if (event === "abort") {
+      const error = args[0];
+      if (!__classPrivateFieldGet(this, _MessageStream_catchingPromiseCreated, "f") && !listeners?.length) {
+        Promise.reject(error);
+      }
+      __classPrivateFieldGet(this, _MessageStream_rejectConnectedPromise, "f").call(this, error);
+      __classPrivateFieldGet(this, _MessageStream_rejectEndPromise, "f").call(this, error);
+      this._emit("end");
+      return;
+    }
+    if (event === "error") {
+      const error = args[0];
+      if (!__classPrivateFieldGet(this, _MessageStream_catchingPromiseCreated, "f") && !listeners?.length) {
+        Promise.reject(error);
+      }
+      __classPrivateFieldGet(this, _MessageStream_rejectConnectedPromise, "f").call(this, error);
+      __classPrivateFieldGet(this, _MessageStream_rejectEndPromise, "f").call(this, error);
+      this._emit("end");
+    }
+  }
+  _emitFinal() {
+    const finalMessage = this.receivedMessages.at(-1);
+    if (finalMessage) {
+      this._emit("finalMessage", __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_getFinalMessage).call(this));
+    }
+  }
+  async _fromReadableStream(readableStream, options) {
+    const signal3 = options?.signal;
+    let abortHandler;
+    if (signal3) {
+      if (signal3.aborted)
+        this.controller.abort();
+      abortHandler = this.controller.abort.bind(this.controller);
+      signal3.addEventListener("abort", abortHandler);
+    }
+    try {
+      __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_beginRequest).call(this);
+      this._connected(null);
+      const stream = Stream.fromReadableStream(readableStream, this.controller);
+      for await (const event of stream) {
+        __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_addStreamEvent).call(this, event);
+      }
+      if (stream.controller.signal?.aborted) {
+        throw new APIUserAbortError();
+      }
+      __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_endRequest).call(this);
+    } finally {
+      if (signal3 && abortHandler) {
+        signal3.removeEventListener("abort", abortHandler);
+      }
+    }
+  }
+  [(_MessageStream_currentMessageSnapshot = /* @__PURE__ */ new WeakMap(), _MessageStream_params = /* @__PURE__ */ new WeakMap(), _MessageStream_connectedPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_resolveConnectedPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_rejectConnectedPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_endPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_resolveEndPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_rejectEndPromise = /* @__PURE__ */ new WeakMap(), _MessageStream_listeners = /* @__PURE__ */ new WeakMap(), _MessageStream_ended = /* @__PURE__ */ new WeakMap(), _MessageStream_errored = /* @__PURE__ */ new WeakMap(), _MessageStream_aborted = /* @__PURE__ */ new WeakMap(), _MessageStream_catchingPromiseCreated = /* @__PURE__ */ new WeakMap(), _MessageStream_response = /* @__PURE__ */ new WeakMap(), _MessageStream_request_id = /* @__PURE__ */ new WeakMap(), _MessageStream_logger = /* @__PURE__ */ new WeakMap(), _MessageStream_handleError = /* @__PURE__ */ new WeakMap(), _MessageStream_instances = /* @__PURE__ */ new WeakSet(), _MessageStream_getFinalMessage = function _MessageStream_getFinalMessage2() {
+    if (this.receivedMessages.length === 0) {
+      throw new AnthropicError("stream ended without producing a Message with role=assistant");
+    }
+    return this.receivedMessages.at(-1);
+  }, _MessageStream_getFinalText = function _MessageStream_getFinalText2() {
+    if (this.receivedMessages.length === 0) {
+      throw new AnthropicError("stream ended without producing a Message with role=assistant");
+    }
+    const textBlocks = this.receivedMessages.at(-1).content.filter((block) => block.type === "text").map((block) => block.text);
+    if (textBlocks.length === 0) {
+      throw new AnthropicError("stream ended without producing a content block with type=text");
+    }
+    return textBlocks.join(" ");
+  }, _MessageStream_beginRequest = function _MessageStream_beginRequest2() {
+    if (this.ended)
+      return;
+    __classPrivateFieldSet(this, _MessageStream_currentMessageSnapshot, void 0, "f");
+  }, _MessageStream_addStreamEvent = function _MessageStream_addStreamEvent2(event) {
+    if (this.ended)
+      return;
+    const messageSnapshot = __classPrivateFieldGet(this, _MessageStream_instances, "m", _MessageStream_accumulateMessage).call(this, event);
+    this._emit("streamEvent", event, messageSnapshot);
+    switch (event.type) {
+      case "content_block_delta": {
+        const content = messageSnapshot.content.at(-1);
+        switch (event.delta.type) {
+          case "text_delta": {
+            if (content.type === "text") {
+              this._emit("text", event.delta.text, content.text || "");
+            }
+            break;
+          }
+          case "citations_delta": {
+            if (content.type === "text") {
+              this._emit("citation", event.delta.citation, content.citations ?? []);
+            }
+            break;
+          }
+          case "input_json_delta": {
+            if (tracksToolInput2(content) && content.input) {
+              this._emit("inputJson", event.delta.partial_json, content.input);
+            }
+            break;
+          }
+          case "thinking_delta": {
+            if (content.type === "thinking") {
+              this._emit("thinking", event.delta.thinking, content.thinking);
+            }
+            break;
+          }
+          case "signature_delta": {
+            if (content.type === "thinking") {
+              this._emit("signature", content.signature);
+            }
+            break;
+          }
+          default:
+            checkNever2(event.delta);
+        }
+        break;
+      }
+      case "message_stop": {
+        this._addMessageParam(messageSnapshot);
+        this._addMessage(maybeParseMessage(messageSnapshot, __classPrivateFieldGet(this, _MessageStream_params, "f"), { logger: __classPrivateFieldGet(this, _MessageStream_logger, "f") }), true);
+        break;
+      }
+      case "content_block_stop": {
+        this._emit("contentBlock", messageSnapshot.content.at(-1));
+        break;
+      }
+      case "message_start": {
+        __classPrivateFieldSet(this, _MessageStream_currentMessageSnapshot, messageSnapshot, "f");
+        break;
+      }
+      case "content_block_start":
+      case "message_delta":
+        break;
+    }
+  }, _MessageStream_endRequest = function _MessageStream_endRequest2() {
+    if (this.ended) {
+      throw new AnthropicError(`stream has ended, this shouldn't happen`);
+    }
+    const snapshot = __classPrivateFieldGet(this, _MessageStream_currentMessageSnapshot, "f");
+    if (!snapshot) {
+      throw new AnthropicError(`request ended without sending any chunks`);
+    }
+    __classPrivateFieldSet(this, _MessageStream_currentMessageSnapshot, void 0, "f");
+    return maybeParseMessage(snapshot, __classPrivateFieldGet(this, _MessageStream_params, "f"), { logger: __classPrivateFieldGet(this, _MessageStream_logger, "f") });
+  }, _MessageStream_accumulateMessage = function _MessageStream_accumulateMessage2(event) {
+    let snapshot = __classPrivateFieldGet(this, _MessageStream_currentMessageSnapshot, "f");
+    if (event.type === "message_start") {
+      if (snapshot) {
+        throw new AnthropicError(`Unexpected event order, got ${event.type} before receiving "message_stop"`);
+      }
+      return event.message;
+    }
+    if (!snapshot) {
+      throw new AnthropicError(`Unexpected event order, got ${event.type} before "message_start"`);
+    }
+    switch (event.type) {
+      case "message_stop":
+        return snapshot;
+      case "message_delta":
+        snapshot.stop_reason = event.delta.stop_reason;
+        snapshot.stop_sequence = event.delta.stop_sequence;
+        snapshot.usage.output_tokens = event.usage.output_tokens;
+        if (event.usage.input_tokens != null) {
+          snapshot.usage.input_tokens = event.usage.input_tokens;
+        }
+        if (event.usage.cache_creation_input_tokens != null) {
+          snapshot.usage.cache_creation_input_tokens = event.usage.cache_creation_input_tokens;
+        }
+        if (event.usage.cache_read_input_tokens != null) {
+          snapshot.usage.cache_read_input_tokens = event.usage.cache_read_input_tokens;
+        }
+        if (event.usage.server_tool_use != null) {
+          snapshot.usage.server_tool_use = event.usage.server_tool_use;
+        }
+        return snapshot;
+      case "content_block_start":
+        snapshot.content.push({ ...event.content_block });
+        return snapshot;
+      case "content_block_delta": {
+        const snapshotContent = snapshot.content.at(event.index);
+        switch (event.delta.type) {
+          case "text_delta": {
+            if (snapshotContent?.type === "text") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                text: (snapshotContent.text || "") + event.delta.text
+              };
+            }
+            break;
+          }
+          case "citations_delta": {
+            if (snapshotContent?.type === "text") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                citations: [...snapshotContent.citations ?? [], event.delta.citation]
+              };
+            }
+            break;
+          }
+          case "input_json_delta": {
+            if (snapshotContent && tracksToolInput2(snapshotContent)) {
+              let jsonBuf = snapshotContent[JSON_BUF_PROPERTY2] || "";
+              jsonBuf += event.delta.partial_json;
+              const newContent = { ...snapshotContent };
+              Object.defineProperty(newContent, JSON_BUF_PROPERTY2, {
+                value: jsonBuf,
+                enumerable: false,
+                writable: true
+              });
+              if (jsonBuf) {
+                newContent.input = partialParse(jsonBuf);
+              }
+              snapshot.content[event.index] = newContent;
+            }
+            break;
+          }
+          case "thinking_delta": {
+            if (snapshotContent?.type === "thinking") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                thinking: snapshotContent.thinking + event.delta.thinking
+              };
+            }
+            break;
+          }
+          case "signature_delta": {
+            if (snapshotContent?.type === "thinking") {
+              snapshot.content[event.index] = {
+                ...snapshotContent,
+                signature: event.delta.signature
+              };
+            }
+            break;
+          }
+          default:
+            checkNever2(event.delta);
+        }
+        return snapshot;
+      }
+      case "content_block_stop":
+        return snapshot;
+    }
+  }, Symbol.asyncIterator)]() {
+    const pushQueue = [];
+    const readQueue = [];
+    let done = false;
+    this.on("streamEvent", (event) => {
+      const reader = readQueue.shift();
+      if (reader) {
+        reader.resolve(event);
+      } else {
+        pushQueue.push(event);
+      }
+    });
+    this.on("end", () => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.resolve(void 0);
+      }
+      readQueue.length = 0;
+    });
+    this.on("abort", (err) => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.reject(err);
+      }
+      readQueue.length = 0;
+    });
+    this.on("error", (err) => {
+      done = true;
+      for (const reader of readQueue) {
+        reader.reject(err);
+      }
+      readQueue.length = 0;
+    });
+    return {
+      next: async () => {
+        if (!pushQueue.length) {
+          if (done) {
+            return { value: void 0, done: true };
+          }
+          return new Promise((resolve, reject) => readQueue.push({ resolve, reject })).then((chunk2) => chunk2 ? { value: chunk2, done: false } : { value: void 0, done: true });
+        }
+        const chunk = pushQueue.shift();
+        return { value: chunk, done: false };
+      },
+      return: async () => {
+        this.abort();
+        return { value: void 0, done: true };
+      }
+    };
+  }
+  toReadableStream() {
+    const stream = new Stream(this[Symbol.asyncIterator].bind(this), this.controller);
+    return stream.toReadableStream();
+  }
+};
+function checkNever2(x) {
+}
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/messages/batches.mjs
+var Batches2 = class extends APIResource {
+  /**
+   * Send a batch of Message creation requests.
+   *
+   * The Message Batches API can be used to process multiple Messages API requests at
+   * once. Once a Message Batch is created, it begins processing immediately. Batches
+   * can take up to 24 hours to complete.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const messageBatch = await client.messages.batches.create({
+   *   requests: [
+   *     {
+   *       custom_id: 'my-custom-id-1',
+   *       params: {
+   *         max_tokens: 1024,
+   *         messages: [
+   *           { content: 'Hello, world', role: 'user' },
+   *         ],
+   *         model: 'claude-opus-4-6',
+   *       },
+   *     },
+   *   ],
+   * });
+   * ```
+   */
+  create(body, options) {
+    return this._client.post("/v1/messages/batches", { body, ...options });
+  }
+  /**
+   * This endpoint is idempotent and can be used to poll for Message Batch
+   * completion. To access the results of a Message Batch, make a request to the
+   * `results_url` field in the response.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const messageBatch = await client.messages.batches.retrieve(
+   *   'message_batch_id',
+   * );
+   * ```
+   */
+  retrieve(messageBatchID, options) {
+    return this._client.get(path`/v1/messages/batches/${messageBatchID}`, options);
+  }
+  /**
+   * List all Message Batches within a Workspace. Most recently created batches are
+   * returned first.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const messageBatch of client.messages.batches.list()) {
+   *   // ...
+   * }
+   * ```
+   */
+  list(query = {}, options) {
+    return this._client.getAPIList("/v1/messages/batches", Page, { query, ...options });
+  }
+  /**
+   * Delete a Message Batch.
+   *
+   * Message Batches can only be deleted once they've finished processing. If you'd
+   * like to delete an in-progress batch, you must first cancel it.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const deletedMessageBatch =
+   *   await client.messages.batches.delete('message_batch_id');
+   * ```
+   */
+  delete(messageBatchID, options) {
+    return this._client.delete(path`/v1/messages/batches/${messageBatchID}`, options);
+  }
+  /**
+   * Batches may be canceled any time before processing ends. Once cancellation is
+   * initiated, the batch enters a `canceling` state, at which time the system may
+   * complete any in-progress, non-interruptible requests before finalizing
+   * cancellation.
+   *
+   * The number of canceled requests is specified in `request_counts`. To determine
+   * which requests were canceled, check the individual results within the batch.
+   * Note that cancellation may not result in any canceled requests if they were
+   * non-interruptible.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const messageBatch = await client.messages.batches.cancel(
+   *   'message_batch_id',
+   * );
+   * ```
+   */
+  cancel(messageBatchID, options) {
+    return this._client.post(path`/v1/messages/batches/${messageBatchID}/cancel`, options);
+  }
+  /**
+   * Streams the results of a Message Batch as a `.jsonl` file.
+   *
+   * Each line in the file is a JSON object containing the result of a single request
+   * in the Message Batch. Results are not guaranteed to be in the same order as
+   * requests. Use the `custom_id` field to match results to requests.
+   *
+   * Learn more about the Message Batches API in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+   *
+   * @example
+   * ```ts
+   * const messageBatchIndividualResponse =
+   *   await client.messages.batches.results('message_batch_id');
+   * ```
+   */
+  async results(messageBatchID, options) {
+    const batch = await this.retrieve(messageBatchID);
+    if (!batch.results_url) {
+      throw new AnthropicError(`No batch \`results_url\`; Has it finished processing? ${batch.processing_status} - ${batch.id}`);
+    }
+    return this._client.get(batch.results_url, {
+      ...options,
+      headers: buildHeaders([{ Accept: "application/binary" }, options?.headers]),
+      stream: true,
+      __binaryResponse: true
+    })._thenUnwrap((_, props2) => JSONLDecoder.fromResponse(props2.response, props2.controller));
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/messages/messages.mjs
+var Messages2 = class extends APIResource {
+  constructor() {
+    super(...arguments);
+    this.batches = new Batches2(this._client);
+  }
+  create(body, options) {
+    if (body.model in DEPRECATED_MODELS2) {
+      console.warn(`The model '${body.model}' is deprecated and will reach end-of-life on ${DEPRECATED_MODELS2[body.model]}
+Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.`);
+    }
+    if (body.model in MODELS_TO_WARN_WITH_THINKING_ENABLED2 && body.thinking && body.thinking.type === "enabled") {
+      console.warn(`Using Claude with ${body.model} and 'thinking.type=enabled' is deprecated. Use 'thinking.type=adaptive' instead which results in better model performance in our testing: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking`);
+    }
+    let timeout = this._client._options.timeout;
+    if (!body.stream && timeout == null) {
+      const maxNonstreamingTokens = MODEL_NONSTREAMING_TOKENS[body.model] ?? void 0;
+      timeout = this._client.calculateNonstreamingTimeout(body.max_tokens, maxNonstreamingTokens);
+    }
+    const helperHeader = stainlessHelperHeader(body.tools, body.messages);
+    return this._client.post("/v1/messages", {
+      body,
+      timeout: timeout ?? 6e5,
+      ...options,
+      headers: buildHeaders([helperHeader, options?.headers]),
+      stream: body.stream ?? false
+    });
+  }
+  /**
+   * Send a structured list of input messages with text and/or image content, along with an expected `output_config.format` and
+   * the response will be automatically parsed and available in the `parsed_output` property of the message.
+   *
+   * @example
+   * ```ts
+   * const message = await client.messages.parse({
+   *   model: 'claude-sonnet-4-5-20250929',
+   *   max_tokens: 1024,
+   *   messages: [{ role: 'user', content: 'What is 2+2?' }],
+   *   output_config: {
+   *     format: zodOutputFormat(z.object({ answer: z.number() })),
+   *   },
+   * });
+   *
+   * console.log(message.parsed_output?.answer); // 4
+   * ```
+   */
+  parse(params, options) {
+    return this.create(params, options).then((message) => parseMessage(message, params, { logger: this._client.logger ?? console }));
+  }
+  /**
+   * Create a Message stream.
+   *
+   * If `output_config.format` is provided with a parseable format (like `zodOutputFormat()`),
+   * the final message will include a `parsed_output` property with the parsed content.
+   *
+   * @example
+   * ```ts
+   * const stream = client.messages.stream({
+   *   model: 'claude-sonnet-4-5-20250929',
+   *   max_tokens: 1024,
+   *   messages: [{ role: 'user', content: 'What is 2+2?' }],
+   *   output_config: {
+   *     format: zodOutputFormat(z.object({ answer: z.number() })),
+   *   },
+   * });
+   *
+   * const message = await stream.finalMessage();
+   * console.log(message.parsed_output?.answer); // 4
+   * ```
+   */
+  stream(body, options) {
+    return MessageStream.createMessage(this, body, options, { logger: this._client.logger ?? console });
+  }
+  /**
+   * Count the number of tokens in a Message.
+   *
+   * The Token Count API can be used to count the number of tokens in a Message,
+   * including tools, images, and documents, without creating it.
+   *
+   * Learn more about token counting in our
+   * [user guide](https://docs.claude.com/en/docs/build-with-claude/token-counting)
+   *
+   * @example
+   * ```ts
+   * const messageTokensCount =
+   *   await client.messages.countTokens({
+   *     messages: [{ content: 'string', role: 'user' }],
+   *     model: 'claude-opus-4-6',
+   *   });
+   * ```
+   */
+  countTokens(body, options) {
+    return this._client.post("/v1/messages/count_tokens", { body, ...options });
+  }
+};
+var DEPRECATED_MODELS2 = {
+  "claude-1.3": "November 6th, 2024",
+  "claude-1.3-100k": "November 6th, 2024",
+  "claude-instant-1.1": "November 6th, 2024",
+  "claude-instant-1.1-100k": "November 6th, 2024",
+  "claude-instant-1.2": "November 6th, 2024",
+  "claude-3-sonnet-20240229": "July 21st, 2025",
+  "claude-3-opus-20240229": "January 5th, 2026",
+  "claude-2.1": "July 21st, 2025",
+  "claude-2.0": "July 21st, 2025",
+  "claude-3-7-sonnet-latest": "February 19th, 2026",
+  "claude-3-7-sonnet-20250219": "February 19th, 2026",
+  "claude-3-5-haiku-latest": "February 19th, 2026",
+  "claude-3-5-haiku-20241022": "February 19th, 2026"
+};
+var MODELS_TO_WARN_WITH_THINKING_ENABLED2 = ["claude-opus-4-6"];
+Messages2.Batches = Batches2;
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/resources/models.mjs
+var Models2 = class extends APIResource {
+  /**
+   * Get a specific model.
+   *
+   * The Models API response can be used to determine information about a specific
+   * model or resolve a model alias to a model ID.
+   */
+  retrieve(modelID, params = {}, options) {
+    const { betas } = params ?? {};
+    return this._client.get(path`/v1/models/${modelID}`, {
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        options?.headers
+      ])
+    });
+  }
+  /**
+   * List available models.
+   *
+   * The Models API response can be used to determine which models are available for
+   * use in the API. More recently released models are listed first.
+   */
+  list(params = {}, options) {
+    const { betas, ...query } = params ?? {};
+    return this._client.getAPIList("/v1/models", Page, {
+      query,
+      ...options,
+      headers: buildHeaders([
+        { ...betas?.toString() != null ? { "anthropic-beta": betas?.toString() } : void 0 },
+        options?.headers
+      ])
+    });
+  }
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/internal/utils/env.mjs
+var readEnv = (env) => {
+  if (typeof globalThis.process !== "undefined") {
+    return globalThis.process.env?.[env]?.trim() ?? void 0;
+  }
+  if (typeof globalThis.Deno !== "undefined") {
+    return globalThis.Deno.env?.get?.(env)?.trim();
+  }
+  return void 0;
+};
+
+// ../../node_modules/.pnpm/@anthropic-ai+sdk@0.82.0_zod@4.3.6/node_modules/@anthropic-ai/sdk/client.mjs
+var _BaseAnthropic_instances;
+var _a;
+var _BaseAnthropic_encoder;
+var _BaseAnthropic_baseURLOverridden;
+var HUMAN_PROMPT = "\\n\\nHuman:";
+var AI_PROMPT = "\\n\\nAssistant:";
+var BaseAnthropic = class {
+  /**
+   * API Client for interfacing with the Anthropic API.
+   *
+   * @param {string | null | undefined} [opts.apiKey=process.env['ANTHROPIC_API_KEY'] ?? null]
+   * @param {string | null | undefined} [opts.authToken=process.env['ANTHROPIC_AUTH_TOKEN'] ?? null]
+   * @param {string} [opts.baseURL=process.env['ANTHROPIC_BASE_URL'] ?? https://api.anthropic.com] - Override the default base URL for the API.
+   * @param {number} [opts.timeout=10 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
+   * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
+   * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
+   * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
+   * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
+   * @param {boolean} [opts.dangerouslyAllowBrowser=false] - By default, client-side use of this library is not allowed, as it risks exposing your secret API credentials to attackers.
+   */
+  constructor({ baseURL = readEnv("ANTHROPIC_BASE_URL"), apiKey = readEnv("ANTHROPIC_API_KEY") ?? null, authToken = readEnv("ANTHROPIC_AUTH_TOKEN") ?? null, ...opts } = {}) {
+    _BaseAnthropic_instances.add(this);
+    _BaseAnthropic_encoder.set(this, void 0);
+    const options = {
+      apiKey,
+      authToken,
+      ...opts,
+      baseURL: baseURL || `https://api.anthropic.com`
+    };
+    if (!options.dangerouslyAllowBrowser && isRunningInBrowser()) {
+      throw new AnthropicError("It looks like you're running in a browser-like environment.\n\nThis is disabled by default, as it risks exposing your secret API credentials to attackers.\nIf you understand the risks and have appropriate mitigations in place,\nyou can set the `dangerouslyAllowBrowser` option to `true`, e.g.,\n\nnew Anthropic({ apiKey, dangerouslyAllowBrowser: true });\n");
+    }
+    this.baseURL = options.baseURL;
+    this.timeout = options.timeout ?? _a.DEFAULT_TIMEOUT;
+    this.logger = options.logger ?? console;
+    const defaultLogLevel = "warn";
+    this.logLevel = defaultLogLevel;
+    this.logLevel = parseLogLevel(options.logLevel, "ClientOptions.logLevel", this) ?? parseLogLevel(readEnv("ANTHROPIC_LOG"), "process.env['ANTHROPIC_LOG']", this) ?? defaultLogLevel;
+    this.fetchOptions = options.fetchOptions;
+    this.maxRetries = options.maxRetries ?? 2;
+    this.fetch = options.fetch ?? getDefaultFetch();
+    __classPrivateFieldSet(this, _BaseAnthropic_encoder, FallbackEncoder, "f");
+    this._options = options;
+    this.apiKey = typeof apiKey === "string" ? apiKey : null;
+    this.authToken = authToken;
+  }
+  /**
+   * Create a new client instance re-using the same options given to the current client with optional overriding.
+   */
+  withOptions(options) {
+    const client = new this.constructor({
+      ...this._options,
+      baseURL: this.baseURL,
+      maxRetries: this.maxRetries,
+      timeout: this.timeout,
+      logger: this.logger,
+      logLevel: this.logLevel,
+      fetch: this.fetch,
+      fetchOptions: this.fetchOptions,
+      apiKey: this.apiKey,
+      authToken: this.authToken,
+      ...options
+    });
+    return client;
+  }
+  defaultQuery() {
+    return this._options.defaultQuery;
+  }
+  validateHeaders({ values, nulls }) {
+    if (values.get("x-api-key") || values.get("authorization")) {
+      return;
+    }
+    if (this.apiKey && values.get("x-api-key")) {
+      return;
+    }
+    if (nulls.has("x-api-key")) {
+      return;
+    }
+    if (this.authToken && values.get("authorization")) {
+      return;
+    }
+    if (nulls.has("authorization")) {
+      return;
+    }
+    throw new Error('Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted');
+  }
+  async authHeaders(opts) {
+    return buildHeaders([await this.apiKeyAuth(opts), await this.bearerAuth(opts)]);
+  }
+  async apiKeyAuth(opts) {
+    if (this.apiKey == null) {
+      return void 0;
+    }
+    return buildHeaders([{ "X-Api-Key": this.apiKey }]);
+  }
+  async bearerAuth(opts) {
+    if (this.authToken == null) {
+      return void 0;
+    }
+    return buildHeaders([{ Authorization: `Bearer ${this.authToken}` }]);
+  }
+  /**
+   * Basic re-implementation of `qs.stringify` for primitive types.
+   */
+  stringifyQuery(query) {
+    return stringifyQuery(query);
+  }
+  getUserAgent() {
+    return `${this.constructor.name}/JS ${VERSION}`;
+  }
+  defaultIdempotencyKey() {
+    return `stainless-node-retry-${uuid4()}`;
+  }
+  makeStatusError(status, error, message, headers2) {
+    return APIError.generate(status, error, message, headers2);
+  }
+  buildURL(path2, query, defaultBaseURL) {
+    const baseURL = !__classPrivateFieldGet(this, _BaseAnthropic_instances, "m", _BaseAnthropic_baseURLOverridden).call(this) && defaultBaseURL || this.baseURL;
+    const url = isAbsoluteURL(path2) ? new URL(path2) : new URL(baseURL + (baseURL.endsWith("/") && path2.startsWith("/") ? path2.slice(1) : path2));
+    const defaultQuery = this.defaultQuery();
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
+    }
+    if (typeof query === "object" && query && !Array.isArray(query)) {
+      url.search = this.stringifyQuery(query);
+    }
+    return url.toString();
+  }
+  _calculateNonstreamingTimeout(maxTokens) {
+    const defaultTimeout = 10 * 60;
+    const expectedTimeout = 60 * 60 * maxTokens / 128e3;
+    if (expectedTimeout > defaultTimeout) {
+      throw new AnthropicError("Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-typescript#streaming-responses for more details");
+    }
+    return defaultTimeout * 1e3;
+  }
+  /**
+   * Used as a callback for mutating the given `FinalRequestOptions` object.
+   */
+  async prepareOptions(options) {
+  }
+  /**
+   * Used as a callback for mutating the given `RequestInit` object.
+   *
+   * This is useful for cases where you want to add certain headers based off of
+   * the request properties, e.g. `method` or `url`.
+   */
+  async prepareRequest(request, { url, options }) {
+  }
+  get(path2, opts) {
+    return this.methodRequest("get", path2, opts);
+  }
+  post(path2, opts) {
+    return this.methodRequest("post", path2, opts);
+  }
+  patch(path2, opts) {
+    return this.methodRequest("patch", path2, opts);
+  }
+  put(path2, opts) {
+    return this.methodRequest("put", path2, opts);
+  }
+  delete(path2, opts) {
+    return this.methodRequest("delete", path2, opts);
+  }
+  methodRequest(method, path2, opts) {
+    return this.request(Promise.resolve(opts).then((opts2) => {
+      return { method, path: path2, ...opts2 };
+    }));
+  }
+  request(options, remainingRetries = null) {
+    return new APIPromise(this, this.makeRequest(options, remainingRetries, void 0));
+  }
+  async makeRequest(optionsInput, retriesRemaining, retryOfRequestLogID) {
+    const options = await optionsInput;
+    const maxRetries = options.maxRetries ?? this.maxRetries;
+    if (retriesRemaining == null) {
+      retriesRemaining = maxRetries;
+    }
+    await this.prepareOptions(options);
+    const { req, url, timeout } = await this.buildRequest(options, {
+      retryCount: maxRetries - retriesRemaining
+    });
+    await this.prepareRequest(req, { url, options });
+    const requestLogID = "log_" + (Math.random() * (1 << 24) | 0).toString(16).padStart(6, "0");
+    const retryLogStr = retryOfRequestLogID === void 0 ? "" : `, retryOf: ${retryOfRequestLogID}`;
+    const startTime = Date.now();
+    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({
+      retryOfRequestLogID,
+      method: options.method,
+      url,
+      options,
+      headers: req.headers
+    }));
+    if (options.signal?.aborted) {
+      throw new APIUserAbortError();
+    }
+    const controller = new AbortController();
+    const response = await this.fetchWithTimeout(url, req, timeout, controller).catch(castToError);
+    const headersTime = Date.now();
+    if (response instanceof globalThis.Error) {
+      const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
+      if (options.signal?.aborted) {
+        throw new APIUserAbortError();
+      }
+      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ("cause" in response ? String(response.cause) : ""));
+      if (retriesRemaining) {
+        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} - ${retryMessage}`);
+        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} (${retryMessage})`, formatRequestDetails({
+          retryOfRequestLogID,
+          url,
+          durationMs: headersTime - startTime,
+          message: response.message
+        }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
+      }
+      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} - error; no more retries left`);
+      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} (error; no more retries left)`, formatRequestDetails({
+        retryOfRequestLogID,
+        url,
+        durationMs: headersTime - startTime,
+        message: response.message
+      }));
+      if (isTimeout) {
+        throw new APIConnectionTimeoutError();
+      }
+      throw new APIConnectionError({ cause: response });
+    }
+    const specialHeaders = [...response.headers.entries()].filter(([name]) => name === "request-id").map(([name, value]) => ", " + name + ": " + JSON.stringify(value)).join("");
+    const responseInfo = `[${requestLogID}${retryLogStr}${specialHeaders}] ${req.method} ${url} ${response.ok ? "succeeded" : "failed"} with status ${response.status} in ${headersTime - startTime}ms`;
+    if (!response.ok) {
+      const shouldRetry = await this.shouldRetry(response);
+      if (retriesRemaining && shouldRetry) {
+        const retryMessage2 = `retrying, ${retriesRemaining} attempts remaining`;
+        await CancelReadableStream(response.body);
+        loggerFor(this).info(`${responseInfo} - ${retryMessage2}`);
+        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage2})`, formatRequestDetails({
+          retryOfRequestLogID,
+          url: response.url,
+          status: response.status,
+          headers: response.headers,
+          durationMs: headersTime - startTime
+        }));
+        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
+      }
+      const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+      const errText = await response.text().catch((err2) => castToError(err2).message);
+      const errJSON = safeJSON(errText);
+      const errMessage = errJSON ? void 0 : errText;
+      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({
+        retryOfRequestLogID,
+        url: response.url,
+        status: response.status,
+        headers: response.headers,
+        message: errMessage,
+        durationMs: Date.now() - startTime
+      }));
+      const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
+      throw err;
+    }
+    loggerFor(this).info(responseInfo);
+    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({
+      retryOfRequestLogID,
+      url: response.url,
+      status: response.status,
+      headers: response.headers,
+      durationMs: headersTime - startTime
+    }));
+    return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
+  }
+  getAPIList(path2, Page2, opts) {
+    return this.requestAPIList(Page2, opts && "then" in opts ? opts.then((opts2) => ({ method: "get", path: path2, ...opts2 })) : { method: "get", path: path2, ...opts });
+  }
+  requestAPIList(Page2, options) {
+    const request = this.makeRequest(options, null, void 0);
+    return new PagePromise(this, request, Page2);
+  }
+  async fetchWithTimeout(url, init, ms, controller) {
+    const { signal: signal3, method, ...options } = init || {};
+    const abort = this._makeAbort(controller);
+    if (signal3)
+      signal3.addEventListener("abort", abort, { once: true });
+    const timeout = setTimeout(abort, ms);
+    const isReadableBody = globalThis.ReadableStream && options.body instanceof globalThis.ReadableStream || typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body;
+    const fetchOptions = {
+      signal: controller.signal,
+      ...isReadableBody ? { duplex: "half" } : {},
+      method: "GET",
+      ...options
+    };
+    if (method) {
+      fetchOptions.method = method.toUpperCase();
+    }
+    try {
+      return await this.fetch.call(void 0, url, fetchOptions);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  async shouldRetry(response) {
+    const shouldRetryHeader = response.headers.get("x-should-retry");
+    if (shouldRetryHeader === "true")
+      return true;
+    if (shouldRetryHeader === "false")
+      return false;
+    if (response.status === 408)
+      return true;
+    if (response.status === 409)
+      return true;
+    if (response.status === 429)
+      return true;
+    if (response.status >= 500)
+      return true;
+    return false;
+  }
+  async retryRequest(options, retriesRemaining, requestLogID, responseHeaders) {
+    let timeoutMillis;
+    const retryAfterMillisHeader = responseHeaders?.get("retry-after-ms");
+    if (retryAfterMillisHeader) {
+      const timeoutMs = parseFloat(retryAfterMillisHeader);
+      if (!Number.isNaN(timeoutMs)) {
+        timeoutMillis = timeoutMs;
+      }
+    }
+    const retryAfterHeader = responseHeaders?.get("retry-after");
+    if (retryAfterHeader && !timeoutMillis) {
+      const timeoutSeconds = parseFloat(retryAfterHeader);
+      if (!Number.isNaN(timeoutSeconds)) {
+        timeoutMillis = timeoutSeconds * 1e3;
+      } else {
+        timeoutMillis = Date.parse(retryAfterHeader) - Date.now();
+      }
+    }
+    if (timeoutMillis === void 0) {
+      const maxRetries = options.maxRetries ?? this.maxRetries;
+      timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
+    }
+    await sleep(timeoutMillis);
+    return this.makeRequest(options, retriesRemaining - 1, requestLogID);
+  }
+  calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries) {
+    const initialRetryDelay = 0.5;
+    const maxRetryDelay = 8;
+    const numRetries = maxRetries - retriesRemaining;
+    const sleepSeconds = Math.min(initialRetryDelay * Math.pow(2, numRetries), maxRetryDelay);
+    const jitter = 1 - Math.random() * 0.25;
+    return sleepSeconds * jitter * 1e3;
+  }
+  calculateNonstreamingTimeout(maxTokens, maxNonstreamingTokens) {
+    const maxTime = 60 * 60 * 1e3;
+    const defaultTime = 60 * 10 * 1e3;
+    const expectedTime = maxTime * maxTokens / 128e3;
+    if (expectedTime > defaultTime || maxNonstreamingTokens != null && maxTokens > maxNonstreamingTokens) {
+      throw new AnthropicError("Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-typescript#long-requests for more details");
+    }
+    return defaultTime;
+  }
+  async buildRequest(inputOptions, { retryCount = 0 } = {}) {
+    const options = { ...inputOptions };
+    const { method, path: path2, query, defaultBaseURL } = options;
+    const url = this.buildURL(path2, query, defaultBaseURL);
+    if ("timeout" in options)
+      validatePositiveInteger("timeout", options.timeout);
+    options.timeout = options.timeout ?? this.timeout;
+    const { bodyHeaders, body } = this.buildBody({ options });
+    const reqHeaders = await this.buildHeaders({ options: inputOptions, method, bodyHeaders, retryCount });
+    const req = {
+      method,
+      headers: reqHeaders,
+      ...options.signal && { signal: options.signal },
+      ...globalThis.ReadableStream && body instanceof globalThis.ReadableStream && { duplex: "half" },
+      ...body && { body },
+      ...this.fetchOptions ?? {},
+      ...options.fetchOptions ?? {}
+    };
+    return { req, url, timeout: options.timeout };
+  }
+  async buildHeaders({ options, method, bodyHeaders, retryCount }) {
+    let idempotencyHeaders = {};
+    if (this.idempotencyHeader && method !== "get") {
+      if (!options.idempotencyKey)
+        options.idempotencyKey = this.defaultIdempotencyKey();
+      idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;
+    }
+    const headers2 = buildHeaders([
+      idempotencyHeaders,
+      {
+        Accept: "application/json",
+        "User-Agent": this.getUserAgent(),
+        "X-Stainless-Retry-Count": String(retryCount),
+        ...options.timeout ? { "X-Stainless-Timeout": String(Math.trunc(options.timeout / 1e3)) } : {},
+        ...getPlatformHeaders(),
+        ...this._options.dangerouslyAllowBrowser ? { "anthropic-dangerous-direct-browser-access": "true" } : void 0,
+        "anthropic-version": "2023-06-01"
+      },
+      await this.authHeaders(options),
+      this._options.defaultHeaders,
+      bodyHeaders,
+      options.headers
+    ]);
+    this.validateHeaders(headers2);
+    return headers2.values;
+  }
+  _makeAbort(controller) {
+    return () => controller.abort();
+  }
+  buildBody({ options: { body, headers: rawHeaders } }) {
+    if (!body) {
+      return { bodyHeaders: void 0, body: void 0 };
+    }
+    const headers2 = buildHeaders([rawHeaders]);
+    if (
+      // Pass raw type verbatim
+      ArrayBuffer.isView(body) || body instanceof ArrayBuffer || body instanceof DataView || typeof body === "string" && // Preserve legacy string encoding behavior for now
+      headers2.values.has("content-type") || // `Blob` is superset of `File`
+      globalThis.Blob && body instanceof globalThis.Blob || // `FormData` -> `multipart/form-data`
+      body instanceof FormData || // `URLSearchParams` -> `application/x-www-form-urlencoded`
+      body instanceof URLSearchParams || // Send chunked stream (each chunk has own `length`)
+      globalThis.ReadableStream && body instanceof globalThis.ReadableStream
+    ) {
+      return { bodyHeaders: void 0, body };
+    } else if (typeof body === "object" && (Symbol.asyncIterator in body || Symbol.iterator in body && "next" in body && typeof body.next === "function")) {
+      return { bodyHeaders: void 0, body: ReadableStreamFrom(body) };
+    } else if (typeof body === "object" && headers2.values.get("content-type") === "application/x-www-form-urlencoded") {
+      return {
+        bodyHeaders: { "content-type": "application/x-www-form-urlencoded" },
+        body: this.stringifyQuery(body)
+      };
+    } else {
+      return __classPrivateFieldGet(this, _BaseAnthropic_encoder, "f").call(this, { body, headers: headers2 });
+    }
+  }
+};
+_a = BaseAnthropic, _BaseAnthropic_encoder = /* @__PURE__ */ new WeakMap(), _BaseAnthropic_instances = /* @__PURE__ */ new WeakSet(), _BaseAnthropic_baseURLOverridden = function _BaseAnthropic_baseURLOverridden2() {
+  return this.baseURL !== "https://api.anthropic.com";
+};
+BaseAnthropic.Anthropic = _a;
+BaseAnthropic.HUMAN_PROMPT = HUMAN_PROMPT;
+BaseAnthropic.AI_PROMPT = AI_PROMPT;
+BaseAnthropic.DEFAULT_TIMEOUT = 6e5;
+BaseAnthropic.AnthropicError = AnthropicError;
+BaseAnthropic.APIError = APIError;
+BaseAnthropic.APIConnectionError = APIConnectionError;
+BaseAnthropic.APIConnectionTimeoutError = APIConnectionTimeoutError;
+BaseAnthropic.APIUserAbortError = APIUserAbortError;
+BaseAnthropic.NotFoundError = NotFoundError;
+BaseAnthropic.ConflictError = ConflictError;
+BaseAnthropic.RateLimitError = RateLimitError;
+BaseAnthropic.BadRequestError = BadRequestError;
+BaseAnthropic.AuthenticationError = AuthenticationError;
+BaseAnthropic.InternalServerError = InternalServerError;
+BaseAnthropic.PermissionDeniedError = PermissionDeniedError;
+BaseAnthropic.UnprocessableEntityError = UnprocessableEntityError;
+BaseAnthropic.toFile = toFile;
+var Anthropic = class extends BaseAnthropic {
+  constructor() {
+    super(...arguments);
+    this.completions = new Completions(this);
+    this.messages = new Messages2(this);
+    this.models = new Models2(this);
+    this.beta = new Beta(this);
+  }
+};
+Anthropic.Completions = Completions;
+Anthropic.Messages = Messages2;
+Anthropic.Models = Models2;
+Anthropic.Beta = Beta;
+
 // src/lib/logger.ts
 var import_pino = __toESM(require_pino(), 1);
 var isProduction = process.env.NODE_ENV === "production";
@@ -91742,10 +96595,36 @@ var logger = (0, import_pino.default)({
 var router4 = (0, import_express5.Router)();
 var KAREN_VOICE_ID = "EXAVITQu4vr4xnSDxMaL";
 var MANAGER_VOICE_ID = "TxGEqnHWrfWFTfGW9XjX";
-function getClient() {
+function getElevenLabs() {
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) throw new Error("ELEVENLABS_API_KEY is not set");
   return new import_elevenlabs.ElevenLabsClient({ apiKey });
+}
+function getAnthropic() {
+  return new Anthropic({
+    baseURL: process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL,
+    apiKey: process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY
+  });
+}
+async function ttsStream(text2, voiceId, isKaren, res) {
+  const client = getElevenLabs();
+  const audioStream = await client.textToSpeech.convert(voiceId, {
+    text: text2,
+    model_id: "eleven_turbo_v2_5",
+    voice_settings: {
+      stability: isKaren ? 0.3 : 0.75,
+      similarity_boost: 0.75,
+      style: isKaren ? 0.85 : 0.2,
+      use_speaker_boost: true
+    }
+  });
+  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader("Transfer-Encoding", "chunked");
+  res.setHeader("Cache-Control", "no-cache");
+  for await (const chunk of audioStream) {
+    res.write(chunk);
+  }
+  res.end();
 }
 router4.post("/voice/tts", async (req, res) => {
   const { text: text2, voice = "karen" } = req.body;
@@ -91753,71 +96632,113 @@ router4.post("/voice/tts", async (req, res) => {
     res.status(400).json({ error: "text is required" });
     return;
   }
-  const voiceId = voice === "manager" ? MANAGER_VOICE_ID : KAREN_VOICE_ID;
   try {
-    const client = getClient();
-    const audioStream = await client.textToSpeech.convert(voiceId, {
-      text: text2.trim(),
+    const voiceId = voice === "manager" ? MANAGER_VOICE_ID : KAREN_VOICE_ID;
+    await ttsStream(text2.trim(), voiceId, voice !== "manager", res);
+  } catch (err) {
+    req.log.error({ err }, "TTS error");
+    if (!res.headersSent) res.status(502).json({ error: "Voice generation failed" });
+  }
+});
+var AMBIENT_TEXT = {
+  grocery: "checkout beeps and scanner sounds, shopping cart wheels rolling on tile floor, distant store intercom announcement, refrigerator hum",
+  "drive-thru": "car engine idling, drive through order intercom static crackle, distant traffic noise, muffled radio music",
+  store: "soft background retail music, footsteps on hard floor, distant checkout activity, air conditioning hum",
+  coffee: "espresso machine hissing steam, coffee grinder whirring, ceramic cups clinking, soft cafe background murmur",
+  office: "keyboard typing clicks, office phone ringing, printer sounds, air conditioning hum, muffled conversation"
+};
+router4.post("/voice/ambient", async (req, res) => {
+  const { scene = "grocery" } = req.body;
+  const text2 = AMBIENT_TEXT[scene] ?? AMBIENT_TEXT["grocery"];
+  try {
+    const client = getElevenLabs();
+    const audioStream = await client.textToSpeech.convert("21m00Tcm4TlvDq8ikWAM", {
+      text: text2,
       model_id: "eleven_turbo_v2_5",
-      voice_settings: {
-        stability: voice === "manager" ? 0.75 : 0.35,
-        similarity_boost: 0.75,
-        style: voice === "manager" ? 0.2 : 0.8,
-        use_speaker_boost: true
-      }
+      voice_settings: { stability: 0.1, similarity_boost: 0.3, style: 0, use_speaker_boost: false }
     });
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Transfer-Encoding", "chunked");
     res.setHeader("Cache-Control", "no-cache");
-    for await (const chunk of audioStream) {
-      res.write(chunk);
-    }
+    for await (const chunk of audioStream) res.write(chunk);
     res.end();
   } catch (err) {
-    req.log.error({ err }, "ElevenLabs TTS error");
-    if (!res.headersSent) {
-      res.status(502).json({ error: "Voice generation failed" });
-    }
+    req.log.error({ err }, "Ambient error");
+    if (!res.headersSent) res.status(502).json({ error: "Ambient generation failed" });
   }
 });
-var AMBIENT_SCRIPTS = {
-  grocery: "beep beep beep... price check on register seven... shopping cart wheels rolling... distant announcement over intercom...",
-  "drive-thru": "static crackle on intercom... car engine idling... drive through chime ding... muffled radio in background...",
-  store: "soft elevator music... distant footsteps on tile... checkout beeps... shopping cart rumble...",
-  coffee: "espresso machine hissing... milk steaming... cups clinking... soft cafe background chatter...",
-  office: "keyboard clicks... phone ringing in background... printer whirring... air conditioning hum..."
-};
-router4.post("/voice/ambient", async (req, res) => {
-  const { scene = "grocery" } = req.body;
-  const script = AMBIENT_SCRIPTS[scene] ?? AMBIENT_SCRIPTS["grocery"];
+router4.post("/voice/respond", async (req, res) => {
+  const {
+    userText,
+    customerName,
+    customerTitle,
+    complaint,
+    location,
+    history = [],
+    rage = 50
+  } = req.body;
+  if (!userText || typeof userText !== "string" || userText.trim().length === 0) {
+    res.status(400).json({ error: "userText is required" });
+    return;
+  }
+  const systemPrompt = `You are ${customerName}, a ${customerTitle} at ${location}. 
+Your complaint: "${complaint}". 
+Your current rage level is ${Math.round(rage)}/100 \u2014 0 is calm, 100 is you storming out and getting the employee fired.
+
+You MUST respond as ${customerName} in character \u2014 emotional, entitled, dramatic. Keep responses SHORT (1-3 sentences max).
+
+After your spoken response, output a JSON block on its own line like this:
+<rage_delta>{"delta": -15, "reason": "player apologized sincerely"}</rage_delta>
+
+Rules for rage delta:
+- If the player was polite, empathetic, apologetic, offered a solution: delta -10 to -25
+- If the player validated your feelings AND offered compensation: delta -20 to -35
+- If the player was dismissive, rude, or didn't address your complaint: delta +10 to +20
+- If the player called you crazy, told you to leave, or was sarcastic: delta +20 to +35
+- If rage drops to 0 or below, output "GAME_OVER_WIN" in the reason
+- If rage would exceed 100, output "GAME_OVER_LOSE" in the reason
+- Normal response range: delta -25 to +25
+
+Remember: you are in a customer service training simulation. Stay in character but keep it realistic.`;
+  const messages = [];
+  for (const h of history.slice(-6)) {
+    messages.push({
+      role: h.role === "user" ? "user" : "assistant",
+      content: h.text
+    });
+  }
+  messages.push({ role: "user", content: userText.trim() });
   try {
-    const client = getClient();
-    const audioStream = await client.textToSpeech.convert(
-      "21m00Tcm4TlvDq8ikWAM",
-      // "Rachel" — calm, neutral
-      {
-        text: script,
-        model_id: "eleven_turbo_v2_5",
-        voice_settings: {
-          stability: 0.1,
-          similarity_boost: 0.3,
-          style: 0,
-          use_speaker_boost: false
-        }
+    const anthropic = getAnthropic();
+    const response = await anthropic.messages.create({
+      model: "claude-haiku-4-5",
+      max_tokens: 300,
+      system: systemPrompt,
+      messages
+    });
+    const fullText = response.content[0].type === "text" ? response.content[0].text : "";
+    const deltaMatch = fullText.match(/<rage_delta>(.*?)<\/rage_delta>/s);
+    let rageDelta = 0;
+    let gameOver = "";
+    if (deltaMatch) {
+      try {
+        const parsed = JSON.parse(deltaMatch[1]);
+        rageDelta = Math.max(-35, Math.min(35, Number(parsed.delta) || 0));
+        const reason = (parsed.reason || "").toLowerCase();
+        if (reason.includes("game_over_win") || rage + rageDelta <= 0) gameOver = "win";
+        if (reason.includes("game_over_lose") || rage + rageDelta >= 100) gameOver = "lose";
+      } catch {
+        rageDelta = 0;
       }
-    );
-    res.setHeader("Content-Type", "audio/mpeg");
-    res.setHeader("Transfer-Encoding", "chunked");
-    res.setHeader("Cache-Control", "no-cache");
-    for await (const chunk of audioStream) {
-      res.write(chunk);
     }
-    res.end();
+    const spokenText = fullText.replace(/<rage_delta>.*?<\/rage_delta>/s, "").trim();
+    res.setHeader("X-Karen-Text", Buffer.from(spokenText.slice(0, 500)).toString("base64"));
+    res.setHeader("X-Rage-Delta", String(rageDelta));
+    res.setHeader("X-Game-Over", gameOver);
+    await ttsStream(spokenText || "I... fine. Fine!", KAREN_VOICE_ID, true, res);
   } catch (err) {
-    req.log.error({ err }, "ElevenLabs ambient error");
-    if (!res.headersSent) {
-      res.status(502).json({ error: "Ambient generation failed" });
-    }
+    req.log.error({ err }, "AI respond error");
+    if (!res.headersSent) res.status(502).json({ error: "Response generation failed" });
   }
 });
 var voice_default = router4;
