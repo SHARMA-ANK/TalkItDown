@@ -56,6 +56,7 @@
     "zod-validation-error": "^3.4.0"
   },
   "dependencies": {
+    "@11labs/client": "^0.2.0",
     "expo-auth-session": "~7.0.10",
     "expo-crypto": "~15.0.8",
     "expo-secure-store": "~15.0.8"
