@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "Survive The Shift"
+version = "1.0.0"
+id = "artifacts/survive-the-shift"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/" ]
+localPort = 22022
+
+[services.development]
+run = "pnpm --filter @workspace/survive-the-shift run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/survive-the-shift", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/survive-the-shift", "run", "serve" ]
+
+[services.env]
+PORT = "22022"
+BASE_PATH = "/"

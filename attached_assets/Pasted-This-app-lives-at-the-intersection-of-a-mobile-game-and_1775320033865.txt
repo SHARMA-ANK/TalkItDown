@@ -1,0 +1,89 @@
+This app lives at the intersection of a mobile game and a workplace satire tool. The visual language should feel like a real retail/fast-food environment got gamified — think digital receipt paper, nametag badges, fluorescent lighting aesthetics — but executed with sharp, modern UI discipline. No cartoon silliness. The comedy comes from the content, not from Comic Sans and clipart. Keep it deadpan and slightly corporate, which makes the absurdity hit harder.
+Primary color identity: deep red (#A32D2D range) for danger/rage states, amber for warning, green for de-escalated/calm states. The UI itself should be dark — a near-black background (#1a1a18) simulating the backroom of a store at night, with white card surfaces that feel like receipt paper under fluorescent lights. This creates natural contrast for the rage meter and all status colors.
+Typography: a monospaced or slab-serif display font for anything "receipt-like" (customer name, shift stats, receipt output). Clean sans-serif for all UI chrome. Two weights only.
+Sound design note for the developer handoff: all ElevenLabs audio should auto-duck the background ambience when the Karen voice fires, then fade ambience back in. The ambience (grocery beeps, drive-thru static) plays at 20% volume baseline.
+
+Screens to design — full inventory
+1. Splash / loading screen
+A dark screen. Center: a large nametag badge graphic — the classic "HELLO my name is" sticker, but it reads "HELLO my name is: Survivor." Below it, a blinking cursor or scanline effect (CSS only, no gif). Tagline underneath: "Train for the worst shift of your life." A single CTA button: "Clock In." Loading state shows a progress bar styled as a cash register receipt printing — monospaced text scrolling upward showing fake receipt items ("Loading Karen... ████████░░").
+
+2. Auth screen (Replit Auth)
+Minimal. Dark card centered on screen. Top: the nametag logo mark (small). Headline: "Create your employee file." Subhead: "Your survival score will be tracked." Two options stacked vertically: "Continue with Google" and "Continue with GitHub" — standard OAuth buttons, but relabeled with store-employee humor ("Sign in with Google — HR requires this"). Below: ghost text "or continue without saving your score →" which drops them into guest mode. No email/password. No form fields. Keep it one tap.
+
+3. Home / lobby screen
+This is the "break room" metaphor. Dark background. Top section: the player's nametag card — their avatar initial in a badge circle, username, current "Survival Score" (large number, center-aligned, monospaced font), and a streak counter ("3-day streak — you showed up").
+Middle section: two large tap targets stacked — "Start Shift" (primary, red-accented border, slightly larger) and "Daily Boss Fight" (amber-accented, shows today's boss name and a countdown timer to midnight reset).
+Bottom section: a horizontal strip — "Leaderboard" | "My Receipts" | "Settings" — tab bar styled as a punch card or shift schedule grid.
+Micro-interaction: when the user taps "Start Shift," the screen does a brief "clock punch" animation — a timestamp stamps itself onto the screen in red ink, then transitions to the next screen.
+
+4. Scenario briefing screen
+Before the encounter begins, the player gets their "shift assignment." Styled exactly like a printed work order or incident report form. Monospaced font throughout. Fields:
+
+Location: "Register 4 — Mega Mart, Aisle 9"
+Customer type: "Brenda, 52, HOA president"
+Complaint: "Demanding refund on half-eaten rotisserie chicken"
+Threat level: a row of 5 pepper icons, 3 filled (medium heat)
+Estimated difficulty: "Moderate — she has a rewards card and knows your manager's name"
+
+Bottom: one button — "Begin Encounter." When tapped, a sound effect fires (store PA chime: "Cleanup on register 4") and the transition begins.
+
+5. Main game screen — the encounter
+This is the hero screen. Needs the most design attention. Portrait layout. Sections from top to bottom:
+A. Status bar (top strip)
+Left: location tag ("Drive-Thru — McDonald's"). Center: timer ("2:14"). Right: "Manager" power-up button — a small badge icon with "1x" counter. When available, it pulses with a subtle amber border. When used, it grays out with a strikethrough.
+B. Karen rage meter (full width below status bar)
+A horizontal bar — not a thin progress bar but a chunky thermometer shape, about 20px tall. Left end labeled "Calm" in small green text. Right end labeled "FIRED" in red. The fill uses a color transition: green → amber → red as it fills. Above the bar, the current rage percentage in monospaced text ("Rage: 67%"). The bar should have a slight shake/vibrate animation via CSS keyframes when above 80%. At 100%, the bar flashes red and a modal fires.
+C. Customer avatar zone (center, ~40% of screen height)
+A large avatar card — not a photo, but a stylized "employee file" illustration style. A bold initial inside a circle (e.g. "B" for Brenda), with a procedurally chosen color per customer. Below the circle: customer name in display font, occupation/archetype below in muted text ("HOA President / Coupon Collector"). This card has a visible border that color-matches the current rage level — green border at low rage, red border pulsing at high rage.
+Below the avatar: a speech bubble (receipt-paper style, slightly off-white, monospaced font) showing the Karen's latest spoken line as a live transcript. It updates as she speaks. If rage is high, the text renders in ALL CAPS with extra punctuation. If calm, it's mixed case.
+D. Player controls (bottom)
+A large circular microphone button — the main interaction. Press and hold to speak. Release to submit. Around the button: a waveform visualizer (CSS bars that animate while recording). Above the mic: a small transcription preview area showing what the player said in real time.
+Below the mic button: the "Summon Manager" panic button — wider, shorter, amber colored, reads "Call Manager — 1 use remaining." When tapped: mic fades, a deep voice audio plays, rage bar resets, and a brief animation shows a "manager arrived" notification banner sliding down from top (like a system notification).
+
+6. Win screen — de-escalated
+Receipt paper aesthetic, full screen. A green checkmark stamp (CSS shape, not emoji). Large monospaced header: "Customer de-escalated." Below: the shift receipt begins printing, line by line (CSS animation, like a receipt printer outputting):
+SURVIVE THE SHIFT
+================================
+Employee:     @username
+Customer:     Brenda K.
+Location:     Register 4
+Complaint:    Rotisserie chicken refund
+Time:         2 min 14 sec
+Rage peak:    84%
+Manager used: No
+Score earned: +340 pts
+================================
+VERDICT: Professional. Barely.
+================================
+Bottom: two buttons — "Share Receipt" (posts image to X/Twitter) and "Next Shift." The share button should generate a proper PNG of the receipt via canvas screenshot, not just a link.
+
+7. Lose screen — fired
+Same receipt layout, but stamped with a red "TERMINATED" diagonal stamp across it. The receipt reads differently: verdict line shows the exact thing the player said that caused the firing ("Fired for saying: 'maybe just chill out'"). Slightly more dramatic — a faint red tint over the entire screen. Two buttons: "File for Unemployment" (humor label for "retry") and "Accept Defeat" (goes home).
+
+8. Daily boss fight screen
+Accessed from the lobby. Full-width header: "TODAY'S BOSS" in large amber text. Below: the boss's profile card (larger than standard customer card) with their name, backstory paragraph, and a global stats strip — "7,432 players attempted — 23% survived." A countdown timer to the next boss. Below that: the global leaderboard — top 10 survivors ranked by fewest turns, with their score, time, and whether they used the manager power-up. Own player's rank shown separately if outside top 10. CTA: "Face Chad →"
+
+9. Leaderboard screen
+Full-screen list. Tabs at top: "Global" | "Friends" | "My History." Each row: rank number (monospaced, large), username with nametag badge color, score, and a tiny receipt icon that expands inline to show their funniest transcript excerpt. Top 3 rows have gold/silver/bronze nametag accent colors. Pull-to-refresh updates live scores.
+
+10. Settings / profile screen
+Simple. Player's full stats summary at top (total shifts, average rage handled, personal best time, total Karen encounters). Below: toggle rows — Haptics, Sound effects volume slider (background ambience), Voice volume slider (Karen), Notifications for daily boss. At bottom: "Clock Out" (log out) in muted red text.
+
+Key effects & micro-interactions checklist
+
+Rage bar shake above 80% — CSS @keyframes shake on the bar element
+Receipt print animation — overflow: hidden container with content revealed via max-height transition timed to a monospaced font character-by-character reveal
+Mic button press — border ring expands outward (CSS scale transform on a pseudo-element), waveform bars animate
+"Clock punch" transition between lobby and game — a red timestamp stamp animation using CSS transform: rotate(-15deg) scale(1.5) that appears then fades
+Speech bubble update — new Karen lines fade in with opacity transition; high-rage lines get a slight letter-spacing increase to feel more aggressive
+Manager arrival — slide-down notification banner using translateY from -60px to 0, amber background, holds 2 seconds, slides back up
+Loss stamp — "TERMINATED" diagonal red stamp appears with scale(0) rotate(-15deg) to scale(1) rotate(-15deg) over 300ms
+
+
+PWA / mobile-specific requirements
+
+Status bar color: #1a1a18 (dark, matches app background) — set via theme-color meta tag
+Safe area insets: all bottom controls use env(safe-area-inset-bottom) padding for iPhone notch/home bar
+Microphone permission prompt: custom pre-permission screen before the system dialog — explain why mic is needed in plain language ("We need your mic so Karen can hear you")
+Offline state: if no internet, show a "The store's WiFi is down" error screen with a retry button — maintain the bit
+Add to home screen prompt: after 2nd session, show a custom prompt card ("Add to your home screen for faster clock-ins") before the browser's native prompt

@@ -1,0 +1,61 @@
+Act as a Senior Full-Stack Engineer, Game Developer, and UI/UX Expert. I am building a mobile-first web game called "Diffuse.ai" for a major hackathon using Replit and ElevenLabs. 
+
+PROJECT OVERVIEW:
+Diffuse.ai is a gamified communication simulator that trains customer service workers in de-escalation. The game generates a random, angry customer. The user must use their microphone to speak empathetically to the AI. Based on what they say, the AI evaluates their response, adjusts a "Rage Meter", and replies using ElevenLabs Voice Design to generate dynamically angry or calm voices.
+
+TECH STACK:
+- Frontend: React (Vite or Next.js), Tailwind CSS, Framer Motion, Lucide React icons.
+- Backend/DB: Node.js/Express, Replit Auth, Replit Postgres Database.
+- AI APIs: OpenAI (for dialogue/evaluation), ElevenLabs Voice Design API (for character voices), ElevenLabs TTS.
+
+PHASE 1: DATABASE & AUTHENTICATION (Replit Native)
+1. Setup Replit Auth so users must log in to play and track their scores.
+2. Initialize a Postgres database with these tables:
+   - `users`: id, username, total_shifts_survived.
+   - `shifts` (game sessions): id, user_id, customer_name, starting_rage, ending_rage, duration_seconds, outcome (won/lost), chat_transcript (JSON).
+
+PHASE 2: MOBILE-FIRST UI/UX DESIGN
+Theme: Dark mode, sleek point-of-sale (POS) terminal aesthetic. Colors: Deep gray/black background, Neon Red (Rage), Neon Green (Calm).
+Build these 3 main screens using Framer Motion for smooth transitions:
+
+Screen 1: The Breakroom (Dashboard)
+- User profile and "Total Shifts Survived" stat.
+- A glowing "START SHIFT" button.
+- A "Global Leaderboard" showing the top 5 players from the Postgres DB.
+
+Screen 2: The Checkout Counter (Active Game)
+- Top Bar: A dynamic "RAGE METER" (Progress bar from 0 to 100). Color transitions from Green (0-30) to Yellow (31-70) to pulsing Red (71-100).
+- Center: A transcript box showing the dialogue history (like an iMessage interface).
+- Bottom: A massive, glowing "HOLD TO SPEAK" microphone button. 
+- Visuals: Include an audio visualizer animation that plays when the ElevenLabs AI customer is speaking.
+
+Screen 3: The Shift Receipt (Game Over / Win Screen)
+- Style this EXACTLY like a long, white, paper CVS receipt (white background, monospace black font, dashed lines `---`).
+- Content: "STORE: Diffuse.ai", "CASHIER:[Username]", "CUSTOMER: [Name]", "OUTCOME: [Fired / De-escalated]", "SURVIVAL TIME:[X mins]".
+- Action: A "Share to X/Twitter" button.
+
+PHASE 3: THE CORE GAME ENGINE & ELEVENLABS PIPELINE
+Implement the following game loop logic on the backend:
+
+1. Game Initialization:
+When a shift starts, use the LLM to generate a random scenario (e.g., "A customer named Brenda whose coupon expired 5 years ago"). Generate an ElevenLabs Voice Design prompt (e.g., "A middle-aged, highly entitled, nasally female voice"). Call the ElevenLabs Voice Design API to generate and save a temporary `voice_id` for this customer. Set Rage Meter to 60%.
+
+2. The AI First Strike:
+The LLM generates the customer's opening aggressive complaint. Pass this text + the generated `voice_id` to ElevenLabs TTS to generate the audio, and send it to the frontend to play.
+
+3. The Player Response:
+When the user holds the mic, capture the audio, transcribe it to text using Web Speech API or Whisper, and send it to the backend.
+
+4. The Evaluation Loop:
+Pass the customer's previous statement, the user's response, and the current Rage Meter to an LLM with this system prompt: 
+"You are evaluating a customer service rep. The customer is angry. Did the rep use empathy, active listening, and de-escalation? Or were they rude/dismissive? Return a JSON object: { 'rage_change': (number between -20 and +30), 'customer_reply': 'string text of what the customer says next' }".
+
+5. Dynamic Voice Scaling:
+Adjust the Rage Meter by `rage_change`. If Rage > 80%, append exclamation marks to the text to make ElevenLabs shout. Call ElevenLabs TTS with the `customer_reply`. Send the audio and new Rage Meter back to the frontend.
+
+6. Win/Loss Condition:
+If Rage reaches 100%, trigger the Loss sequence ("I WANT YOUR MANAGER!").
+If Rage reaches 0%, trigger the Win sequence ("Thank you for understanding.").
+Save the session to the `shifts` table and show the "Shift Receipt" screen.
+
+Please generate the file structure, database schema, and write the initial boilerplate for the frontend UI and the backend game loop. Make it modular and ready to test!
