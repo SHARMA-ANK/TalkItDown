@@ -17,6 +17,7 @@ export type Scenario = {
   threatLevel: number;
   timeEstimate: string;
   dialogue: string[];
+  gender: "female" | "male";
 };
 
 export type GameResult = {
@@ -70,6 +71,7 @@ const SCENARIOS: Scenario[] = [
     customerAge: 52,
     customerTitle: "HOA President",
     complaint: "Demanding refund on half-eaten rotisserie chicken",
+    gender: "female",
     threatLevel: 3,
     timeEstimate: "8-12 minutes",
     dialogue: [
@@ -85,6 +87,7 @@ const SCENARIOS: Scenario[] = [
     customerAge: 45,
     customerTitle: "Facebook Group Admin",
     complaint: "Wrong sauce on burger, demands free meal",
+    gender: "female",
     threatLevel: 2,
     timeEstimate: "5-8 minutes",
     dialogue: [
@@ -100,6 +103,7 @@ const SCENARIOS: Scenario[] = [
     customerAge: 61,
     customerTitle: "Couponing Influencer",
     complaint: "Coupon expired last year, insists it should still work",
+    gender: "female",
     threatLevel: 4,
     timeEstimate: "12-20 minutes",
     dialogue: [
@@ -115,6 +119,7 @@ const SCENARIOS: Scenario[] = [
     customerAge: 38,
     customerTitle: "Regional Manager's Wife",
     complaint: "Latte is 'the wrong temperature' — wants it remade 3 times",
+    gender: "female",
     threatLevel: 5,
     timeEstimate: "15-25 minutes",
     dialogue: [
@@ -132,6 +137,7 @@ const BOSS_SCENARIO: Scenario = {
   customerAge: 56,
   customerTitle: "Regional Manager's Wife",
   complaint: "Armed with a coupon from 2019 and absolutely nothing to lose",
+  gender: "female",
   threatLevel: 5,
   timeEstimate: "20-30 minutes",
   dialogue: [

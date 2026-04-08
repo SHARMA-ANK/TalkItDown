@@ -1,6 +1,7 @@
 modules = ["nodejs-20"]
 [agent]
 expertMode = true
+integrations = ["javascript_anthropic_ai_integrations:2.0.0"]
 
 [nix]
 channel = "stable-25_05"
@@ -56,3 +57,12 @@ externalPort = 8081
 [[ports]]
 localPort = 22022
 externalPort = 3000
+
+[[ports]]
+localPort = 22023
+externalPort = 3001
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "PORT=3000 node --enable-source-maps ./artifacts/api-server/dist/index.mjs"]
+build = ["bash", "build-prod.sh"]

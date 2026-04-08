@@ -1,7 +1,9 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
+import path from "path";
+import fs from "fs";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { authMiddleware } from "./middlewares/authMiddleware";
@@ -34,5 +36,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(authMiddleware);
 
 app.use("/api", router);
+
+// In production, serve the built Expo web app
+const FRONTEND_DIST = path.resolve(process.cwd(), "frontend-dist");
+if (fs.existsSync(FRONTEND_DIST)) {
+  app.use(express.static(FRONTEND_DIST));
+  app.get("*", (_req: Request, res: Response) => {
+    res.sendFile(path.join(FRONTEND_DIST, "index.html"));
+  });
+}
 
 export default app;

@@ -50,23 +50,9 @@ export function useGameAudio({ scene, enabled, onKarenFinished }: UseGameAudioOp
   }, []);
 
   const startAmbient = useCallback(async () => {
-    if (Platform.OS !== "web" || !enabled) return;
-    try {
-      const res = await fetch(`${BASE_URL}/api/voice/ambient`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scene }),
-      });
-      if (!res.ok || !res.body) return;
-      const blob = await res.blob();
-      if (!isMountedRef.current) return;
-      const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audio.volume = AMBIENT_VOLUME;
-      audio.loop = true;
-      audio.play().catch(() => {});
-      ambientRef.current = audio;
-    } catch {}
+    // Ambient sound via TTS is disabled — ElevenLabs reads descriptions as
+    // speech rather than generating actual sound effects, which sounds wrong.
+    // Background ambience can be added later using real audio files.
   }, [scene, enabled]);
 
   const stopAmbient = useCallback(() => {
@@ -118,6 +104,8 @@ export function useGameAudio({ scene, enabled, onKarenFinished }: UseGameAudioOp
 
         if (!res.ok) {
           if (duck) duck.volume = AMBIENT_VOLUME;
+          // Still fire finished so the game can progress to "your-turn"
+          setTimeout(() => onKarenFinishedRef.current?.(), 1500);
           return defaultResult;
         }
 

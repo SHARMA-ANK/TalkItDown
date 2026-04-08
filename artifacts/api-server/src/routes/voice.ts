@@ -15,10 +15,11 @@ function getElevenLabs(): ElevenLabsClient {
 }
 
 function getAnthropic(): Anthropic {
-  return new Anthropic({
-    baseURL: process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL,
-    apiKey: process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY,
-  });
+  const apiKey =
+    process.env.ANTHROPIC_API_KEY ||
+    process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY;
+  const baseURL = process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL;
+  return new Anthropic({ apiKey, ...(baseURL ? { baseURL } : {}) });
 }
 
 async function ttsStream(text: string, voiceId: string, isKaren: boolean, res: Response) {
@@ -129,38 +130,39 @@ router.post("/voice/respond", async (req: Request, res: Response) => {
 
   const isSilent = !userText || userText.trim().length === 0;
 
-  const systemPrompt = `You are ${customerName}, a ${customerTitle} at ${location}. 
-Your complaint: "${complaint}". 
-Your current rage level is ${Math.round(rage)}/100 — 0 is calm, 100 is you storming out and getting the employee fired.
+  const isResolved = !isSilent && (() => {
+    const lower = userText.toLowerCase();
+    return (lower.includes("refund") || lower.includes("resolved") || lower.includes("taken care") ||
+      lower.includes("fixed") || lower.includes("coupon") || lower.includes("compensation") ||
+      lower.includes("applied") || lower.includes("credited")) && rage < 40;
+  })();
 
-You are having a REAL, natural conversation with a customer service employee. Respond naturally as this character would in real life.
+  const systemPrompt = `You are ${customerName}, a ${customerTitle} at ${location}.
+Your complaint: "${complaint}".
+Your current rage level is ${Math.round(rage)}/100 — 0 is perfectly calm and satisfied, 100 is storming out furiously.
 
-${isSilent && silenceCount === 0 ? `The employee hasn't responded yet. Say something to get their attention — like "Hello? Anyone there?" or "Excuse me?" Stay in character.` : ""}
-${isSilent && silenceCount === 1 ? `The employee is STILL not responding. Get more impatient — "Hello?! I'm talking to you!" or similar. Your rage rises.` : ""}
-${isSilent && silenceCount >= 2 ? `The employee keeps ignoring you. You are getting very angry now. "This is UNBELIEVABLE. Are you even listening to me?!" Your rage surges.` : ""}
-${!isSilent ? `The employee just said: "${userText.trim()}"
+You are in a REAL customer service interaction. Keep responses SHORT — 1-2 sentences only.
+Do NOT use stage directions or asterisk actions like *sighs*. Speak only in dialogue.
 
-Respond naturally to what they actually said. Be a real person reacting genuinely to their words. 
-- If they were empathetic, apologetic, or offered a solution: calm down a bit
-- If they were dismissive, unhelpful, or didn't address your complaint: get more upset
-- If they said something rude or inappropriate: get very angry
-- Stay in character — emotional, entitled, dramatic but realistic
-Keep responses SHORT (1-3 sentences max). This is a natural back-and-forth conversation.` : ""}
+${isSilent && silenceCount === 0 ? `The employee hasn't responded yet. Say something to get their attention.` : ""}
+${isSilent && silenceCount === 1 ? `The employee is STILL not responding. Get more impatient.` : ""}
+${isSilent && silenceCount >= 2 ? `The employee keeps ignoring you. Get very angry.` : ""}
+${isResolved ? `The employee has just resolved your complaint — "${userText.trim()}". The issue is FIXED. You are satisfied and grateful. Say a brief thank you and that you're happy it was resolved. This is the END of the interaction.` : ""}
+${!isSilent && !isResolved ? `The employee just said: "${userText.trim()}"
+React genuinely: calm down if they were helpful, get angrier if they were dismissive or rude.` : ""}
 
-After your spoken response, output a JSON block on its own line like this:
-<rage_delta>{"delta": -15, "reason": "player apologized sincerely"}</rage_delta>
+After your response, output EXACTLY this format on its own line:
+<rage_delta>{"delta": NUMBER, "reason": "SHORT_REASON"}</rage_delta>
 
-Rules for rage delta:
-- Silent / no response: delta +${silenceCount >= 2 ? "25 to +35" : silenceCount === 1 ? "15 to +25" : "8 to +15"}
-- Player was polite, empathetic, apologetic: delta -10 to -25
-- Player validated feelings AND offered compensation or solution: delta -20 to -35
-- Player gave a vague or unhelpful response: delta +5 to +15
-- Player was dismissive, rude, or didn't address the complaint: delta +10 to +20
-- Player called you crazy, told you to leave, or was sarcastic: delta +20 to +35
-- If rage drops to 0 or below, output "GAME_OVER_WIN" in the reason
-- If rage would exceed 100, output "GAME_OVER_LOSE" in the reason
-
-Remember: you are in a customer service training simulation. Stay in character but keep it realistic.`;
+Delta rules:
+- Silence: +${silenceCount >= 2 ? "20 to +30" : silenceCount === 1 ? "12 to +20" : "8 to +12"}
+- Polite and empathetic: -8 to -20
+- Offered real solution or compensation: -20 to -35
+- Vague or unhelpful: +3 to +10
+- Dismissive or rude: +10 to +25
+- CRITICAL: If complaint is now resolved and customer is satisfied, set delta so rage reaches 0 and put GAME_OVER_WIN in the reason
+- CRITICAL: If the employee resolved the issue and you just said thank you, output: {"delta": -${Math.round(rage)}, "reason": "GAME_OVER_WIN - complaint resolved and customer is satisfied"}
+- If rage exceeds 100, put GAME_OVER_LOSE in the reason`;
 
   const messages: Anthropic.MessageParam[] = [];
 
@@ -197,14 +199,21 @@ Remember: you are in a customer service training simulation. Stay in character b
         const parsed = JSON.parse(deltaMatch[1]);
         rageDelta = Math.max(-35, Math.min(35, Number(parsed.delta) || rageDelta));
         const reason = (parsed.reason || "").toLowerCase();
+        req.log.info({ userText, rageBefore: rage, rageDelta, reason }, "rage delta");
         if (reason.includes("game_over_win") || rage + rageDelta <= 0) gameOver = "win";
         if (reason.includes("game_over_lose") || rage + rageDelta >= 100) gameOver = "lose";
       } catch {
         // keep default
       }
+    } else {
+      req.log.warn({ userText, rageBefore: rage, rageDelta, fullText: fullText.slice(0, 200) }, "no rage_delta tag found, using default");
     }
 
-    const spokenText = fullText.replace(/<rage_delta>.*?<\/rage_delta>/s, "").trim();
+    const spokenText = fullText
+      .replace(/<rage_delta>.*?<\/rage_delta>/s, "")
+      .replace(/\*[^*]+\*/g, "")
+      .replace(/\s{2,}/g, " ")
+      .trim();
 
     res.setHeader("X-Karen-Text", Buffer.from(spokenText.slice(0, 500)).toString("base64"));
     res.setHeader("X-Rage-Delta", String(rageDelta));

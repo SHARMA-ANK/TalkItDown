@@ -58,7 +58,18 @@ Once you know what to build, you can proceed and make reasonable decisions about
 
 ### Step 1: Set up the mockup sandbox
 
-The mockup sandbox artifact is pre-installed — do **not** call `createArtifact`. Start its dev server **before** creating any components or placing iframes on the canvas:
+Create the mockup sandbox using `createArtifact` (see {{skill("artifacts")}} for full details):
+
+```javascript
+const result = await createArtifact({
+    artifactType: "mockup-sandbox",
+    slug: "mockup-sandbox",
+    previewPath: "/__mockup/",
+    title: "Mockup Sandbox"
+});
+```
+
+Then start its dev server **before** creating any components or placing iframes on the canvas:
 
 ```javascript
 await restartWorkflow({ workflowName: "artifacts/mockup-sandbox: Component Preview Server" });
@@ -105,7 +116,7 @@ Example -- a pricing card is a "Card / Panel", so use a snug iframe (see [Iframe
 ```
 ### Step 4: Layout and focus
 
-Before embedding iframes, call `get_canvas_state` to see what already exists on the board and find empty space. Then place your iframes in an unoccupied region.
+Before embedding iframes, call `getCanvasState()` to see what already exists on the board and find empty space. Then place your iframes in an unoccupied region.
 
 If an iframe is created while the workflow is still booting, rely on the canvas host's iframe retry behavior plus the dev server's automatic 404 rescan to recover. Do not ask the user to refresh the whole board.
 
@@ -276,7 +287,7 @@ Missing fonts fail silently — no console error, no build failure, just a fallb
 The `packager_install_tool` only works for the main project. To add packages to the mockup sandbox:
 
 1. Edit `artifacts/mockup-sandbox/package.json` directly and add the dependency
-2. Run `pnpm install` from the project root so the workspace resolves the new dependency
+2. Run `npm install` from the `artifacts/mockup-sandbox/` directory
 3. Restart the "artifacts/mockup-sandbox: Component Preview Server" workflow to pick up the change
 
 ## shadcn/ui Components
